@@ -1,0 +1,29 @@
+{
+  "testData": {
+    "address": "",
+    "businessCertificate": "",
+    "businessId": 3673390697676801,
+    "businessLicense": "",
+    "businessQualification": "",
+    "city": "",
+    "corporater": "发撒旦法",
+    "corporaterCredentials": "",
+    "corporaterMobile": "18113015707",
+    "county": "",
+    "guideCertificate": "",
+    "hotlineReseller": "",
+    "id": 3672972781420544,
+    "identifyType": "p",
+    "name": "",
+    "operChargerEmail": "",
+    "operChargerFax": "",
+    "operChargerPhone": "",
+    "province": "",
+    "refereeId": 3673390697676801,
+    "resellerType": 5,
+    "supplierId": 2216619741564532,
+    "supplierNormal": "",
+    "updateBy": 2216619741564532
+  },
+  "testDataClass": "com.pzj.core.customer.profile.ModifyCustomerRequest"
+}

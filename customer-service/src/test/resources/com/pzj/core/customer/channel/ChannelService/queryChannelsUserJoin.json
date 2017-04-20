@@ -1,0 +1,19 @@
+{
+  "testData" : {
+    "channelRequest" : {
+      "supplierId": 2216619741563912,
+      "name":"魔方"
+    },
+    "customerRequest" : null,
+    "pageModel" : {
+      "pageSize" : 1000
+    },
+    "tmpAddIds" : null,
+    "tmpDelIds" : null
+  },
+  "testDataClass" : {
+    "channelRequest" : "com.pzj.core.customer.channel.QueryChannelRequest",
+    "customerRequest" : "com.pzj.core.customer.profile.QueryCustomerRequest",
+    "pageModel" : "com.pzj.base.common.utils.PageModel"
+  }
+}

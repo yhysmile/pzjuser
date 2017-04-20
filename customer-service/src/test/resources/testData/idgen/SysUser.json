@@ -1,0 +1,38 @@
+[
+  {
+    "loginName": "test11111111111",
+    "loginPasswd": "123456",
+    "name": "abcabc",
+    "sysCode": "aaaa"
+  },
+  {
+    "loginName": "test22222222222",
+    "loginPasswd": "123456",
+    "name": "abcabc",
+    "sysCode": "aaaa"
+  },
+  {
+    "loginName": "test33333333333",
+    "loginPasswd": "123456",
+    "name": "abcabc",
+    "sysCode": "aaaa"
+  },
+  {
+    "loginName": "test44444444444",
+    "loginPasswd": "123456",
+    "name": "abcabc",
+    "sysCode": "aaaa"
+  },
+  {
+    "loginName": "test55555555555",
+    "loginPasswd": "123456",
+    "name": "abcabc",
+    "sysCode": "aaaa"
+  },
+  {
+    "loginName": "test66666666666",
+    "loginPasswd": "123456",
+    "name": "abcabc",
+    "sysCode": "aaaa"
+  }
+]

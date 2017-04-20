@@ -1,0 +1,515 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysMenuMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,parent_id
+		,parent_ids
+		,name
+		,href
+		,target
+		,icon
+		,sort
+		,is_show
+		,is_activiti
+		,permission
+		,create_by
+		,create_date
+		,update_by
+		,update_date
+		,remarks
+		,del_flag
+		,position
+		,style
+		,data_source
+		,supplier_id
+		,catalog
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysMenu">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+		<result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="href" jdbcType="VARCHAR" property="href" />
+		<result column="target" jdbcType="VARCHAR" property="target" />
+		<result column="icon" jdbcType="VARCHAR" property="icon" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="is_show" jdbcType="CHAR" property="isShow" />
+		<result column="is_activiti" jdbcType="CHAR" property="isActiviti" />
+		<result column="permission" jdbcType="VARCHAR" property="permission" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+		<result column="position" jdbcType="VARCHAR" property="position" />
+		<result column="style" jdbcType="VARCHAR" property="style" />
+        <result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+		<result column="catalog" jdbcType="VARCHAR" property="catalog" />
+	</resultMap>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_menu where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		<where> 1=1
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.parentId != null"> AND parent_id = #{bParam.parentId,jdbcType=VARCHAR} </if>
+			<if test="bParam.parentIds != null"> AND parent_ids = #{bParam.parentIds,jdbcType=VARCHAR} </if>
+			<if test="bParam.name != null"> AND name = #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.href != null"> AND href = #{bParam.href,jdbcType=VARCHAR} </if>
+			<if test="bParam.target != null"> AND target = #{bParam.target,jdbcType=VARCHAR} </if>
+			<if test="bParam.icon != null"> AND icon = #{bParam.icon,jdbcType=VARCHAR} </if>
+			<if test="bParam.sort != null"> AND sort = #{bParam.sort,jdbcType=INTEGER} </if>
+			<if test="bParam.isShow != null"> AND is_show = #{bParam.isShow,jdbcType=CHAR} </if>
+			<if test="bParam.isActiviti != null"> AND is_activiti = #{bParam.isActiviti,jdbcType=CHAR} </if>
+			<if test="bParam.permission != null"> AND permission = #{bParam.permission,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.createDate != null"> AND create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.updateDate != null"> AND update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.remarks != null"> AND remarks = #{bParam.remarks,jdbcType=VARCHAR} </if>
+			<if test="bParam.delFlag != null"> AND del_flag = #{bParam.delFlag,jdbcType=CHAR} </if>
+			<if test="bParam.position != null"> AND position = #{bParam.position,jdbcType=VARCHAR} </if>
+			<if test="bParam.style != null"> AND style = #{bParam.style,jdbcType=VARCHAR} </if>
+            <if test="bParam.dataSource != null"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+            <if test="bParam.supplierId != null"> AND (supplier_id =
+                #{bParam.supplierId,jdbcType=BIGINT} OR supplier_id is NULL)
+            </if>
+			<if test="bParam.catalog != null"> AND catalog = #{bParam.catalog,jdbcType=VARCHAR} </if>
+		</if>
+		</where>
+	</sql>
+
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by id desc </if>
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from sys_menu
+		<include refid="sql_of_where" />
+	</select>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu
+		<where>
+			<if test="menuIds != null">
+				and id in (${menuIds})
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=CHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysMenu">
+		insert into sys_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="parentIds != null">
+				parent_ids,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="href != null">
+				href,
+			</if>
+			<if test="target != null">
+				target,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="isShow != null">
+				is_show,
+			</if>
+			<if test="isActiviti != null">
+				is_activiti,
+			</if>
+			<if test="permission != null">
+				permission,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="position != null">
+				position,
+			</if>
+			<if test="style != null">
+				style,
+			</if>
+            <if test="dataSource != null">
+                data_source,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+			<if test="catalog != null">
+				catalog,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="parentId != null">
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentIds != null">
+				#{parentIds,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="href != null">
+				#{href,jdbcType=VARCHAR},
+			</if>
+			<if test="target != null">
+				#{target,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				#{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="isShow != null">
+				#{isShow,jdbcType=CHAR},
+			</if>
+			<if test="isActiviti != null">
+				#{isActiviti,jdbcType=CHAR},
+			</if>
+			<if test="permission != null">
+				#{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="position != null">
+				#{position,jdbcType=VARCHAR},
+			</if>
+			<if test="style != null">
+				#{style,jdbcType=VARCHAR},
+			</if>
+            <if test="dataSource != null">
+                #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=BIGINT},
+            </if>
+			<if test="catalog != null">
+				#{catalog,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_menu ( <include refid="Base_Column_List"/>)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.parentId != null">,#{item.parentId ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.parentIds != null">,#{item.parentIds ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.name != null">,#{item.name ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.href != null">,#{item.href ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.target != null">,#{item.target ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.icon != null">,#{item.icon ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.sort != null">,#{item.sort ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.isShow != null">,#{item.isShow ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.isActiviti != null">,#{item.isActiviti ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.permission != null">,#{item.permission ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.remarks != null">,#{item.remarks ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.delFlag != null">,#{item.delFlag ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.position != null">,#{item.position ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.style != null">,#{item.style ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+            <choose>
+                <when test="item.dataSource != null">,#{item.dataSource ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+            <choose>
+                <when test="item.supplierId != null">,#{item.supplierId ,jdbcType=BIGINT}</when>
+                <otherwise>,0</otherwise>
+            </choose>
+			<choose>
+				<when test="item.catalog != null">,#{item.catalog ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysMenu">
+		update sys_menu
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentIds != null">
+				parent_ids = #{parentIds,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="href != null">
+				href = #{href,jdbcType=VARCHAR},
+			</if>
+			<if test="target != null">
+				target = #{target,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="isShow != null">
+				is_show = #{isShow,jdbcType=CHAR},
+			</if>
+			<if test="isActiviti != null">
+				is_activiti = #{isActiviti,jdbcType=CHAR},
+			</if>
+			<if test="permission != null">
+				permission = #{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate == null">
+                update_date = current_timestamp(),
+            </if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="position != null">
+				position = #{position,jdbcType=VARCHAR},
+			</if>
+			<if test="style != null">
+				style = #{style,jdbcType=VARCHAR},
+			</if>
+            <if test="dataSource != null">
+                data_source = #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=BIGINT},
+            </if>
+			<if test="catalog != null">
+				catalog = #{catalog,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			update sys_menu
+			<set>
+				<if test="item.parentId != null">
+					parent_id = #{item.parentId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.parentIds != null">
+					parent_ids = #{item.parentIds,jdbcType=VARCHAR},
+				</if>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.href != null">
+					href = #{item.href,jdbcType=VARCHAR},
+				</if>
+				<if test="item.target != null">
+					target = #{item.target,jdbcType=VARCHAR},
+				</if>
+				<if test="item.icon != null">
+					icon = #{item.icon,jdbcType=VARCHAR},
+				</if>
+				<if test="item.sort != null">
+					sort = #{item.sort,jdbcType=INTEGER},
+				</if>
+				<if test="item.isShow != null">
+					is_show = #{item.isShow,jdbcType=CHAR},
+				</if>
+				<if test="item.isActiviti != null">
+					is_activiti = #{item.isActiviti,jdbcType=CHAR},
+				</if>
+				<if test="item.permission != null">
+					permission = #{item.permission,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createBy != null">
+					create_by = #{item.createBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createDate != null">
+					create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateBy != null">
+					update_by = #{item.updateBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateDate != null">
+					update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+                <if test="item.updateDate == null">
+                    update_date = current_timestamp(),
+                </if>
+				<if test="item.remarks != null">
+					remarks = #{item.remarks,jdbcType=VARCHAR},
+				</if>
+				<if test="item.delFlag != null">
+					del_flag = #{item.delFlag,jdbcType=CHAR},
+				</if>
+				<if test="item.position != null">
+					position = #{item.position,jdbcType=VARCHAR},
+				</if>
+				<if test="item.style != null">
+					style = #{item.style,jdbcType=VARCHAR},
+				</if>
+				<if test="item.dataSource != null">
+                    data_source = #{item.dataSource,jdbcType=VARCHAR},
+                </if>
+                <if test="item.supplierId != null">
+                    supplier_id = #{item.supplierId,jdbcType=BIGINT},
+                </if>
+				<if test="item.catalog != null">
+					catalog = #{item.catalog,jdbcType=VARCHAR},
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+</mapper>

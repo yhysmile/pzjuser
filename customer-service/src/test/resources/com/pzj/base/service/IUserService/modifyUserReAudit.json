@@ -1,0 +1,8 @@
+{
+  "testData" : {
+    "id" : 2216619736763901,
+    "businessQualification" : "bbbbbbb",
+    "updateBy" : 234
+  },
+  "testDataClass" : "com.pzj.base.entity.SysUser"
+}

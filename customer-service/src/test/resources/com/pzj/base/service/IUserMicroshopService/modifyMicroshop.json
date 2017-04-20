@@ -1,0 +1,12 @@
+{
+  "testData" : {
+    "id" : 2216619736563717,
+    "userId" : 52434,
+    "name" : "4444123123",
+    "intro" : "aga",
+    "avatar" : "5354",
+    "createDate" : "2013-12-12",
+    "updateDate" : "2013-12-22"
+  },
+  "testDataClass" : "com.pzj.base.entity.SysUserMicroshop"
+}

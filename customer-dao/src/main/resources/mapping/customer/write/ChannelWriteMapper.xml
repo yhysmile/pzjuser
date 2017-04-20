@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.ChannelWriteMapper">
+    <!-- 所有字段 -->
+    <sql id="Base_Column_List">
+        id, supplier_id, name, channel_type, channel_category, del_flag, create_by, create_date, update_by, update_date
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.channel.ChannelEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="supplier_id" jdbcType="BIGINT" property="masterId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="channel_type" jdbcType="CHAR" property="type" />
+        <result column="channel_category" jdbcType="VARCHAR" property="category" />
+        <result column="del_flag" jdbcType="CHAR" property="status" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_channel where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_channel
+        where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+
+</mapper>

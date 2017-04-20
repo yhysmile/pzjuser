@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration debug="true" scan="true">
+    <property name="log.path" value="../logs"/>
+    <property name="enginee" value="customer" />
+
+    <turboFilter class="com.pzj.common.log.LogSessionDynamicConfigFilter" />
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="user-data" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/user-data.out</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/user-data.%d{yyyyMMdd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+        </encoder>
+        <filter class="com.pzj.framework.logger.filter.ThresholdFilter">
+            <level>warn</level>
+            <rebel>true</rebel>
+        </filter>
+    </appender>
+    <appender name="user-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/user-error.out</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/user-error.%d{yyyyMMdd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.pzj.orange" level="INFO">
+        <appender name="orange-client" class="ch.qos.logback.core.rolling.RollingFileAppender" >
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${log.path}/callrecord/customer-service.%d{yyyy-MM-dd}.log</FileNamePattern>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+            </encoder>
+        </appender>
+    </logger>
+
+    <logger name="com.pzj.service.Impl" level="debug" additivity="false">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="user-error"/>
+        <appender-ref ref="user-data"/>
+    </logger>
+    <logger name="org.apache.ibatis" level="debug" additivity="false">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="user-error"/>
+        <appender-ref ref="user-data"/>
+    </logger>
+    <logger name="java.sql" level="debug" additivity="false">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="user-error"/>
+        <appender-ref ref="user-data"/>
+    </logger>
+
+    <logger name="org.springframework" level="debug" />
+    <logger name="com.alibaba" level="debug" />
+    <logger name="org.apache" level="warn" />
+    <logger name="org.I0Itec.zkclient" level="warn" />
+
+    <root level="debug">
+        <appender-ref ref="stdout"/>
+    </root>
+</configuration>

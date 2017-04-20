@@ -1,0 +1,15 @@
+{
+  "testData" : {
+    "channelId" : 9999999,
+    "addCustomerIds" : [2, 1],
+    "delCustomerIds" : [111123, 111456],
+    "operId" : 3632399036973056
+  },
+
+  "testDataClass" : {
+    "channelId" : "long",
+    "addCustomerIds" : "long",
+    "delCustomerIds" : "long",
+    "operId" : "long"
+  }
+}

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysUserMicroshopMapper">
+
+    <!-- 所有字段 -->
+    <sql id="Base_Column_List">
+        id,
+        user_id,
+        name,
+        intro,
+        avatar,
+        create_date,
+        update_date
+    </sql>
+
+    <!-- 字段映射 -->
+    <resultMap id="BaseResultMap" type="com.pzj.base.entity.SysUserMicroshop">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="intro" property="intro" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!-- 主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select <include refid="Base_Column_List" /> from sys_user_microshop  where
+        id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <!-- 删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from sys_user_microshop where
+        id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteBatchByPrimaryKey">
+        delete from sys_user_microshop where id in
+        <foreach collection="list" item="_id" open="(" separator="," close=")">
+            #{_id, jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchByParam">
+        delete from sys_user_microshop
+        <where>
+            <trim prefix="(" suffix=")"  prefixOverrides="and|or">
+                <include refid="sql_of_where" />
+            </trim>
+            or 1 = 2
+        </where>
+    </delete>
+
+    <!-- 通用查询条件 -->
+    <sql id="sql_of_where">
+        <if test="bParam != null">
+            <if test="bParam.id != null"> AND id = #{bParam.id, jdbcType=BIGINT}</if>
+            <if test="bParam.userId != null"> AND user_id = #{bParam.userId, jdbcType=BIGINT}</if>
+            <if test="bParam.name != null"> AND name = #{bParam.name, jdbcType=VARCHAR}</if>
+            <if test="bParam.intro != null"> AND intro = #{bParam.intro, jdbcType=VARCHAR}</if>
+            <if test="bParam.avatar != null"> AND avatar = #{bParam.avatar, jdbcType=VARCHAR}</if>
+            <if test="bParam.createDate != null"> AND create_date = #{bParam.createDate, jdbcType=TIMESTAMP}</if>
+            <if test="bParam.updateDate != null"> AND update_date = #{bParam.updateDate, jdbcType=TIMESTAMP}</if>
+            <if test="bParam.userIds != null and bParam.userIds.size &gt; 0">
+                AND user_id in
+                <foreach collection="bParam.userId" item="_item" open="(" separator="," close=")">
+                    #{_item, jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 具有表别名的通用查询条件 -->
+    <sql id="sql_of_where_alias">
+        <if test="bParam != null">
+            <if test="bParam.id != null"> AND a.id = #{bParam.id, jdbcType=BIGINT}</if>
+            <if test="bParam.userId != null"> AND a.user_id = #{bParam.userId, jdbcType=BIGINT}</if>
+            <if test="bParam.name != null"> AND a.name = #{bParam.name, jdbcType=VARCHAR}</if>
+            <if test="bParam.intro != null"> AND a.intro = #{bParam.intro, jdbcType=VARCHAR}</if>
+            <if test="bParam.avatar != null"> AND a.avatar = #{bParam.avatar, jdbcType=VARCHAR}</if>
+            <if test="bParam.createDate != null"> AND a.create_date = #{bParam.createDate, jdbcType=TIMESTAMP}</if>
+            <if test="bParam.updateDate != null"> AND a.update_date = #{bParam.updateDate, jdbcType=TIMESTAMP}</if>
+            <if test="bParam.userIds != null and bParam.userIds.size &gt; 0">
+                AND a.user_id in
+                <foreach collection="bParam.userId" item="_item" open="(" separator="," close=")">
+                    #{_item, jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 通用分页查询 -->
+    <select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_user_microshop a
+        <where>
+            <include refid="sql_of_where_alias" />
+        </where>
+        <if test="pParam != null">
+            <if test="pParam.orderByClause == null"> order by a.id desc </if>
+            <if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+            <if test="pParam.startIndex != null and pParam.pageSize != null">
+                limit #{pParam.startIndex} , #{pParam.pageSize}
+            </if>
+        </if>
+    </select>
+
+    <!-- 通用分页查询记录总数 -->
+    <select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(a.id) from sys_user_microshop a
+        <where>
+            <include refid="sql_of_where_alias" />
+        </where>
+    </select>
+
+
+    <!-- 插入单条数据 -->
+    <insert id="insert" parameterType="com.pzj.base.entity.SysUserMicroshop">
+        insert into sys_user_microshop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="userId != null">user_id,</if>
+            <if test="name != null">name,</if>
+            <if test="intro != null">intro,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id, jdbcType=BIGINT},
+            <if test="userId != null">#{userId, jdbcType=BIGINT},</if>
+            <if test="name != null">#{name, jdbcType=VARCHAR},</if>
+            <if test="intro != null">#{intro, jdbcType=VARCHAR},</if>
+            <if test="avatar != null">#{avatar, jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateDate != null">#{updateDate, jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <!-- 批量插入，请根据业务修改默认值 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into sys_user_microshop ( <include refid="Base_Column_List"/> )
+        values
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id, jdbcType=BIGINT}
+            <choose><when test="item.userId != null">, #{item.userId, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.name != null">, #{item.name, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.intro != null">, #{item.intro, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.avatar != null">, #{item.avatar, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.createDate != null">, #{item.createDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            <choose><when test="item.updateDate != null">, #{item.updateDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新单条数据 -->
+    <update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysMenu">
+        update sys_user_microshop
+        <set>
+            <if test="userId != null">user_id = #{userId, jdbcType=BIGINT},</if>
+            <if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+            <if test="intro != null">intro = #{intro, jdbcType=VARCHAR},</if>
+            <if test="avatar != null">avatar = #{avatar, jdbcType=VARCHAR},</if>
+            <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+        </set>
+        where
+        id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <!-- 批量更新 -->
+    <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update sys_user_microshop
+            <set>
+                <if test="item.id != null">id = #{item.id, jdbcType=BIGINT},</if>
+                <if test="item.userId != null">user_id = #{item.userId, jdbcType=BIGINT},</if>
+                <if test="item.name != null">name = #{item.name, jdbcType=VARCHAR},</if>
+                <if test="item.intro != null">intro = #{item.intro, jdbcType=VARCHAR},</if>
+                <if test="item.avatar != null">avatar = #{item.avatar, jdbcType=VARCHAR},</if>
+                <if test="item.createDate != null">create_date = #{item.createDate, jdbcType=TIMESTAMP},</if>
+                <if test="item.updateDate != null">update_date = #{item.updateDate, jdbcType=TIMESTAMP},</if>
+            </set>
+            where
+            id = #{item.id, jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <update id="updateByUserId">
+        update sys_user_microshop
+        <set>
+            <if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+            <if test="intro != null">intro = #{intro, jdbcType=VARCHAR},</if>
+            <if test="avatar != null">avatar = #{avatar, jdbcType=VARCHAR},</if>
+            <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+        </set>
+        where
+        1 = 2
+        <if test="id != null or userId != null">
+            <trim prefix=" or (" suffix=")" prefixOverrides="or|and">
+                <if test="id != null">
+                    id = #{id, jdbcType=BIGINT}
+                </if>
+                <if test="userId != null">
+                    and user_id = #{userId, jdbcType=BIGINT}
+                </if>
+            </trim>
+        </if>
+    </update>
+
+
+</mapper>

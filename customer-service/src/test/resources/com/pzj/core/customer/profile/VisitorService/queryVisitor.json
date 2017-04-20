@@ -1,0 +1,7 @@
+{
+  "testData" : {
+    "ownerId" : "123456789"
+
+  },
+  "testDataClass" : "com.pzj.core.customer.visitor.QueryVisitorRequest"
+}

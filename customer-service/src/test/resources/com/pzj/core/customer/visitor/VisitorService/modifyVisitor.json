@@ -1,0 +1,12 @@
+{
+  "testData" : {
+    "id" : 3614760350777344,
+    "name" : "张三那",
+    "phoneNum" : "1388888888",
+    "idNum" : "111111111111111112",
+    "remark" : "ddd3333",
+    "operator" : 2216619741563734
+
+  },
+  "testDataClass" : "com.pzj.core.customer.visitor.ModifyVisitorRequest"
+}

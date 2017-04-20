@@ -1,0 +1,9 @@
+{
+  "testData" : {
+    "relUserParam" :{
+    }
+  },
+  "testDataClass" : {
+    "relUserParam" : "com.pzj.base.entity.SysUser"
+  }
+}

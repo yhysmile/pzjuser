@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.BankCardWriteMapper">
+
+    <!-- 所有字段 -->
+    <sql id="Base_Column_List">
+        id,
+        owner_id,
+        account_holder,
+        id_num,
+        bank,
+        card_num,
+        data_source,
+        create_by,
+        create_date,
+        update_by,
+        update_date
+    </sql>
+
+    <!-- 字段映射 -->
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.BankCardEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+        <result column="account_holder" property="accountHolder" jdbcType="VARCHAR" />
+        <result column="id_num" property="idNum" jdbcType="VARCHAR" />
+        <result column="bank" property="bank" jdbcType="VARCHAR" />
+        <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
+        <result column="data_source" property="dataSource" jdbcType="BIGINT" />
+        <result column="create_by" property="createBy" jdbcType="BIGINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!-- 主键查询 -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select <include refid="Base_Column_List" /> from bank_card where id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <!-- 插入单条数据 -->
+    <insert id="insert" parameterType="com.pzj.core.customer.profile.BankCardEntity">
+        insert into bank_card
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="ownerId != null">owner_id,</if>
+            <if test="accountHolder != null">account_holder,</if>
+            <if test="idNum != null">id_num,</if>
+            <if test="bank != null">bank,</if>
+            <if test="cardNum != null">card_num,</if>
+            <if test="dataSource != null">data_source,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createDate != null">create_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id, jdbcType=BIGINT},
+            <if test="ownerId != null">#{ownerId, jdbcType=BIGINT},</if>
+            <if test="accountHolder != null">#{accountHolder, jdbcType=VARCHAR},</if>
+            <if test="idNum != null">#{idNum, jdbcType=VARCHAR},</if>
+            <if test="bank != null">#{bank, jdbcType=VARCHAR},</if>
+            <if test="cardNum != null">#{cardNum, jdbcType=VARCHAR},</if>
+            <if test="dataSource != null">#{dataSource, jdbcType=BIGINT},</if>
+            <if test="createBy != null">#{createBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <!-- 批量插入，请根据业务修改默认值 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into bank_card (
+            id,
+            owner_id,
+            account_holder,
+            id_num,
+            bank,
+            card_num,
+            data_source,
+            create_by,
+            create_date
+        )
+        values
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id, jdbcType=BIGINT}
+            <choose><when test="item.ownerId != null">, #{item.ownerId, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.accountHolder != null">, #{item.accountHolder, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.idNum != null">, #{item.idNum, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.bank != null">, #{item.bank, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.cardNum != null">, #{item.cardNum, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.dataSource != null">, #{item.dataSource, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.createBy != null">, #{item.createBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.createDate != null">, #{item.createDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新单条数据 -->
+    <update id="update" parameterType="com.pzj.core.customer.profile.BankCardEntity">
+        update bank_card
+        <set>
+            <if test="accountHolder != null">account_holder = #{accountHolder, jdbcType=VARCHAR},</if>
+            <if test="idNum != null">id_num = #{idNum, jdbcType=VARCHAR},</if>
+            <if test="bank != null">bank = #{bank, jdbcType=VARCHAR},</if>
+            <if test="cardNum != null">card_num = #{cardNum, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">update_by = #{updateBy, jdbcType=BIGINT},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+        </set>
+        where
+        id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <!-- 批量更新 -->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update bank_card
+            <set>
+                <if test="item.accountHolder != null">account_holder = #{item.accountHolder, jdbcType=VARCHAR},</if>
+                <if test="item.idNum != null">id_num = #{item.idNum, jdbcType=VARCHAR},</if>
+                <if test="item.bank != null">bank = #{item.bank, jdbcType=VARCHAR},</if>
+                <if test="item.cardNum != null">card_num = #{item.cardNum, jdbcType=VARCHAR},</if>
+                <if test="item.updateBy != null">update_by = #{item.updateBy, jdbcType=BIGINT},</if>
+                <if test="item.updateDate != null">update_date = #{item.updateDate, jdbcType=TIMESTAMP},</if>
+            </set>
+            where
+            id = #{item.id, jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+
+</mapper>

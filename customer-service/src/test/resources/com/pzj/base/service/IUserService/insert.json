@@ -1,0 +1,15 @@
+{
+  "testData" : {
+    "name" : "testLogo2",
+    "loginName" : "testLogo",
+    "logo" : "vvvaaa",
+    "isRoot" : "1",
+    "createBy" : 5234543,
+    "supplierId" : 656666666,
+    "createDate" : "2015-08-12 17:53:33",
+    "settlement" : {
+      "tradePayee" : "3"
+    }
+  },
+  "testDataClass" : "com.pzj.base.entity.SysUser"
+}

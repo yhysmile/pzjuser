@@ -1,0 +1,3889 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysUserMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,login_name
+		,login_passwd
+		,sys_code
+		,two_Dimension_Code
+		,user_type
+		,identifyType
+		,oper_charger_mobile
+		,oper_charger_phone
+		,oper_charger_fax
+		,oper_charger_email
+		,last_login_time
+		,last_login_ip
+		,defaultLoginAddress
+		,account_state
+		,create_date
+		,office_id
+		,company_id
+		,parent_id
+		,wx_openid
+		,login_source
+		,name
+		,reseller_type
+		,is_buygroup
+		,is_buysingle
+		,reseller_level
+		,province
+		,city
+		,county
+		,corporater
+		,credentials_type
+		,corporater_credentials
+		,corporater_mobile
+		,corporater_phone
+		,corporater_email
+		,business_certificate
+		,guideCertificate
+		,directCompany
+		,directTime
+		,business_license
+		,business_qualification
+		,org_code_certificate
+		,tax_certificate
+		,other_files
+		,resellerId
+		,address
+		,reseller_state
+		,request_date
+		,approve_date
+		,approve_result
+		,contract_num
+		,description
+		,wx_open_flag
+		,isCReseller
+		,about_us
+		,contact_way
+		,reseller_phonetic_shorthand
+		,supplier_level
+		,is_manage
+		,other_file
+		,other_file2
+		,supplierPk
+		,supplier_address
+		,supplier_state
+		,supplier_description
+		,supplier_py
+		,supplier_normal
+		,supplier_discount_value
+		,from_date
+		,period
+		,settle_date
+		,contract_remarks
+		,contract_notes
+		,verification_codes
+		,user_source
+		,create_by
+		,update_by
+		,update_date
+		,sort
+		,leader_flag
+		,ticket_rule
+		,check_status
+		,check_user_id
+		,check_user_name
+		,check_date
+		,reason_rejection
+		,supplier_id
+		,is_root
+		,belongScenicId
+		,hotelType
+		,hotel_map_longitude
+		,hotel_map_latitude
+		,region
+		,scenic_info
+		,hotel_start_date
+		,hotel_end_date
+		,hotel_num
+		,treat_people_num
+		,hotel_facility
+		,hotel_feature
+		,hotel_pirture
+		,boss_story
+		,boss_pirture
+		,notify_update_state
+		,accountingUnit
+		,accountingUnitName
+		,supplierBillingMode
+		,supplierCreditPayMode
+		,supplierPlatformPayMode
+		,supplierTradeServiceFeeType
+		,supplierTradeServiceFee
+		,supplierTradeServiceRemark
+		,supplierServiceFeePeriod
+		,supplierBrokeragePeriod
+		,currencyType
+		,trade_payee
+		,invitationCode
+		,check_type
+		,qualification_audit
+		,reg_source
+		,logo
+		,department
+		,hotline_supplier
+		,hotline_reseller
+	</sql>
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysUser">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
+		<result column="login_passwd" jdbcType="VARCHAR" property="loginPasswd" />
+		<result column="sys_code" jdbcType="VARCHAR" property="sysCode" />
+		<result column="two_Dimension_Code" jdbcType="VARCHAR" property="twoDimensionCode" />
+		<result column="user_type" jdbcType="VARCHAR" property="userType" />
+		<result column="identifyType" jdbcType="VARCHAR" property="identifyType" />
+		<result column="oper_charger_mobile" jdbcType="VARCHAR" property="operChargerMobile" />
+		<result column="oper_charger_phone" jdbcType="VARCHAR" property="operChargerPhone" />
+		<result column="oper_charger_fax" jdbcType="VARCHAR" property="operChargerFax" />
+		<result column="oper_charger_email" jdbcType="VARCHAR" property="operChargerEmail" />
+		<result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+		<result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+		<result column="defaultLoginAddress" jdbcType="VARCHAR" property="defaultLoginAddress" />
+		<result column="account_state" jdbcType="INTEGER" property="accountState" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="office_id" jdbcType="CHAR" property="officeId" />
+		<result column="company_id" jdbcType="BIGINT" property="companyId" />
+		<result column="parent_id" jdbcType="BIGINT" property="parentId" />
+		<result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+		<result column="login_source" jdbcType="INTEGER" property="loginSource" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="reseller_type" jdbcType="VARCHAR" property="resellerType" />
+		<result column="is_buygroup" jdbcType="INTEGER" property="isBuygroup" />
+		<result column="is_buysingle" jdbcType="INTEGER" property="isBuysingle" />
+		<result column="reseller_level" jdbcType="INTEGER" property="resellerLevel" />
+		<result column="province" jdbcType="VARCHAR" property="province" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="county" jdbcType="VARCHAR" property="county" />
+		<result column="corporater" jdbcType="VARCHAR" property="corporater" />
+		<result column="credentials_type" jdbcType="INTEGER" property="credentialsType" />
+		<result column="corporater_credentials" jdbcType="VARCHAR" property="corporaterCredentials" />
+		<result column="corporater_mobile" jdbcType="VARCHAR" property="corporaterMobile" />
+		<result column="corporater_phone" jdbcType="VARCHAR" property="corporaterPhone" />
+		<result column="corporater_email" jdbcType="VARCHAR" property="corporaterEmail" />
+		<result column="business_certificate" jdbcType="VARCHAR" property="businessCertificate" />
+		<result column="guideCertificate" jdbcType="VARCHAR" property="guideCertificate" />
+		<result column="directCompany" jdbcType="VARCHAR" property="directCompany" />
+		<result column="directTime" jdbcType="TIMESTAMP" property="directTime" />
+		<result column="business_license" jdbcType="VARCHAR" property="businessLicense" />
+		<result column="business_qualification" jdbcType="VARCHAR" property="businessQualification" />
+		<result column="org_code_certificate" jdbcType="VARCHAR" property="orgCodeCertificate" />
+		<result column="tax_certificate" jdbcType="VARCHAR" property="taxCertificate" />
+		<result column="other_files" jdbcType="VARCHAR" property="otherFiles" />
+		<result column="resellerId" jdbcType="BIGINT" property="resellerId" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="reseller_state" jdbcType="INTEGER" property="resellerState" />
+		<result column="request_date" jdbcType="TIMESTAMP" property="requestDate" />
+		<result column="approve_date" jdbcType="TIMESTAMP" property="approveDate" />
+		<result column="approve_result" jdbcType="VARCHAR" property="approveResult" />
+		<result column="contract_num" jdbcType="VARCHAR" property="contractNum" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="wx_open_flag" jdbcType="INTEGER" property="wxOpenFlag" />
+		<result column="isCReseller" jdbcType="INTEGER" property="iscreseller" />
+		<result column="about_us" jdbcType="VARCHAR" property="aboutUs" />
+		<result column="contact_way" jdbcType="VARCHAR" property="contactWay" />
+		<result column="reseller_phonetic_shorthand" jdbcType="VARCHAR" property="resellerPhoneticShorthand" />
+		<result column="supplier_level" jdbcType="VARCHAR" property="supplierLevel" />
+		<result column="is_manage" jdbcType="INTEGER" property="isManage" />
+		<result column="other_file" jdbcType="VARCHAR" property="otherFile" />
+		<result column="other_file2" jdbcType="VARCHAR" property="otherFile2" />
+		<result column="supplierPk" jdbcType="BIGINT" property="supplierPk" />
+		<result column="supplier_address" jdbcType="VARCHAR" property="supplierAddress" />
+		<result column="supplier_state" jdbcType="INTEGER" property="supplierState" />
+		<result column="supplier_description" jdbcType="VARCHAR" property="supplierDescription" />
+		<result column="supplier_py" jdbcType="VARCHAR" property="supplierPy" />
+		<result column="supplier_normal" jdbcType="VARCHAR" property="supplierNormal" />
+		<result column="supplier_discount_value" jdbcType="DOUBLE" property="supplierDiscountValue" />
+		<result column="from_date" jdbcType="TIMESTAMP" property="fromDate" />
+		<result column="period" jdbcType="INTEGER" property="period" />
+		<result column="settle_date" jdbcType="TIMESTAMP" property="settleDate" />
+		<result column="contract_remarks" jdbcType="VARCHAR" property="contractRemarks" />
+		<result column="contract_notes" jdbcType="VARCHAR" property="contractNotes" />
+		<result column="verification_codes" jdbcType="VARCHAR" property="verificationCodes" />
+		<result column="user_source" jdbcType="VARCHAR" property="userSource" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="leader_flag" jdbcType="INTEGER" property="leaderFlag" />
+		<result column="ticket_rule" jdbcType="VARCHAR" property="ticketRule" />
+		<result column="check_status" jdbcType="VARCHAR" property="checkStatus" />
+		<result column="check_user_id" jdbcType="BIGINT" property="checkUserId" />
+		<result column="check_user_name" jdbcType="VARCHAR" property="checkUserName" />
+		<result column="check_date" jdbcType="TIMESTAMP" property="checkDate" />
+		<result column="reason_rejection" jdbcType="VARCHAR" property="reasonRejection" />
+		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+		<result column="is_root" jdbcType="CHAR" property="isRoot" />
+
+		<result column="belongScenicId" jdbcType="BIGINT" property="belongScenicId" />
+		<result column="hotelType" jdbcType="INTEGER" property="hotelType" />
+		<result column="hotel_map_longitude" jdbcType="DOUBLE" property="hotelMapLongitude" />
+		<result column="hotel_map_latitude" jdbcType="DOUBLE" property="hotelMapLatitude" />
+		<result column="region" jdbcType="VARCHAR" property="region" />
+		<result column="scenic_info" jdbcType="VARCHAR" property="scenicInfo" />
+		<result column="hotel_start_date" jdbcType="VARCHAR" property="hotelStartDate" />
+		<result column="hotel_end_date" jdbcType="VARCHAR" property="hotelEndDate" />
+		<result column="hotel_num" jdbcType="INTEGER" property="hotelNum" />
+		<result column="treat_people_num" jdbcType="INTEGER" property="treatPeopelNum" />
+		<result column="hotel_facility" jdbcType="VARCHAR" property="hotelFacility" />
+		<result column="hotel_feature" jdbcType="VARCHAR" property="hotelFeature" />
+		<result column="hotel_pirture" jdbcType="VARCHAR" property="hotelPirture" />
+		<result column="boss_story" jdbcType="VARCHAR" property="bossStory" />
+		<result column="boss_pirture" jdbcType="VARCHAR" property="bossPirture" />
+		<result column="notify_update_state" jdbcType="VARCHAR" property="notifyUpdateState" />
+		<result column="invitationCode" jdbcType="VARCHAR" property="invitationCode" />
+		<result column="reg_source" jdbcType="INTEGER" property="regSource" />
+		<result column="logo" jdbcType="VARCHAR" property="logo" />
+		<result column="department" jdbcType="VARCHAR" property="department" />
+		<result column="hotline_supplier" jdbcType="VARCHAR" property="hotlineSupplier" />
+		<result column="hotline_reseller" jdbcType="VARCHAR" property="hotlineReseller" />
+
+		<result column="check_type" jdbcType="INTEGER" property="checkType" />
+		<result column="qualification_audit" jdbcType="INTEGER" property="qualificationAudit" />
+		<association property="settlement" resultMap="SettlementResultMap" />
+
+	</resultMap>
+	<!-- 清结算 -->
+	<resultMap id="SettlementResultMap" type="com.pzj.base.entity.SysUserSettlement">
+		<result column="accountingUnit" jdbcType="BIGINT" property="accountingUnit" />
+		<result column="accountingUnitName" jdbcType="VARCHAR"
+			property="accountingUnitName" />
+		<result column="supplierBillingMode" jdbcType="INTEGER"
+			property="supplierBillingMode" />
+		<result column="supplierCreditPayMode" jdbcType="INTEGER"
+			property="supplierCreditPayMode" />
+		<result column="supplierPlatformPayMode" jdbcType="INTEGER"
+			property="supplierPlatformPayMode" />
+		<result column="supplierTradeServiceFeeType" jdbcType="INTEGER"
+			property="supplierTradeServiceFeeType" />
+		<result column="supplierTradeServiceFee" jdbcType="DOUBLE"
+			property="supplierTradeServiceFee" />
+		<result column="supplierTradeServiceRemark" jdbcType="VARCHAR"
+			property="supplierTradeServiceRemark" />
+		<result column="supplierServiceFeePeriod" jdbcType="INTEGER"
+			property="supplierServiceFeePeriod" />
+		<result column="supplierBrokeragePeriod" jdbcType="INTEGER"
+			property="supplierBrokeragePeriod" />
+		<result column="currencyType" jdbcType="INTEGER" property="currencyType" />
+		<result column="trade_payee" jdbcType="INTEGER" property="tradePayee" />
+	</resultMap>
+
+	<resultMap id="UserRelationResultMap" type="com.pzj.base.entity.SysUser" extends="BaseResultMap">
+		<result column="userRelationCreateDate" property="userRelationCreateDate" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_user where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		<where>
+			1=1
+			<if test="bParam != null">
+				<if test="bParam.id != null">AND id = #{bParam.id,jdbcType=BIGINT}</if>
+				<if test="bParam.loginName != null and bParam.loginName != ''">AND login_name like #{bParam.loginName,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.loginPasswd != null">AND login_passwd =
+					#{bParam.loginPasswd,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.sysCode != null">AND sys_code = #{bParam.sysCode,jdbcType=VARCHAR}</if>
+				<if test="bParam.twoDimensionCode != null and bParam.twoDimensionCode.length() &gt; 0">AND two_Dimension_Code =
+					#{bParam.twoDimensionCode,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.userType != null and bParam.userType != ''">AND user_type = #{bParam.userType,jdbcType=VARCHAR}</if>
+				<if test="bParam.identifyType != null and bParam.identifyType != ''">AND identifyType =
+					#{bParam.identifyType,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.operChargerMobile != null and bParam.operChargerMobile != ''">AND oper_charger_mobile like
+					#{bParam.operChargerMobile,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.operChargerPhone != null and bParam.operChargerPhone != ''">AND oper_charger_phone like
+					#{bParam.operChargerPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.operChargerFax != null and bParam.operChargerFax != ''">AND oper_charger_fax like
+					#{bParam.operChargerFax,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.operChargerEmail != null and bParam.operChargerEmail != ''">AND oper_charger_email like
+					#{bParam.operChargerEmail,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.lastLoginTime != null">AND last_login_time =
+					#{bParam.lastLoginTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.lastLoginIp != null and bParam.lastLoginIp != ''">AND last_login_ip =
+					#{bParam.lastLoginIp,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.defaultLoginAddress != null and bParam.defaultLoginAddress != ''">AND defaultLoginAddress =
+					#{bParam.defaultLoginAddress,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.accountState != null">AND account_state =
+					#{bParam.accountState,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.officeId != null">AND office_id = #{bParam.officeId,jdbcType=CHAR}</if>
+				<if test="bParam.companyId != null">AND company_id = #{bParam.companyId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.parentId != null">AND parent_id = #{bParam.parentId,jdbcType=BIGINT}</if>
+				<if test="bParam.wxOpenid != null">AND wx_openid = #{bParam.wxOpenid,jdbcType=VARCHAR}</if>
+				<if test="bParam.loginSource != null">AND login_source =
+					#{bParam.loginSource,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.name != null and bParam.name != ''">AND name like #{bParam.name,jdbcType=VARCHAR}</if>
+				<if test="bParam.resellerType != null and bParam.resellerType != ''">AND reseller_type =
+					#{bParam.resellerType,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.isBuygroup != null">AND is_buygroup = #{bParam.isBuygroup,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.isBuysingle != null">AND is_buysingle =
+					#{bParam.isBuysingle,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.resellerLevel != null">AND reseller_level =
+					#{bParam.resellerLevel,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.province != null and bParam.province != ''">AND province = #{bParam.province,jdbcType=VARCHAR}</if>
+				<if test="bParam.city != null and bParam.city != ''">AND city = #{bParam.city,jdbcType=VARCHAR}</if>
+				<if test="bParam.county != null and bParam.county != ''">AND county = #{bParam.county,jdbcType=VARCHAR}</if>
+				<if test="bParam.corporater != null and bParam.corporater != ''">AND corporater like
+					#{bParam.corporater,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.credentialsType != null">AND credentials_type =
+					#{bParam.credentialsType,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.corporaterCredentials != null and bParam.corporaterCredentials != ''">AND corporater_credentials like
+					#{bParam.corporaterCredentials,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.corporaterMobile != null and bParam.corporaterMobile != ''">AND corporater_mobile =
+					#{bParam.corporaterMobile,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.corporaterPhone != null and bParam.corporaterPhone != ''">AND corporater_phone =
+					#{bParam.corporaterPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.corporaterEmail != null and bParam.corporaterEmail != ''">AND corporater_email =
+					#{bParam.corporaterEmail,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.businessCertificate != null and bParam.businessCertificate != ''">AND business_certificate =
+					#{bParam.businessCertificate,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.guideCertificate != null and bParam.guideCertificate != ''">AND guideCertificate =
+					#{bParam.guideCertificate,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.directCompany != null and bParam.directCompany != ''">AND directCompany like
+					#{bParam.directCompany,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.direct != null">
+					<if test="bParam.direct">
+						AND directCompany is not null
+					</if>
+					<if test="!bParam.direct">
+						AND directCompany is null
+					</if>
+				</if>
+				<if test="bParam.directTime != null">AND directTime >=
+					#{bParam.directTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.directTimeEnd != null"><![CDATA[ AND directTime <= #{bParam.directTimeEnd,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.businessLicense != null and bParam.businessLicense != ''">AND business_license =
+					#{bParam.businessLicense,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.orgCodeCertificate != null and bParam.orgCodeCertificate != ''">AND org_code_certificate =
+					#{bParam.orgCodeCertificate,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.taxCertificate != null">AND tax_certificate =
+					#{bParam.taxCertificate,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.otherFiles != null">AND other_files = #{bParam.otherFiles,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.resellerId != null">AND resellerId = #{bParam.resellerId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.address != null and bParam.address != ''">AND address = #{bParam.address,jdbcType=VARCHAR}</if>
+				<if test="bParam.resellerState != null">AND reseller_state =
+					#{bParam.resellerState,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.requestDate != null">AND request_date =
+					#{bParam.requestDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.approveDate != null">AND approve_date =
+					#{bParam.approveDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.approveResult != null">AND approve_result =
+					#{bParam.approveResult,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.contractNum != null">AND contract_num =
+					#{bParam.contractNum,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.description != null">AND description = #{bParam.description,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.wxOpenFlag != null">AND wx_open_flag = #{bParam.wxOpenFlag,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.iscreseller != null">AND isCReseller = #{bParam.iscreseller,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.aboutUs != null">AND about_us = #{bParam.aboutUs,jdbcType=VARCHAR}</if>
+				<if test="bParam.contactWay != null">AND contact_way = #{bParam.contactWay,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.resellerPhoneticShorthand != null">AND reseller_phonetic_shorthand =
+					#{bParam.resellerPhoneticShorthand,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierLevel != null">AND supplier_level =
+					#{bParam.supplierLevel,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.isManage != null">AND is_manage = #{bParam.isManage,jdbcType=INTEGER}</if>
+				<if test="bParam.otherFile != null">AND other_file = #{bParam.otherFile,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.otherFile2 != null">AND other_file2 = #{bParam.otherFile2,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierPk != null">AND supplierPk = #{bParam.supplierPk,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.supplierAddress != null">AND supplier_address =
+					#{bParam.supplierAddress,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierState != null">AND supplier_state =
+					#{bParam.supplierState,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.supplierDescription != null">AND supplier_description =
+					#{bParam.supplierDescription,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierPy != null">AND supplier_py = #{bParam.supplierPy,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierNormal != null">AND supplier_normal =
+					#{bParam.supplierNormal,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierDiscountValue != null">AND supplier_discount_value =
+					#{bParam.supplierDiscountValue,jdbcType=DOUBLE}
+				</if>
+				<if test="bParam.fromDate != null">AND from_date = #{bParam.fromDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.period != null">AND period = #{bParam.period,jdbcType=INTEGER}</if>
+				<if test="bParam.settleDate != null">AND settle_date =
+					#{bParam.settleDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.contractRemarks != null">AND contract_remarks =
+					#{bParam.contractRemarks,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.contractNotes != null">AND contract_notes =
+					#{bParam.contractNotes,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.verificationCodes != null and bParam.verificationCodes != ''">AND verification_codes =
+					#{bParam.verificationCodes,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.userSource != null and bParam.userSource != ''">AND user_source = #{bParam.userSource,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.createBy != null">AND create_by = #{bParam.createBy,jdbcType=VARCHAR}</if>
+				<if test="bParam.createDate != null"><![CDATA[ AND create_date >= #{bParam.createDate,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.createDateEnd != null"><![CDATA[ AND create_date <= #{bParam.createDateEnd,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.updateBy != null">AND update_by = #{bParam.updateBy,jdbcType=VARCHAR}</if>
+				<if test="bParam.updateDate != null"><![CDATA[ AND update_date >= #{bParam.updateDate,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.updateDateEnd != null"><![CDATA[ AND update_date <= #{bParam.updateDateEnd,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.sort != null">AND sort = #{bParam.sort,jdbcType=INTEGER}</if>
+				<if test="bParam.leaderFlag != null">AND leader_flag = #{bParam.leaderFlag,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.ticketRule != null">AND ticket_rule = #{bParam.ticketRule,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.checkStatus != null">AND check_status =
+					#{bParam.checkStatus,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.checkStatusQuery != null">AND check_status in
+					<foreach collection="bParam.checkStatusQuery" item="_status" open="(" separator="," close=")">
+						#{_status,jdbcType=VARCHAR}
+					</foreach>
+				</if>
+				<if test="bParam.checkUserId != null">AND check_user_id =
+					#{bParam.checkUserId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.checkUserName != null">AND check_user_name like
+					#{bParam.checkUserName,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.checkDate != null"><![CDATA[ AND check_date >= #{bParam.checkDate,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.checkDateEnd != null"><![CDATA[ AND check_date <= #{bParam.checkDateEnd,jdbcType=TIMESTAMP}]]></if>
+				<if test="bParam.reasonRejection != null and bParam.reasonRejection != ''">AND reason_rejection =
+					#{bParam.reasonRejection,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierId != null">AND supplier_id = #{bParam.supplierId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.isRoot != null">AND is_root = #{bParam.isRoot,jdbcType=CHAR}</if>
+
+				<if test="bParam.belongScenicId != null">AND belongScenicId =
+					#{bParam.belongScenicId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.hotelType != null">AND hotelType = #{bParam.hotelType,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.hotelMapLongitude != null">AND hotel_map_longitude =
+					#{bParam.hotelMapLongitude,jdbcType=DOUBLE}
+				</if>
+				<if test="bParam.hotelMapLatitude != null">AND hotel_map_latitude =
+					#{bParam.hotelMapLatitude,jdbcType=DOUBLE}
+				</if>
+				<if test="bParam.region != null">AND region = #{bParam.region,jdbcType=VARCHAR}</if>
+				<if test="bParam.scenicInfo != null">AND scenic_info = #{bParam.scenicInfo,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.hotelStartDate != null">AND hotel_start_date =
+					#{bParam.hotelStartDate,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.hotelEndDate != null">AND hotel_end_date =
+					#{bParam.hotelEndDate,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.hotelNum != null">AND hotel_num = #{bParam.hotelNum,jdbcType=INTEGER}</if>
+				<if test="bParam.treatPeopelNum != null">AND treat_people_num =
+					#{bParam.treatPeopelNum,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.hotelFacility != null">AND hotel_facility =
+					#{bParam.hotelFacility,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.hotelFeature != null">AND hotel_feature =
+					#{bParam.hotelFeature,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.hotelPirture != null">AND hotel_pirture =
+					#{bParam.hotelPirture,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.bossStory != null">AND boss_story = #{bParam.bossStory,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.bossPirture != null">AND boss_pirture =
+					#{bParam.bossPirture,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.notifyUpdateState != null">AND notify_update_state =
+					#{bParam.notifyUpdateState,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.invitationCode != null and bParam.invitationCode != ''">AND invitationCode =
+					#{bParam.invitationCode,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.checkType != null">AND
+					( check_type = #{bParam.checkType,jdbcType=INTEGER}
+					<if test="bParam.qualificationAudit != null">OR qualification_audit =
+						#{bParam.qualificationAudit,jdbcType=INTEGER}
+					</if>
+					)
+				</if>
+				<if test="bParam.checkType == null and bParam.qualificationAudit != null">AND qualification_audit =
+					#{bParam.qualificationAudit,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.regSource != null">AND reg_source =
+					#{bParam.regSource,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.department != null">AND department like
+					#{bParam.department,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.settlement != null">
+					<if test="bParam.settlement.accountingUnit != null">AND accountingUnit =
+						#{bParam.settlement.accountingUnit,jdbcType=BIGINT}
+					</if>
+					<if test="bParam.settlement.accountingUnitName != null">AND accountingUnitName =
+						#{bParam.settlement.accountingUnitName,jdbcType=VARCHAR}
+					</if>
+					<if test="bParam.settlement.supplierBillingMode != null">AND supplierBillingMode =
+						#{bParam.settlement.supplierBillingMode,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.supplierCreditPayMode != null">AND supplierCreditPayMode =
+						#{bParam.settlement.supplierCreditPayMode,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.supplierPlatformPayMode != null">AND supplierPlatformPayMode =
+						#{bParam.settlement.supplierPlatformPayMode,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.supplierTradeServiceFeeType != null">AND supplierTradeServiceFeeType =
+						#{bParam.settlement.supplierTradeServiceFeeType,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.supplierTradeServiceFee != null">AND supplierTradeServiceFee =
+						#{bParam.settlement.supplierTradeServiceFee,jdbcType=DOUBLE}
+					</if>
+					<if test="bParam.settlement.supplierTradeServiceRemark != null">AND supplierTradeServiceRemark =
+						#{bParam.settlement.supplierTradeServiceRemark,jdbcType=VARCHAR}
+					</if>
+					<if test="bParam.settlement.supplierServiceFeePeriod != null">AND supplierServiceFeePeriod =
+						#{bParam.settlement.supplierServiceFeePeriod,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.supplierBrokeragePeriod != null">AND supplierBrokeragePeriod =
+						#{bParam.settlement.supplierBrokeragePeriod,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.currencyType != null">AND currencyType =
+						#{bParam.settlement.currencyType,jdbcType=INTEGER}
+					</if>
+					<if test="bParam.settlement.tradePayee != null">AND trade_payee =
+						#{bParam.settlement.tradePayee,jdbcType=INTEGER}
+					</if>
+				</if>
+				<if test="bParam.queryIdList != null and bParam.queryIdList.size &gt; 0">
+					and id in
+					<foreach collection="bParam.queryIdList" item="item" open="("
+							 separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+				<if test="bParam.checkStatusQuery != null">
+					AND check_status in
+					<foreach collection="bParam.checkStatusQuery" item="_status" open="(" separator="," close=")">
+						#{_status,jdbcType=VARCHAR}
+					</foreach>
+				</if>
+				<if test="bParam.checkTypeQuery != null">
+					AND check_type in
+					<foreach collection="bParam.checkTypeQuery" item="_type" open="(" separator="," close=")">
+						#{_type,jdbcType=INTEGER}
+					</foreach>
+				</if>
+				<if test="bParam.qualificationAuditQuery != null">
+					AND qualification_audit in
+					<foreach collection="bParam.qualificationAuditQuery" item="_item" open="(" separator="," close=")">
+						#{_item,jdbcType=INTEGER}
+					</foreach>
+				</if>
+				<if test="bParam.resellerTypes != null and bParam.resellerTypes.size &gt; 0">
+					and reseller_type in
+					<foreach collection="bParam.resellerTypes" item="item" open="("
+							 separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_LeftJoin_List">
+		u.id
+		,u.login_name
+		,u.login_passwd
+		,u.sys_code
+		,u.two_Dimension_Code
+		,u.user_type
+		,u.identifyType
+		,u.oper_charger_mobile
+		,u.oper_charger_phone
+		,u.oper_charger_fax
+		,u.oper_charger_email
+		,u.last_login_time
+		,u.last_login_ip
+		,u.defaultLoginAddress
+		,u.account_state
+		,u.create_date
+		,u.office_id
+		,u.company_id
+		,u.parent_id
+		,u.wx_openid
+		,u.login_source
+		,u.name
+		,u.reseller_type
+		,u.is_buygroup
+		,u.is_buysingle
+		,u.reseller_level
+		,u.province
+		,u.city
+		,u.county
+		,u.corporater
+		,u.credentials_type
+		,u.corporater_credentials
+		,u.corporater_mobile
+		,u.corporater_phone
+		,u.corporater_email
+		,u.business_certificate
+		,u.guideCertificate
+		,u.directCompany
+		,u.directTime
+		,u.business_license
+		,u.business_qualification
+		,u.org_code_certificate
+		,u.tax_certificate
+		,u.other_files
+		,u.resellerId
+		,u.address
+		,u.reseller_state
+		,u.request_date
+		,u.approve_date
+		,u.approve_result
+		,u.contract_num
+		,u.description
+		,u.wx_open_flag
+		,u.isCReseller
+		,u.about_us
+		,u.contact_way
+		,u.reseller_phonetic_shorthand
+		,u.supplier_level
+		,u.is_manage
+		,u.other_file
+		,u.other_file2
+		,u.supplierPk
+		,u.supplier_address
+		,u.supplier_state
+		,u.supplier_description
+		,u.supplier_py
+		,u.supplier_normal
+		,u.supplier_discount_value
+		,u.from_date
+		,u.period
+		,u.settle_date
+		,u.contract_remarks
+		,u.contract_notes
+		,u.verification_codes
+		,u.user_source
+		,u.create_by
+		,u.update_by
+		,u.update_date
+		,u.sort
+		,u.leader_flag
+		,u.ticket_rule
+		,u.check_status
+		,u.check_user_id
+		,u.check_user_name
+		,u.check_date
+		,u.supplier_id
+		,u.is_root
+		<!-- 客栈特有属性 -->
+		,u.belongScenicId
+		,u.hotelType
+		,u.hotel_map_longitude
+		,u.hotel_map_latitude
+		,u.region
+		,u.scenic_info
+		,u.hotel_start_date
+		,u.hotel_end_date
+		,u.hotel_num
+		,u.treat_people_num
+		,u.hotel_facility
+		,u.hotel_feature
+		,u.hotel_pirture
+		,u.boss_story
+		,u.boss_pirture
+		,u.notify_update_state
+		,u.accountingUnit
+		,u.accountingUnitName
+		,u.supplierBillingMode
+		,u.supplierCreditPayMode
+		,u.supplierPlatformPayMode
+		,u.supplierTradeServiceFeeType
+		,u.supplierTradeServiceFee
+		,u.supplierTradeServiceRemark
+		,u.supplierServiceFeePeriod
+		,u.supplierBrokeragePeriod
+		,u.currencyType
+		,u.reason_rejection
+		,u.invitationCode
+		,u.check_type
+		,u.qualification_audit
+		,u.reg_source
+		,u.logo
+		,u.trade_payee
+		,u.department
+	</sql>
+	<sql id="sql_where_and_equals">
+		<if test="bParam.id != null">
+			<if test="bParam.id &gt; 0">AND u.id = #{bParam.id,jdbcType=BIGINT}</if>
+			<if test="bParam.id &lt; 0">AND u.id != abs(#{bParam.id,jdbcType=BIGINT})</if>
+		</if>
+		<if test="bParam.loginPasswd != null">AND u.login_passwd =
+			#{bParam.loginPasswd,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.sysCode != null">AND u.sys_code = #{bParam.sysCode,jdbcType=VARCHAR}</if>
+		<if test="bParam.twoDimensionCode != null">AND u.two_Dimension_Code =
+			#{bParam.twoDimensionCode,jdbcType=VARCHAR}</if>
+		<if test="bParam.userType != null">AND u.user_type = #{bParam.userType,jdbcType=VARCHAR}</if>
+		<if test="bParam.identifyType != null">AND u.identifyType =
+			#{bParam.identifyType,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.lastLoginTime != null">AND u.last_login_time =
+			#{bParam.lastLoginTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="bParam.lastLoginIp != null">AND u.last_login_ip =
+			#{bParam.lastLoginIp,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.defaultLoginAddress != null">AND u.defaultLoginAddress =
+			#{bParam.defaultLoginAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.accountState != null">AND u.account_state =
+			#{bParam.accountState,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.officeId != null">AND u.office_id = #{bParam.officeId,jdbcType=CHAR}</if>
+		<if test="bParam.companyId != null">AND u.company_id = #{bParam.companyId,jdbcType=BIGINT}
+		</if>
+		<if test="bParam.parentId != null">AND u.parent_id = #{bParam.parentId,jdbcType=BIGINT}</if>
+		<if test="bParam.wxOpenid != null">AND u.wx_openid = #{bParam.wxOpenid,jdbcType=VARCHAR}</if>
+		<if test="bParam.loginSource != null">AND u.login_source =
+			#{bParam.loginSource,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.resellerType != null">AND u.reseller_type =
+			#{bParam.resellerType,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.isBuygroup != null">AND u.is_buygroup = #{bParam.isBuygroup,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.isBuysingle != null">AND u.is_buysingle =
+			#{bParam.isBuysingle,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.resellerLevel != null">AND u.reseller_level =
+			#{bParam.resellerLevel,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.province != null">AND u.province = #{bParam.province,jdbcType=VARCHAR}</if>
+		<if test="bParam.city != null">AND u.city = #{bParam.city,jdbcType=VARCHAR}</if>
+		<if test="bParam.county != null">AND u.county = #{bParam.county,jdbcType=VARCHAR}</if>
+		<if test="bParam.credentialsType != null">AND u.credentials_type =
+			#{bParam.credentialsType,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.direct != null">
+			<if test="bParam.direct">
+				AND u.directCompany is not null
+			</if>
+			<if test="!bParam.direct">
+				AND u.directCompany is null
+			</if>
+		</if>
+		<if test="bParam.orgCodeCertificate != null">AND u.org_code_certificate =
+			#{bParam.orgCodeCertificate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.taxCertificate != null">AND u.tax_certificate =
+			#{bParam.taxCertificate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.otherFiles != null">AND u.other_files = #{bParam.otherFiles,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.resellerId != null">AND u.resellerId = #{bParam.resellerId,jdbcType=BIGINT}
+		</if>
+		<if test="bParam.address != null">AND u.address = #{bParam.address,jdbcType=VARCHAR}</if>
+		<if test="bParam.resellerState != null">AND u.reseller_state =
+			#{bParam.resellerState,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.requestDate != null">AND u.request_date =
+			#{bParam.requestDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="bParam.approveDate != null">AND u.approve_date =
+			#{bParam.approveDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="bParam.approveResult != null">AND u.approve_result =
+			#{bParam.approveResult,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.contractNum != null">AND u.contract_num =
+			#{bParam.contractNum,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.description != null">AND u.description = #{bParam.description,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.wxOpenFlag != null">AND u.wx_open_flag = #{bParam.wxOpenFlag,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.iscreseller != null">AND u.isCReseller = #{bParam.iscreseller,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.aboutUs != null">AND u.about_us = #{bParam.aboutUs,jdbcType=VARCHAR}</if>
+		<if test="bParam.contactWay != null">AND u.contact_way = #{bParam.contactWay,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.resellerPhoneticShorthand != null">AND u.reseller_phonetic_shorthand =
+			#{bParam.resellerPhoneticShorthand,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierLevel != null">AND u.supplier_level =
+			#{bParam.supplierLevel,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.isManage != null">AND u.is_manage = #{bParam.isManage,jdbcType=INTEGER}</if>
+		<if test="bParam.otherFile != null">AND u.other_file = #{bParam.otherFile,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.otherFile2 != null">AND u.other_file2 = #{bParam.otherFile2,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierPk != null">AND u.supplierPk = #{bParam.supplierPk,jdbcType=BIGINT}
+		</if>
+		<if test="bParam.supplierAddress != null">AND u.supplier_address =
+			#{bParam.supplierAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierState != null">AND u.supplier_state =
+			#{bParam.supplierState,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.supplierDescription != null">AND u.supplier_description =
+			#{bParam.supplierDescription,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierPy != null">AND u.supplier_py = #{bParam.supplierPy,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierNormal != null">AND u.supplier_normal =
+			#{bParam.supplierNormal,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierDiscountValue != null">AND u.supplier_discount_value =
+			#{bParam.supplierDiscountValue,jdbcType=DOUBLE}
+		</if>
+		<if test="bParam.fromDate != null">AND u.from_date = #{bParam.fromDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="bParam.period != null">AND u.period = #{bParam.period,jdbcType=INTEGER}</if>
+		<if test="bParam.settleDate != null">AND u.settle_date =
+			#{bParam.settleDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="bParam.contractRemarks != null">AND u.contract_remarks =
+			#{bParam.contractRemarks,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.contractNotes != null">AND u.contract_notes =
+			#{bParam.contractNotes,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.verificationCodes != null">AND u.verification_codes =
+			#{bParam.verificationCodes,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.userSource != null">AND u.user_source = #{bParam.userSource,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.createBy != null">AND u.create_by = #{bParam.createBy,jdbcType=VARCHAR}</if>
+		<if test="bParam.updateBy != null">AND u.update_by = #{bParam.updateBy,jdbcType=VARCHAR}</if>
+		<if test="bParam.sort != null">AND u.sort = #{bParam.sort,jdbcType=INTEGER}</if>
+		<if test="bParam.leaderFlag != null">AND u.leader_flag = #{bParam.leaderFlag,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.ticketRule != null">AND u.ticket_rule = #{bParam.ticketRule,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.checkStatus != null">AND u.check_status =
+			#{bParam.checkStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.checkUserId != null">AND u.check_user_id =
+			#{bParam.checkUserId,jdbcType=BIGINT}
+		</if>
+		<if test="bParam.reasonRejection != null">AND u.reason_rejection =
+			#{bParam.reasonRejection,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.supplierId != null">AND u.supplier_id = #{bParam.supplierId,jdbcType=BIGINT}
+		</if>
+		<if test="bParam.isRoot != null">AND u.is_root = #{bParam.isRoot,jdbcType=CHAR}</if>
+		<!-- 客栈属性 -->
+		<if test="bParam.belongScenicId != null">AND u.belongScenicId =
+			#{bParam.belongScenicId,jdbcType=BIGINT}
+		</if>
+		<if test="bParam.hotelType != null">AND u.hotelType = #{bParam.hotelType,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.hotelMapLongitude != null">AND u.hotel_map_longitude =
+			#{bParam.hotelMapLongitude,jdbcType=DOUBLE}
+		</if>
+		<if test="bParam.hotelMapLatitude != null">AND u.hotel_map_latitude =
+			#{bParam.hotelMapLatitude,jdbcType=DOUBLE}
+		</if>
+		<if test="bParam.region != null">AND u.region = #{bParam.region,jdbcType=VARCHAR}</if>
+		<if test="bParam.hotelStartDate != null">AND u.hotel_start_date =
+			#{bParam.hotelStartDate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.hotelEndDate != null">AND u.hotel_end_date =
+			#{bParam.hotelEndDate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.hotelNum != null">AND u.hotel_num = #{bParam.hotelNum,jdbcType=INTEGER}</if>
+		<if test="bParam.treatPeopelNum != null">AND u.treat_people_num =
+			#{bParam.treatPeopelNum,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.hotelPirture != null">AND u.hotel_pirture =
+			#{bParam.hotelPirture,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.bossStory != null">AND u.boss_story = #{bParam.bossStory,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.bossPirture != null">AND u.boss_pirture =
+			#{bParam.bossPirture,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.notifyUpdateState != null">AND u.notify_update_state =
+			#{bParam.notifyUpdateState,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.invitationCode != null">AND u.invitationCode =
+			#{bParam.invitationCode,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.checkType != null">AND
+			( u.check_type = #{bParam.checkType,jdbcType=INTEGER}
+			<if test="bParam.qualificationAudit != null">OR u.qualification_audit =
+				#{bParam.qualificationAudit,jdbcType=INTEGER}
+			</if>
+			)
+		</if>
+		<if test="bParam.checkType == null and bParam.qualificationAudit != null">AND u.qualification_audit =
+			#{bParam.qualificationAudit,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.regSource != null">AND u.reg_source =
+			#{bParam.regSource,jdbcType=INTEGER}
+		</if>
+		<if test="bParam.settlement != null">
+			<if test="bParam.settlement.accountingUnit != null">AND u.accountingUnit =
+				#{bParam.settlement.accountingUnit,jdbcType=BIGINT}
+			</if>
+			<if test="bParam.settlement.accountingUnitName != null">AND u.accountingUnitName =
+				#{bParam.settlement.accountingUnitName,jdbcType=VARCHAR}
+			</if>
+			<if test="bParam.settlement.supplierBillingMode != null">AND u.supplierBillingMode =
+				#{bParam.settlement.supplierBillingMode,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.supplierCreditPayMode != null">AND u.supplierCreditPayMode =
+				#{bParam.settlement.supplierCreditPayMode,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.supplierPlatformPayMode != null">AND u.supplierPlatformPayMode =
+				#{bParam.settlement.supplierPlatformPayMode,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.supplierTradeServiceFeeType != null">AND u.supplierTradeServiceFeeType =
+				#{bParam.settlement.supplierTradeServiceFeeType,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.supplierTradeServiceFee != null">AND u.supplierTradeServiceFee =
+				#{bParam.settlement.supplierTradeServiceFee,jdbcType=DOUBLE}
+			</if>
+			<if test="bParam.settlement.supplierTradeServiceRemark != null">AND u.supplierTradeServiceRemark =
+				#{bParam.settlement.supplierTradeServiceRemark,jdbcType=VARCHAR}
+			</if>
+			<if test="bParam.settlement.supplierServiceFeePeriod != null">AND u.supplierServiceFeePeriod =
+				#{bParam.settlement.supplierServiceFeePeriod,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.supplierBrokeragePeriod != null">AND u.supplierBrokeragePeriod =
+				#{bParam.settlement.supplierBrokeragePeriod,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.currencyType != null">AND u.currencyType =
+				#{bParam.settlement.currencyType,jdbcType=INTEGER}
+			</if>
+			<if test="bParam.settlement.tradePayee != null">AND u.trade_payee =
+				#{bParam.settlement.tradePayee,jdbcType=INTEGER}
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_where_and_range">
+		<if test="bParam.createDate != null"><![CDATA[ AND u.create_date >= #{bParam.createDate,jdbcType=TIMESTAMP}]]></if>
+		<if test="bParam.createDateEnd != null"><![CDATA[ AND u.create_date <= #{bParam.createDateEnd,jdbcType=TIMESTAMP}]]></if>
+		<if test="bParam.updateDate != null"><![CDATA[ AND u.update_date >= #{bParam.updateDate,jdbcType=TIMESTAMP}]]></if>
+		<if test="bParam.updateDateEnd != null"><![CDATA[ AND u.update_date <= #{bParam.updateDateEnd,jdbcType=TIMESTAMP}]]></if>
+		<if test="bParam.checkDate != null"><![CDATA[ AND u.check_date >= #{bParam.checkDate,jdbcType=TIMESTAMP}]]></if>
+		<if test="bParam.checkDateEnd != null"><![CDATA[ AND u.check_date <= #{bParam.checkDateEnd,jdbcType=TIMESTAMP}]]></if>
+		<if test="bParam.directTime != null">AND u.directTime >=
+			#{bParam.directTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="bParam.directTimeEnd != null"><![CDATA[ AND u.check_date <= #{bParam.directTimeEnd,jdbcType=TIMESTAMP}]]></if>
+	</sql>
+
+	<!-- 所有地方使用的like查询 -->
+	<sql id="sql_where_and_like1">
+		<if test="bParam.operChargerPhone != null">AND u.oper_charger_phone like
+			#{bParam.operChargerPhone,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.operChargerFax != null">AND u.oper_charger_fax like
+			#{bParam.operChargerFax,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.operChargerEmail != null">AND u.oper_charger_email like
+			#{bParam.operChargerEmail,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterEmail != null">AND u.corporater_email like
+			#{bParam.corporaterEmail,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.checkUserName != null">AND u.check_user_name like
+			#{bParam.checkUserName,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.invitationCode != null">AND u.invitationCode like
+			#{bParam.invitationCode,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.department != null">AND u.department like
+			#{bParam.department,jdbcType=VARCHAR}
+		</if>
+	</sql>
+
+	<!-- 一个联表sys_role查询的所需不同的like -->
+	<sql id="sql_where_and_like2">
+		<if test="bParam.loginName != null">AND u.login_name like #{bParam.loginName,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.name != null">AND u.name like #{bParam.name,jdbcType=VARCHAR}</if>
+		<if test="bParam.corporater != null">AND u.corporater like
+			#{bParam.corporater,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterCredentials != null">AND u.corporater_credentials like
+			#{bParam.corporaterCredentials,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.businessCertificate != null">AND u.business_certificate like
+			#{bParam.businessCertificate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.guideCertificate != null">AND u.guideCertificate like
+			#{bParam.guideCertificate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.directCompany != null">AND u.directCompany like
+			#{bParam.directCompany,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterPhone != null">AND u.corporater_phone like
+			#{bParam.corporaterPhone,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.operChargerMobile != null">AND u.oper_charger_mobile like
+			#{bParam.operChargerMobile,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterMobile != null">AND u.corporater_mobile like
+			#{bParam.corporaterMobile,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.address != null">and u.address like #{bParam.address,jdbcType=VARCHAR}</if>
+		<if test="bParam.businessLicense != null">and u.business_license like
+			#{bParam.businessLicense,jdbcType=VARCHAR}
+		</if>
+	</sql>
+	<!-- 通过用户信息和用户关联的角色信息查询用户 -->
+	<sql id="sql_of_role_condition">
+		<if test="role != null">
+			<if test="role.id != null">AND r.id = #{role.id,jdbcType=BIGINT}</if>
+			<if test="role.name != null">AND r.name like #{role.name,jdbcType=VARCHAR}</if>
+			<if test="role.type != null">AND r.type = #{role.type,jdbcType=VARCHAR}</if>
+			<if test="role.dataScope != null">AND r.data_scope = #{role.dataScope,jdbcType=CHAR}</if>
+			<if test="role.createBy != null">AND r.create_by = #{role.createBy,jdbcType=VARCHAR}</if>
+			<if test="role.createDate != null">AND r.create_date = #{role.createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="role.updateBy != null">AND r.update_by = #{role.updateBy,jdbcType=VARCHAR}</if>
+			<if test="role.updateDate != null">AND r.update_date = #{role.updateDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="role.remarks != null">AND r.remarks = #{role.remarks,jdbcType=VARCHAR}</if>
+			<if test="role.delFlag != null">AND r.del_flag = #{role.delFlag,jdbcType=CHAR}</if>
+			<if test="role.dataSource != null">AND r.data_source = #{role.dataSource,jdbcType=VARCHAR}
+			</if>
+			<if test="role.bingding != null">AND r.is_bingding = #{role.bingding,jdbcType=INTEGER}
+			</if>
+			<if test="role.supplierId != null">AND r.supplier_id = #{role.supplierId,jdbcType=BIGINT}
+			</if>
+			<if test="role.queryDataScope != null and role.queryDataScope.size &gt; 0">
+				and data_scope in
+				<foreach collection="role.queryDataScope" item="item" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_where_or_like">
+		<if test="bParam.loginName != null">or u.login_name like #{bParam.loginName,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.name != null">or u.name like #{bParam.name,jdbcType=VARCHAR}</if>
+		<if test="bParam.address != null">or u.address like #{bParam.address,jdbcType=VARCHAR}</if>
+		<if test="bParam.corporater != null">or u.corporater like #{bParam.corporater,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterCredentials != null">or u.corporater_credentials like
+			#{bParam.corporaterCredentials,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.businessCertificate != null">or u.business_certificate like
+			#{bParam.businessCertificate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterPhone != null">or u.corporater_phone like
+			#{bParam.corporaterPhone,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.operChargerMobile != null">or u.oper_charger_mobile like
+			#{bParam.operChargerMobile,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.guideCertificate != null">or u.guideCertificate like
+			#{bParam.guideCertificate,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.corporaterMobile != null">or u.corporater_mobile like
+			#{bParam.corporaterMobile,jdbcType=VARCHAR}
+		</if>
+		<if test="bParam.businessLicense != null">or u.business_license like
+			#{bParam.businessLicense,jdbcType=VARCHAR}
+		</if>
+	</sql>
+
+	<sql id="sql_where_and_in">
+		<if test="bParam.queryIdList != null and bParam.queryIdList.size &gt; 0">
+			and u.id in
+			<foreach collection="bParam.queryIdList" item="item" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="bParam.queryHotelType != null and bParam.queryHotelType.size &gt; 0">
+			and u.hotelType in
+			<foreach collection="bParam.queryHotelType" item="item" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="bParam.resellerTypes != null and bParam.resellerTypes.size &gt; 0">
+			and u.reseller_type in
+			<foreach collection="bParam.resellerTypes" item="item" open="("
+					 separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="bParam.checkStatusQuery != null">
+			AND u.check_status in
+			<foreach collection="bParam.checkStatusQuery" item="_status" open="(" separator="," close=")">
+				#{_status,jdbcType=VARCHAR}
+			</foreach>
+		</if>
+		<if test="bParam.checkTypeQuery != null">
+			AND u.check_type in
+			<foreach collection="bParam.checkTypeQuery" item="_type" open="(" separator="," close=")">
+				#{_type,jdbcType=INTEGER}
+			</foreach>
+		</if>
+		<if test="bParam.qualificationAuditQuery != null">
+			AND u.qualification_audit in
+			<foreach collection="bParam.qualificationAuditQuery" item="_item" open="(" separator="," close=")">
+				#{_item,jdbcType=INTEGER}
+			</foreach>
+		</if>
+	</sql>
+	<!-- 左连接实体多蚕食查询sql -->
+	<sql id="sql_of_leftJoin_condition">
+		<if test="bParam != null">
+			<include refid="sql_where_and_equals" />
+
+			<include refid="sql_where_and_range" />
+
+			<include refid="sql_where_and_like1" />
+
+			<include refid="sql_where_and_like2" />
+
+			<include refid="sql_where_and_in" />
+		</if>
+	</sql>
+
+	<sql id="sql_of_leftJoin_condition_or">
+		<if test="bParam != null">
+			<trim prefix="and ( " prefixOverrides="and|or" suffix=" )">
+				<include refid="sql_where_and_equals" />
+
+				<include refid="sql_where_and_range" />
+
+				<include refid="sql_where_and_like1" />
+
+				<trim prefix="and ( " prefixOverrides="and|or" suffix=" )">
+					<include refid="sql_where_or_like" />
+				</trim>
+			</trim>
+		</if>
+	</sql>
+
+	<sql id="sql_page_limit">
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null">order by u.id desc</if>
+			<if test="pParam.orderByClause != null">order by ${pParam.orderByClause}</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</sql>
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null">order by id desc</if>
+			<if test="pParam.orderByClause != null">order by ${pParam.orderByClause}</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(id) from sys_user
+		<include refid="sql_of_where" />
+	</select>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		<where>
+			<if test="userIds != null and userIds.length() &gt; 0">
+				and id in (${userIds})
+			</if>
+			<if test="delFlag != null">
+				and account_state = #{delFlag,jdbcType=CHAR}
+			</if>
+			or (1=2)
+		</where>
+	</select>
+
+	<select id="findByIdList" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		<where>
+			<if test="userIds != null or userIds.size &gt; 0">
+				and id in
+				<foreach collection="userIds" item="item" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="delFlag != null">
+				and account_state = #{delFlag,jdbcType=CHAR}
+			</if>
+			or 1=2
+		</where>
+	</select>
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysUser">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="loginPasswd != null">
+				login_passwd,
+			</if>
+			<if test="sysCode != null">
+				sys_code,
+			</if>
+			<if test="twoDimensionCode != null">
+				two_Dimension_Code,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="identifyType != null">
+				identifyType,
+			</if>
+			<if test="operChargerMobile != null">
+				oper_charger_mobile,
+			</if>
+			<if test="operChargerPhone != null">
+				oper_charger_phone,
+			</if>
+			<if test="operChargerFax != null">
+				oper_charger_fax,
+			</if>
+			<if test="operChargerEmail != null">
+				oper_charger_email,
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time,
+			</if>
+			<if test="lastLoginIp != null">
+				last_login_ip,
+			</if>
+			<if test="defaultLoginAddress != null">
+				defaultLoginAddress,
+			</if>
+			<if test="accountState != null">
+				account_state,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="officeId != null">
+				office_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="wxOpenid != null">
+				wx_openid,
+			</if>
+			<if test="loginSource != null">
+				login_source,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="resellerType != null">
+				reseller_type,
+			</if>
+			<if test="isBuygroup != null">
+				is_buygroup,
+			</if>
+			<if test="isBuysingle != null">
+				is_buysingle,
+			</if>
+			<if test="resellerLevel != null">
+				reseller_level,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="county != null">
+				county,
+			</if>
+			<if test="corporater != null">
+				corporater,
+			</if>
+			<if test="credentialsType != null">
+				credentials_type,
+			</if>
+			<if test="corporaterCredentials != null">
+				corporater_credentials,
+			</if>
+			<if test="corporaterMobile != null">
+				corporater_mobile,
+			</if>
+			<if test="corporaterPhone != null">
+				corporater_phone,
+			</if>
+			<if test="corporaterEmail != null">
+				corporater_email,
+			</if>
+			<if test="businessCertificate != null">
+				business_certificate,
+			</if>
+			<if test="guideCertificate != null">
+				guideCertificate,
+			</if>
+			<if test="directCompany != null">
+				directCompany,
+			</if>
+			<if test="directTime != null">
+				directTime,
+			</if>
+			<if test="businessLicense != null">
+				business_license,
+			</if>
+			<if test="businessQualification != null">
+				business_qualification,
+			</if>
+			<if test="orgCodeCertificate != null">
+				org_code_certificate,
+			</if>
+			<if test="taxCertificate != null">
+				tax_certificate,
+			</if>
+			<if test="otherFiles != null">
+				other_files,
+			</if>
+			<if test="resellerId != null">
+				resellerId,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="resellerState != null">
+				reseller_state,
+			</if>
+			<if test="requestDate != null">
+				request_date,
+			</if>
+			<if test="approveDate != null">
+				approve_date,
+			</if>
+			<if test="approveResult != null">
+				approve_result,
+			</if>
+			<if test="contractNum != null">
+				contract_num,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="wxOpenFlag != null">
+				wx_open_flag,
+			</if>
+			<if test="iscreseller != null">
+				isCReseller,
+			</if>
+			<if test="aboutUs != null">
+				about_us,
+			</if>
+			<if test="contactWay != null">
+				contact_way,
+			</if>
+			<if test="resellerPhoneticShorthand != null">
+				reseller_phonetic_shorthand,
+			</if>
+			<if test="supplierLevel != null">
+				supplier_level,
+			</if>
+			<if test="isManage != null">
+				is_manage,
+			</if>
+			<if test="otherFile != null">
+				other_file,
+			</if>
+			<if test="otherFile2 != null">
+				other_file2,
+			</if>
+			<if test="supplierPk != null">
+				supplierPk,
+			</if>
+			<if test="supplierAddress != null">
+				supplier_address,
+			</if>
+			<if test="supplierState != null">
+				supplier_state,
+			</if>
+			<if test="supplierDescription != null">
+				supplier_description,
+			</if>
+			<if test="supplierPy != null">
+				supplier_py,
+			</if>
+			<if test="supplierNormal != null">
+				supplier_normal,
+			</if>
+			<if test="supplierDiscountValue != null">
+				supplier_discount_value,
+			</if>
+			<if test="fromDate != null">
+				from_date,
+			</if>
+			<if test="period != null">
+				period,
+			</if>
+			<if test="settleDate != null">
+				settle_date,
+			</if>
+			<if test="contractRemarks != null">
+				contract_remarks,
+			</if>
+			<if test="contractNotes != null">
+				contract_notes,
+			</if>
+			<if test="verificationCodes != null">
+				verification_codes,
+			</if>
+			<if test="userSource != null">
+				user_source,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="leaderFlag != null">
+				leader_flag,
+			</if>
+			<if test="ticketRule != null">
+				ticket_rule,
+			</if>
+			<if test="checkStatus != null">
+				check_status,
+			</if>
+			<if test="checkUserId != null">
+				check_user_id,
+			</if>
+			<if test="checkUserName != null">
+				check_user_name,
+			</if>
+			<if test="checkDate != null">
+				check_date,
+			</if>
+			<if test="reasonRejection != null">
+				reason_rejection,
+			</if>
+			<if test="supplierId != null">
+				supplier_id,
+			</if>
+			<if test="isRoot != null">
+				is_root,
+			</if>
+			<!-- 客栈属性 -->
+			<if test="belongScenicId != null">
+				belongScenicId,
+			</if>
+			<if test="hotelType != null">
+				hotelType,
+			</if>
+			<if test="hotelMapLongitude != null">
+				hotel_map_longitude,
+			</if>
+			<if test="hotelMapLatitude != null">
+				hotel_map_latitude,
+			</if>
+			<if test="region != null">
+				region,
+			</if>
+			<if test="scenicInfo != null">
+				scenic_info,
+			</if>
+			<if test="hotelStartDate != null">
+				hotel_start_date,
+			</if>
+			<if test="hotelEndDate != null">
+				hotel_end_date,
+			</if>
+			<if test="hotelNum != null">
+				hotel_num,
+			</if>
+			<if test="treatPeopelNum != null">
+				treat_people_num,
+			</if>
+			<if test="hotelFacility != null">
+				hotel_facility,
+			</if>
+			<if test="hotelFeature != null">
+				hotel_feature,
+			</if>
+			<if test="hotelPirture != null">
+				hotel_pirture,
+			</if>
+			<if test="bossStory != null">
+				boss_story,
+			</if>
+			<if test="bossPirture != null">
+				boss_pirture,
+			</if>
+			<if test="notifyUpdateState != null">
+				notify_update_state,
+			</if>
+			<if test="invitationCode != null">
+				invitationCode,
+			</if>
+			<if test="checkType != null">
+				check_type,
+			</if>
+			<if test="qualificationAudit != null">
+				qualification_audit,
+			</if>
+			<if test="regSource != null">
+				reg_source,
+			</if>
+			<if test="logo != null">
+				logo,
+			</if>
+			<if test="department != null">
+				department,
+			</if>
+			<if test="settlement != null">
+				<if test="settlement.accountingUnit != null">
+					accountingUnit,
+				</if>
+				<if test="settlement.accountingUnitName != null">
+					accountingUnitName,
+				</if>
+				<if test="settlement.supplierBillingMode != null">
+					supplierBillingMode,
+				</if>
+				<if test="settlement.supplierCreditPayMode != null">
+					supplierCreditPayMode,
+				</if>
+				<if test="settlement.supplierPlatformPayMode != null">
+					supplierPlatformPayMode,
+				</if>
+				<if test="settlement.supplierTradeServiceFeeType != null">
+					supplierTradeServiceFeeType,
+				</if>
+				<if test="settlement.supplierTradeServiceFee != null">
+					supplierTradeServiceFee,
+				</if>
+				<if test="settlement.supplierTradeServiceRemark != null">
+					supplierTradeServiceRemark,
+				</if>
+				<if test="settlement.supplierServiceFeePeriod != null">
+					supplierServiceFeePeriod,
+				</if>
+				<if test="settlement.supplierBrokeragePeriod != null">
+					supplierBrokeragePeriod,
+				</if>
+				<if test="settlement.currencyType != null">
+					currencyType,
+				</if>
+				<if test="settlement.tradePayee != null">
+					trade_payee,
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPasswd != null">
+				#{loginPasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="sysCode != null">
+				#{sysCode,jdbcType=VARCHAR},
+			</if>
+			<if test="twoDimensionCode != null">
+				#{twoDimensionCode,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=VARCHAR},
+			</if>
+			<if test="identifyType != null">
+				#{identifyType,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerMobile != null">
+				#{operChargerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerPhone != null">
+				#{operChargerPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerFax != null">
+				#{operChargerFax,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerEmail != null">
+				#{operChargerEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				#{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginIp != null">
+				#{lastLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultLoginAddress != null">
+				#{defaultLoginAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="accountState != null">
+				#{accountState,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="officeId != null">
+				#{officeId,jdbcType=CHAR},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="wxOpenid != null">
+				#{wxOpenid,jdbcType=VARCHAR},
+			</if>
+			<if test="loginSource != null">
+				#{loginSource,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerType != null">
+				#{resellerType,jdbcType=VARCHAR},
+			</if>
+			<if test="isBuygroup != null">
+				#{isBuygroup,jdbcType=INTEGER},
+			</if>
+			<if test="isBuysingle != null">
+				#{isBuysingle,jdbcType=INTEGER},
+			</if>
+			<if test="resellerLevel != null">
+				#{resellerLevel,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				#{county,jdbcType=VARCHAR},
+			</if>
+			<if test="corporater != null">
+				#{corporater,jdbcType=VARCHAR},
+			</if>
+			<if test="credentialsType != null">
+				#{credentialsType,jdbcType=INTEGER},
+			</if>
+			<if test="corporaterCredentials != null">
+				#{corporaterCredentials,jdbcType=VARCHAR},
+			</if>
+			<if test="corporaterMobile != null">
+				#{corporaterMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="corporaterPhone != null">
+				#{corporaterPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="corporaterEmail != null">
+				#{corporaterEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="businessCertificate != null">
+				#{businessCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="guideCertificate != null">
+				#{guideCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="directCompany != null">
+				#{directCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="directTime != null">
+				#{directTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="businessLicense != null">
+				#{businessLicense,jdbcType=VARCHAR},
+			</if>
+
+			<if test="businessQualification != null">
+				#{businessQualification,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCodeCertificate != null">
+				#{orgCodeCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="taxCertificate != null">
+				#{taxCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="otherFiles != null">
+				#{otherFiles,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerId != null">
+				#{resellerId,jdbcType=BIGINT},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerState != null">
+				#{resellerState,jdbcType=INTEGER},
+			</if>
+			<if test="requestDate != null">
+				#{requestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="approveDate != null">
+				#{approveDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="approveResult != null">
+				#{approveResult,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNum != null">
+				#{contractNum,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="wxOpenFlag != null">
+				#{wxOpenFlag,jdbcType=INTEGER},
+			</if>
+			<if test="iscreseller != null">
+				#{iscreseller,jdbcType=INTEGER},
+			</if>
+			<if test="aboutUs != null">
+				#{aboutUs,jdbcType=VARCHAR},
+			</if>
+			<if test="contactWay != null">
+				#{contactWay,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerPhoneticShorthand != null">
+				#{resellerPhoneticShorthand,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierLevel != null">
+				#{supplierLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="isManage != null">
+				#{isManage,jdbcType=INTEGER},
+			</if>
+			<if test="otherFile != null">
+				#{otherFile,jdbcType=VARCHAR},
+			</if>
+			<if test="otherFile2 != null">
+				#{otherFile2,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierPk != null">
+				#{supplierPk,jdbcType=BIGINT},
+			</if>
+			<if test="supplierAddress != null">
+				#{supplierAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierState != null">
+				#{supplierState,jdbcType=INTEGER},
+			</if>
+			<if test="supplierDescription != null">
+				#{supplierDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierPy != null">
+				#{supplierPy,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierNormal != null">
+				#{supplierNormal,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierDiscountValue != null">
+				#{supplierDiscountValue,jdbcType=DOUBLE},
+			</if>
+			<if test="fromDate != null">
+				#{fromDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="period != null">
+				#{period,jdbcType=INTEGER},
+			</if>
+			<if test="settleDate != null">
+				#{settleDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="contractRemarks != null">
+				#{contractRemarks,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNotes != null">
+				#{contractNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="verificationCodes != null">
+				#{verificationCodes,jdbcType=VARCHAR},
+			</if>
+			<if test="userSource != null">
+				#{userSource,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				current_timestamp(),
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="leaderFlag != null">
+				#{leaderFlag,jdbcType=INTEGER},
+			</if>
+			<if test="ticketRule != null">
+				#{ticketRule,jdbcType=VARCHAR},
+			</if>
+			<if test="checkStatus != null">
+				#{checkStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="checkUserId != null">
+				#{checkUserId,jdbcType=BIGINT},
+			</if>
+			<if test="checkUserName != null">
+				#{checkUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="checkDate != null">
+				#{checkDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reasonRejection != null">
+				#{reasonRejection,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierId != null">
+				#{supplierId,jdbcType=BIGINT},
+			</if>
+			<if test="isRoot != null">
+				#{isRoot,jdbcType=CHAR},
+			</if>
+			<!-- 客栈属性 -->
+			<if test="belongScenicId != null">
+				#{belongScenicId,jdbcType=BIGINT},
+			</if>
+			<if test="hotelType != null">
+				#{hotelType,jdbcType=INTEGER},
+			</if>
+			<if test="hotelMapLongitude != null">
+				#{hotelMapLongitude,jdbcType=DOUBLE},
+			</if>
+			<if test="hotelMapLatitude != null">
+				#{hotelMapLatitude,jdbcType=DOUBLE},
+			</if>
+			<if test="region != null">#{region,jdbcType=VARCHAR},</if>
+			<if test="scenicInfo != null">#{scenicInfo,jdbcType=VARCHAR},</if>
+			<if test="hotelStartDate != null">#{hotelStartDate,jdbcType=VARCHAR},</if>
+			<if test="hotelEndDate != null">#{hotelEndDate,jdbcType=VARCHAR},</if>
+			<if test="hotelNum != null">#{hotelNum,jdbcType=INTEGER},</if>
+			<if test="treatPeopelNum != null">#{treatPeopelNum,jdbcType=INTEGER},</if>
+			<if test="hotelFacility != null">#{hotelFacility,jdbcType=VARCHAR},</if>
+			<if test="hotelFeature != null">#{hotelFeature,jdbcType=VARCHAR},</if>
+			<if test="hotelPirture != null">#{hotelPirture,jdbcType=VARCHAR},</if>
+			<if test="bossStory != null">#{bossStory,jdbcType=VARCHAR},</if>
+			<if test="bossPirture != null">#{bossPirture,jdbcType=VARCHAR},</if>
+			<if test="notifyUpdateState != null">#{notifyUpdateState,jdbcType=VARCHAR},</if>
+			<if test="invitationCode != null">#{invitationCode,jdbcType=VARCHAR},</if>
+			<if test="checkType != null">#{checkType,jdbcType=INTEGER},</if>
+			<if test="qualificationAudit != null"> #{qualificationAudit,jdbcType=INTEGER},</if>
+			<if test="regSource != null">
+				#{regSource,jdbcType=INTEGER},
+			</if>
+			<if test="logo != null">
+				#{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="department != null">
+				#{department,jdbcType=VARCHAR},
+			</if>
+			<if test="settlement != null">
+				<if test="settlement.accountingUnit != null">
+					#{settlement.accountingUnit,jdbcType=BIGINT},
+				</if>
+				<if test="settlement.accountingUnitName != null">
+					#{settlement.accountingUnitName,jdbcType=VARCHAR},
+				</if>
+				<if test="settlement.supplierBillingMode != null">
+					#{settlement.supplierBillingMode,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierCreditPayMode != null">
+					#{settlement.supplierCreditPayMode,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierPlatformPayMode != null">
+					#{settlement.supplierPlatformPayMode,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierTradeServiceFeeType != null">
+					#{settlement.supplierTradeServiceFeeType,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierTradeServiceFee != null">
+					#{settlement.supplierTradeServiceFee,jdbcType=DOUBLE},
+				</if>
+				<if test="settlement.supplierTradeServiceRemark != null">
+					#{settlement.supplierTradeServiceRemark,jdbcType=VARCHAR},
+				</if>
+				<if test="settlement.supplierServiceFeePeriod != null">
+					#{settlement.supplierServiceFeePeriod,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierBrokeragePeriod != null">
+					#{settlement.supplierBrokeragePeriod,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.currencyType != null">
+					#{settlement.currencyType,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.tradePayee != null">
+					#{settlement.tradePayee,jdbcType=INTEGER},
+				</if>
+			</if>
+		</trim>
+	</insert>
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_user (
+		<include refid="Base_Column_List" />
+		) values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.loginName != null">,#{item.loginName ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.loginPasswd != null">,#{item.loginPasswd ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.sysCode != null">,#{item.sysCode ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.twoDimensionCode != null">,#{item.twoDimensionCode ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.userType != null">,#{item.userType ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.identifyType != null">,#{item.identifyType ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.operChargerMobile != null">,#{item.operChargerMobile ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.operChargerPhone != null">,#{item.operChargerPhone ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.operChargerFax != null">,#{item.operChargerFax ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.operChargerEmail != null">,#{item.operChargerEmail ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.lastLoginTime != null">,#{item.lastLoginTime ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.lastLoginIp != null">,#{item.lastLoginIp ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.defaultLoginAddress != null">,#{item.defaultLoginAddress ,jdbcType=VARCHAR}
+				</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.accountState != null">,#{item.accountState ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.officeId != null">,#{item.officeId ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.companyId != null">,#{item.companyId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.parentId != null">,#{item.parentId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.wxOpenid != null">,#{item.wxOpenid ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.loginSource != null">,#{item.loginSource ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.name != null">,#{item.name ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.resellerType != null">,#{item.resellerType ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.isBuygroup != null">,#{item.isBuygroup ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.isBuysingle != null">,#{item.isBuysingle ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.resellerLevel != null">,#{item.resellerLevel ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.province != null">,#{item.province ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.city != null">,#{item.city ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.county != null">,#{item.county ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.corporater != null">,#{item.corporater ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.credentialsType != null">,#{item.credentialsType ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.corporaterCredentials != null">,#{item.corporaterCredentials ,jdbcType=VARCHAR}
+				</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.corporaterMobile != null">,#{item.corporaterMobile ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.corporaterPhone != null">,#{item.corporaterPhone ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.corporaterEmail != null">,#{item.corporaterEmail ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.businessCertificate != null">,#{item.businessCertificate ,jdbcType=VARCHAR}
+				</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.guideCertificate != null">,#{item.guideCertificate ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.directCompany != null">,#{item.directCompany ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.directTime != null">,#{item.directTime ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.businessLicense != null">,#{item.businessLicense ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.businessQualification != null">,#{item.businessQualification ,jdbcType=VARCHAR}
+				</when>
+				<otherwise>,null</otherwise>
+			</choose>
+			<choose>
+				<when test="item.orgCodeCertificate != null">,#{item.orgCodeCertificate ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.taxCertificate != null">,#{item.taxCertificate ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.otherFiles != null">,#{item.otherFiles ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.resellerId != null">,#{item.resellerId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.address != null">,#{item.address ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.resellerState != null">,#{item.resellerState ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.requestDate != null">,#{item.requestDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.approveDate != null">,#{item.approveDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.approveResult != null">,#{item.approveResult ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.contractNum != null">,#{item.contractNum ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.description != null">,#{item.description ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.wxOpenFlag != null">,#{item.wxOpenFlag ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.iscreseller != null">,#{item.iscreseller ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.aboutUs != null">,#{item.aboutUs ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.contactWay != null">,#{item.contactWay ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.resellerPhoneticShorthand != null">
+					,#{item.resellerPhoneticShorthand ,jdbcType=VARCHAR}
+				</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierLevel != null">,#{item.supplierLevel ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.isManage != null">,#{item.isManage ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.otherFile != null">,#{item.otherFile ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.otherFile2 != null">,#{item.otherFile2 ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierPk != null">,#{item.supplierPk ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierAddress != null">,#{item.supplierAddress ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierState != null">,#{item.supplierState ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierDescription != null">,#{item.supplierDescription ,jdbcType=VARCHAR}
+				</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierPy != null">,#{item.supplierPy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierNormal != null">,#{item.supplierNormal ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierDiscountValue != null">,#{item.supplierDiscountValue ,jdbcType=DOUBLE}
+				</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.fromDate != null">,#{item.fromDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.period != null">,#{item.period ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.settleDate != null">,#{item.settleDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.contractRemarks != null">,#{item.contractRemarks ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.contractNotes != null">,#{item.contractNotes ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.verificationCodes != null">,#{item.verificationCodes ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.userSource != null">,#{item.userSource ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>, current_timestamp()</otherwise>
+			</choose>
+			<choose>
+				<when test="item.sort != null">,#{item.sort ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.leaderFlag != null">,#{item.leaderFlag ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.ticketRule != null">,#{item.ticketRule ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.checkStatus != null">,#{item.check_status ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.checkUserId != null">,#{item.checkUserId ,jdbcType=BIGINT}</when>
+				<otherwise>,null</otherwise>
+			</choose>
+			<choose>
+				<when test="item.checkUserName != null">,#{item.checkUserName ,jdbcType=VARCHAR}</when>
+				<otherwise>,null</otherwise>
+			</choose>
+			<choose>
+				<when test="item.checkDate != null">,#{item.checkDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,null</otherwise>
+			</choose>
+			<choose>
+				<when test="item.reasonRejection != null">,#{item.reasonRejection ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierId != null">,#{item.supplierId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.isRoot != null">,#{item.isRoot ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<!-- 客栈属性 -->
+			<choose>
+				<when test="item.belongScenicId != null">, #{item.belongScenicId,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelType != null">, #{item.hotelType,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelMapLongitude != null">, #{item.hotelMapLongitude,jdbcType=DOUBLE}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelMapLatitude != null">, #{item.hotelMapLatitude,jdbcType=DOUBLE}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.region != null">, #{item.region,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.scenicInfo != null">, #{item.scenicInfo,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelStartDate != null">, #{item.hotelStartDate,jdbcType=VARCHAR}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelEndDate != null">, #{item.hotelEndDate,jdbcType=VARCHAR}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelNum != null">, #{item.hotelNum,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.treatPeopelNum != null">, #{item.treatPeopelNum,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelFacility != null">, #{item.hotelFacility,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelFeature != null">, #{item.hotelFeature,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotelPirture != null">, #{item.hotelPirture,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.bossStory != null">, #{item.bossStory,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.bossPirture != null">, #{item.bossPirture,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.notifyUpdateState != null">, #{item.notifyUpdateState,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+
+			<if test="item.settlement != null">
+				<choose>
+					<when test="item.settlement.accountingUnit != null">,#{item.settlement.accountingUnit
+						,jdbcType=BIGINT}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.accountingUnitName != null">,#{item.settlement.accountingUnitName
+						,jdbcType=VARCHAR}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierBillingMode != null">,#{item.settlement.supplierBillingMode
+						,jdbcType=INTEGER}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierCreditPayMode != null">,#{item.settlement.supplierCreditPayMode
+						,jdbcType=INTEGER}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierPlatformPayMode != null">,#{item.settlement.supplierPlatformPayMode
+						,jdbcType=INTEGER}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierTradeServiceFeeType != null">,#{item.settlement.supplierTradeServiceFeeType
+						,jdbcType=INTEGER}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierTradeServiceFee != null">,#{item.settlement.supplierTradeServiceFee
+						,jdbcType=DOUBLE}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierTradeServiceRemark != null">,#{item.settlement.supplierTradeServiceRemark
+						,jdbcType=VARCHAR}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierServiceFeePeriod != null">,#{item.settlement.supplierServiceFeePeriod
+						,jdbcType=INTEGER}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.supplierBrokeragePeriod != null">,#{item.settlement.supplierBrokeragePeriod
+						,jdbcType=INTEGER}
+					</when>
+					<otherwise>,null</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.currencyType != null">,#{item.settlement.currencyType ,jdbcType=INTEGER}
+					</when>
+					<otherwise>,0</otherwise>
+				</choose>
+				<choose>
+					<when test="item.settlement.tradePayee != null">,#{item.settlement.tradePayee ,jdbcType=INTEGER}
+					</when>
+					<otherwise>,0</otherwise>
+				</choose>
+			</if>
+			<if test="item.settlement == null">
+				,null,null,null,null,null,null,null,null,null,0,0
+			</if>
+			<choose>
+				<when test="item.invitationCode != null">, #{item.invitationCode,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.checkType != null">, #{item.checkType,jdbcType=INTEGER}</when>
+				<otherwise>,2</otherwise>
+			</choose>
+			<choose>
+				<when test="item.qualificationAudit != null">, #{item.qualificationAudit,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.regSource != null">, #{item.regSource,jdbcType=INTEGER}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.logo != null">, #{item.logo,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.department != null">, #{item.department,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysUser">
+		update sys_user
+		<set>
+			<if test="hotlineSupplier != null">
+				hotline_supplier = #{hotlineSupplier,jdbcType=VARCHAR},
+			</if>
+			<if test="hotlineReseller != null">
+				hotline_reseller = #{hotlineReseller,jdbcType=VARCHAR},
+			</if>
+			<if test="loginName != null">
+				login_name = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPasswd != null">
+				login_passwd = #{loginPasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="sysCode != null">
+				sys_code = #{sysCode,jdbcType=VARCHAR},
+			</if>
+			<if test="twoDimensionCode != null">
+				two_Dimension_Code =
+				#{twoDimensionCode,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				user_type = #{userType,jdbcType=VARCHAR},
+			</if>
+			<if test="identifyType != null">
+				identifyType = #{identifyType,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerMobile != null">
+				oper_charger_mobile =
+				#{operChargerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerPhone != null">
+				oper_charger_phone =
+				#{operChargerPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerFax != null">
+				oper_charger_fax = #{operChargerFax,jdbcType=VARCHAR},
+			</if>
+			<if test="operChargerEmail != null">
+				oper_charger_email =
+				#{operChargerEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginIp != null">
+				last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultLoginAddress != null">
+				defaultLoginAddress =
+				#{defaultLoginAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="accountState != null">
+				account_state = #{accountState,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="officeId != null">
+				office_id = #{officeId,jdbcType=CHAR},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="wxOpenid != null">
+				wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+			</if>
+			<if test="loginSource != null">
+				login_source = #{loginSource,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerType != null">
+				reseller_type = #{resellerType,jdbcType=VARCHAR},
+			</if>
+			<if test="isBuygroup != null">
+				is_buygroup = #{isBuygroup,jdbcType=INTEGER},
+			</if>
+			<if test="isBuysingle != null">
+				is_buysingle = #{isBuysingle,jdbcType=INTEGER},
+			</if>
+			<if test="resellerLevel != null">
+				reseller_level = #{resellerLevel,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				county = #{county,jdbcType=VARCHAR},
+			</if>
+			<if test="corporater != null">
+				corporater = #{corporater,jdbcType=VARCHAR},
+			</if>
+			<if test="credentialsType != null">
+				credentials_type = #{credentialsType,jdbcType=INTEGER},
+			</if>
+			<if test="corporaterCredentials != null">
+				corporater_credentials =
+				#{corporaterCredentials,jdbcType=VARCHAR},
+			</if>
+			<if test="corporaterMobile != null">
+				corporater_mobile = #{corporaterMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="corporaterPhone != null">
+				corporater_phone = #{corporaterPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="corporaterEmail != null">
+				corporater_email = #{corporaterEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="businessCertificate != null">
+				business_certificate =
+				#{businessCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="guideCertificate != null">
+				guideCertificate = #{guideCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="directCompany != null">
+				directCompany = #{directCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="directTime != null">
+				directTime = #{directTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="businessLicense != null">
+				business_license = #{businessLicense,jdbcType=VARCHAR},
+			</if>
+			<if test="businessQualification != null">
+				business_qualification =
+				#{businessQualification,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCodeCertificate != null">
+				org_code_certificate =
+				#{orgCodeCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="taxCertificate != null">
+				tax_certificate = #{taxCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="otherFiles != null">
+				other_files = #{otherFiles,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerId != null">
+				resellerId = #{resellerId,jdbcType=BIGINT},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerState != null">
+				reseller_state = #{resellerState,jdbcType=INTEGER},
+			</if>
+			<if test="requestDate != null">
+				request_date = #{requestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="approveDate != null">
+				approve_date = #{approveDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="approveResult != null">
+				approve_result = #{approveResult,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNum != null">
+				contract_num = #{contractNum,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="wxOpenFlag != null">
+				wx_open_flag = #{wxOpenFlag,jdbcType=INTEGER},
+			</if>
+			<if test="iscreseller != null">
+				isCReseller = #{iscreseller,jdbcType=INTEGER},
+			</if>
+			<if test="aboutUs != null">
+				about_us = #{aboutUs,jdbcType=VARCHAR},
+			</if>
+			<if test="contactWay != null">
+				contact_way = #{contactWay,jdbcType=VARCHAR},
+			</if>
+			<if test="resellerPhoneticShorthand != null">
+				reseller_phonetic_shorthand =
+				#{resellerPhoneticShorthand,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierLevel != null">
+				supplier_level = #{supplierLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="isManage != null">
+				is_manage = #{isManage,jdbcType=INTEGER},
+			</if>
+			<if test="otherFile != null">
+				other_file = #{otherFile,jdbcType=VARCHAR},
+			</if>
+			<if test="otherFile2 != null">
+				other_file2 = #{otherFile2,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierPk != null">
+				supplierPk = #{supplierPk,jdbcType=BIGINT},
+			</if>
+			<if test="supplierAddress != null">
+				supplier_address = #{supplierAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierState != null">
+				supplier_state = #{supplierState,jdbcType=INTEGER},
+			</if>
+			<if test="supplierDescription != null">
+				supplier_description =
+				#{supplierDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierPy != null">
+				supplier_py = #{supplierPy,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierNormal != null">
+				supplier_normal = #{supplierNormal,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierDiscountValue != null">
+				supplier_discount_value =
+				#{supplierDiscountValue,jdbcType=DOUBLE},
+			</if>
+			<if test="fromDate != null">
+				from_date = #{fromDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="period != null">
+				period = #{period,jdbcType=INTEGER},
+			</if>
+			<if test="settleDate != null">
+				settle_date = #{settleDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="contractRemarks != null">
+				contract_remarks = #{contractRemarks,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNotes != null">
+				contract_notes = #{contractNotes,jdbcType=VARCHAR},
+			</if>
+			<if test="verificationCodes != null">
+				verification_codes =
+				#{verificationCodes,jdbcType=VARCHAR},
+			</if>
+			<if test="userSource != null">
+				user_source = #{userSource,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate == null">
+				update_date = current_timestamp(),
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="leaderFlag != null">
+				leader_flag = #{leaderFlag,jdbcType=INTEGER},
+			</if>
+			<if test="ticketRule != null">
+				ticket_rule = #{ticketRule,jdbcType=VARCHAR},
+			</if>
+			<if test="checkStatus != null">
+				check_status = #{checkStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="checkUserId != null">
+				check_user_id = #{checkUserId,jdbcType=BIGINT},
+			</if>
+			<if test="checkUserName != null">
+				check_user_name = #{checkUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="checkDate != null">
+				check_date = #{checkDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reasonRejection != null">
+				reason_rejection = #{reasonRejection,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierId != null">
+				supplier_id = #{supplierId,jdbcType=BIGINT},
+			</if>
+			<if test="isRoot != null">
+				is_root = #{isRoot,jdbcType=CHAR},
+			</if>
+			<!-- 客栈属性 -->
+			<if test="belongScenicId != null">belongScenicId = #{belongScenicId,jdbcType=BIGINT},</if>
+			<if test="hotelType != null">hotelType = #{hotelType,jdbcType=INTEGER},</if>
+			<if test="hotelMapLongitude != null">hotel_map_longitude =
+				#{hotelMapLongitude,jdbcType=DOUBLE},
+			</if>
+			<if test="hotelMapLatitude != null">hotel_map_latitude = #{hotelMapLatitude,jdbcType=DOUBLE},
+			</if>
+			<if test="region != null">region = #{region,jdbcType=VARCHAR},</if>
+			<if test="scenicInfo != null">scenic_info = #{scenicInfo,jdbcType=VARCHAR},</if>
+			<if test="hotelStartDate != null">hotel_start_date = #{hotelStartDate,jdbcType=VARCHAR},
+			</if>
+			<if test="hotelEndDate != null">hotel_end_date = #{hotelEndDate,jdbcType=VARCHAR},</if>
+			<if test="hotelNum != null">hotel_num = #{hotelNum,jdbcType=INTEGER},</if>
+			<if test="treatPeopelNum != null">treat_people_num = #{treatPeopelNum,jdbcType=INTEGER},
+			</if>
+			<if test="hotelFacility != null">hotel_facility = #{hotelFacility,jdbcType=VARCHAR},</if>
+			<if test="hotelFeature != null">hotel_feature = #{hotelFeature,jdbcType=VARCHAR},</if>
+			<if test="hotelPirture != null">hotel_pirture = #{hotelPirture,jdbcType=VARCHAR},</if>
+			<if test="bossStory != null">boss_story = #{bossStory,jdbcType=VARCHAR},</if>
+			<if test="bossPirture != null">boss_pirture = #{bossPirture,jdbcType=VARCHAR},</if>
+			<if test="notifyUpdateState != null">notify_update_state =
+				#{notifyUpdateState,jdbcType=VARCHAR},
+			</if>
+			<if test="invitationCode != null">invitationCode =
+				#{invitationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="checkType != null">check_type =
+				#{checkType,jdbcType=INTEGER},
+			</if>
+			<if test="qualificationAudit != null">qualification_audit =
+				#{qualificationAudit,jdbcType=INTEGER},
+			</if>
+			<if test="regSource != null">
+				reg_source = #{regSource,jdbcType=INTEGER},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="department != null">
+				department = #{department,jdbcType=VARCHAR},
+			</if>
+			<if test="settlement != null">
+				<if test="settlement.accountingUnit != null">
+					accountingUnit =
+					#{settlement.accountingUnit,jdbcType=BIGINT},
+				</if>
+				<if test="settlement.accountingUnitName != null">
+					accountingUnitName =
+					#{settlement.accountingUnitName,jdbcType=VARCHAR},
+				</if>
+				<if test="settlement.supplierBillingMode != null">
+					supplierBillingMode =
+					#{settlement.supplierBillingMode,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierCreditPayMode != null">
+					supplierCreditPayMode =
+					#{settlement.supplierCreditPayMode,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierPlatformPayMode != null">
+					supplierPlatformPayMode =
+					#{settlement.supplierPlatformPayMode,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierTradeServiceFeeType != null">
+					supplierTradeServiceFeeType =
+					#{settlement.supplierTradeServiceFeeType,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierTradeServiceFee != null">
+					supplierTradeServiceFee =
+					#{settlement.supplierTradeServiceFee,jdbcType=DOUBLE},
+				</if>
+				<if test="settlement.supplierTradeServiceRemark != null">
+					supplierTradeServiceRemark =
+					#{settlement.supplierTradeServiceRemark,jdbcType=VARCHAR},
+				</if>
+				<if test="settlement.supplierServiceFeePeriod != null">
+					supplierServiceFeePeriod =
+					#{settlement.supplierServiceFeePeriod,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.supplierBrokeragePeriod != null">
+					supplierBrokeragePeriod =
+					#{settlement.supplierBrokeragePeriod,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.currencyType != null">
+					currencyType =
+					#{settlement.currencyType,jdbcType=INTEGER},
+				</if>
+				<if test="settlement.tradePayee != null">
+					trade_payee =
+					#{settlement.tradePayee,jdbcType=INTEGER},
+				</if>
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			update sys_user
+			<set>
+				<if test="item.hotlineSupplier != null">
+					hotline_supplier = #{item.hotlineSupplier,jdbcType=VARCHAR},
+				</if>
+				<if test="item.hotlineReseller != null">
+					hotline_reseller = #{item.hotlineReseller,jdbcType=VARCHAR},
+				</if>
+				<if test="item.loginName != null">
+					login_name = #{item.loginName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.loginPasswd != null">
+					login_passwd = #{item.loginPasswd,jdbcType=VARCHAR},
+				</if>
+				<if test="item.sysCode != null">
+					sys_code = #{item.sysCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.twoDimensionCode != null">
+					two_Dimension_Code =
+					#{item.twoDimensionCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.userType != null">
+					user_type = #{item.userType,jdbcType=VARCHAR},
+				</if>
+				<if test="item.identifyType != null">
+					identifyType = #{item.identifyType,jdbcType=VARCHAR},
+				</if>
+				<if test="item.operChargerMobile != null">
+					oper_charger_mobile =
+					#{item.operChargerMobile,jdbcType=VARCHAR},
+				</if>
+				<if test="item.operChargerPhone != null">
+					oper_charger_phone =
+					#{item.operChargerPhone,jdbcType=VARCHAR},
+				</if>
+				<if test="item.operChargerFax != null">
+					oper_charger_fax =
+					#{item.operChargerFax,jdbcType=VARCHAR},
+				</if>
+				<if test="item.operChargerEmail != null">
+					oper_charger_email =
+					#{item.operChargerEmail,jdbcType=VARCHAR},
+				</if>
+				<if test="item.lastLoginTime != null">
+					last_login_time =
+					#{item.lastLoginTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.lastLoginIp != null">
+					last_login_ip = #{item.lastLoginIp,jdbcType=VARCHAR},
+				</if>
+				<if test="item.defaultLoginAddress != null">
+					defaultLoginAddress =
+					#{item.defaultLoginAddress,jdbcType=VARCHAR},
+				</if>
+				<if test="item.accountState != null">
+					account_state = #{item.accountState,jdbcType=INTEGER},
+				</if>
+				<if test="item.createDate != null">
+					create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.officeId != null">
+					office_id = #{item.officeId,jdbcType=CHAR},
+				</if>
+				<if test="item.companyId != null">
+					company_id = #{item.companyId,jdbcType=BIGINT},
+				</if>
+				<if test="item.parentId != null">
+					parent_id = #{item.parentId,jdbcType=BIGINT},
+				</if>
+				<if test="item.wxOpenid != null">
+					wx_openid = #{item.wxOpenid,jdbcType=VARCHAR},
+				</if>
+				<if test="item.loginSource != null">
+					login_source = #{item.loginSource,jdbcType=INTEGER},
+				</if>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.resellerType != null">
+					reseller_type = #{item.resellerType,jdbcType=VARCHAR},
+				</if>
+				<if test="item.isBuygroup != null">
+					is_buygroup = #{item.isBuygroup,jdbcType=INTEGER},
+				</if>
+				<if test="item.isBuysingle != null">
+					is_buysingle = #{item.isBuysingle,jdbcType=INTEGER},
+				</if>
+				<if test="item.resellerLevel != null">
+					reseller_level = #{item.resellerLevel,jdbcType=INTEGER},
+				</if>
+				<if test="item.province != null">
+					province = #{item.province,jdbcType=VARCHAR},
+				</if>
+				<if test="item.city != null">
+					city = #{item.city,jdbcType=VARCHAR},
+				</if>
+				<if test="item.county != null">
+					county = #{item.county,jdbcType=VARCHAR},
+				</if>
+				<if test="item.corporater != null">
+					corporater = #{item.corporater,jdbcType=VARCHAR},
+				</if>
+				<if test="item.credentialsType != null">
+					credentials_type =
+					#{item.credentialsType,jdbcType=INTEGER},
+				</if>
+				<if test="item.corporaterCredentials != null">
+					corporater_credentials =
+					#{item.corporaterCredentials,jdbcType=VARCHAR},
+				</if>
+				<if test="item.corporaterMobile != null">
+					corporater_mobile =
+					#{item.corporaterMobile,jdbcType=VARCHAR},
+				</if>
+				<if test="item.corporaterPhone != null">
+					corporater_phone =
+					#{item.corporaterPhone,jdbcType=VARCHAR},
+				</if>
+				<if test="item.corporaterEmail != null">
+					corporater_email =
+					#{item.corporaterEmail,jdbcType=VARCHAR},
+				</if>
+				<if test="item.businessCertificate != null">
+					business_certificate =
+					#{item.businessCertificate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.guideCertificate != null">
+					guideCertificate =
+					#{item.guideCertificate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.directCompany != null">
+					directCompany = #{item.directCompany,jdbcType=VARCHAR},
+				</if>
+				<if test="item.directTime != null">
+					directTime = #{item.directTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.businessLicense != null">
+					business_license =
+					#{item.businessLicense,jdbcType=VARCHAR},
+				</if>
+				<if test="item.businessQualification != null">
+					business_qualification =
+					#{item.businessQualification,jdbcType=VARCHAR},
+				</if>
+				<if test="item.orgCodeCertificate != null">
+					org_code_certificate =
+					#{item.orgCodeCertificate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.taxCertificate != null">
+					tax_certificate =
+					#{item.taxCertificate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.otherFiles != null">
+					other_files = #{item.otherFiles,jdbcType=VARCHAR},
+				</if>
+				<if test="item.resellerId != null">
+					resellerId = #{item.resellerId,jdbcType=BIGINT},
+				</if>
+				<if test="item.address != null">
+					address = #{item.address,jdbcType=VARCHAR},
+				</if>
+				<if test="item.resellerState != null">
+					reseller_state = #{item.resellerState,jdbcType=INTEGER},
+				</if>
+				<if test="item.requestDate != null">
+					request_date = #{item.requestDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.approveDate != null">
+					approve_date = #{item.approveDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.approveResult != null">
+					approve_result = #{item.approveResult,jdbcType=VARCHAR},
+				</if>
+				<if test="item.contractNum != null">
+					contract_num = #{item.contractNum,jdbcType=VARCHAR},
+				</if>
+				<if test="item.description != null">
+					description = #{item.description,jdbcType=VARCHAR},
+				</if>
+				<if test="item.wxOpenFlag != null">
+					wx_open_flag = #{item.wxOpenFlag,jdbcType=INTEGER},
+				</if>
+				<if test="item.iscreseller != null">
+					isCReseller = #{item.iscreseller,jdbcType=INTEGER},
+				</if>
+				<if test="item.aboutUs != null">
+					about_us = #{item.aboutUs,jdbcType=VARCHAR},
+				</if>
+				<if test="item.contactWay != null">
+					contact_way = #{item.contactWay,jdbcType=VARCHAR},
+				</if>
+				<if test="item.resellerPhoneticShorthand != null">
+					reseller_phonetic_shorthand =
+					#{item.resellerPhoneticShorthand,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierLevel != null">
+					supplier_level = #{item.supplierLevel,jdbcType=VARCHAR},
+				</if>
+				<if test="item.isManage != null">
+					is_manage = #{item.isManage,jdbcType=INTEGER},
+				</if>
+				<if test="item.otherFile != null">
+					other_file = #{item.otherFile,jdbcType=VARCHAR},
+				</if>
+				<if test="item.otherFile2 != null">
+					other_file2 = #{item.otherFile2,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierPk != null">
+					supplierPk = #{item.supplierPk,jdbcType=BIGINT},
+				</if>
+				<if test="item.supplierAddress != null">
+					supplier_address =
+					#{item.supplierAddress,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierState != null">
+					supplier_state = #{item.supplierState,jdbcType=INTEGER},
+				</if>
+				<if test="item.supplierDescription != null">
+					supplier_description =
+					#{item.supplierDescription,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierPy != null">
+					supplier_py = #{item.supplierPy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierNormal != null">
+					supplier_normal =
+					#{item.supplierNormal,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierDiscountValue != null">
+					supplier_discount_value =
+					#{item.supplierDiscountValue,jdbcType=DOUBLE},
+				</if>
+				<if test="item.fromDate != null">
+					from_date = #{item.fromDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.period != null">
+					period = #{item.period,jdbcType=INTEGER},
+				</if>
+				<if test="item.settleDate != null">
+					settle_date = #{item.settleDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.contractRemarks != null">
+					contract_remarks =
+					#{item.contractRemarks,jdbcType=VARCHAR},
+				</if>
+				<if test="item.contractNotes != null">
+					contract_notes = #{item.contractNotes,jdbcType=VARCHAR},
+				</if>
+				<if test="item.verificationCodes != null">
+					verification_codes =
+					#{item.verificationCodes,jdbcType=VARCHAR},
+				</if>
+				<if test="item.userSource != null">
+					user_source = #{item.userSource,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createBy != null">
+					create_by = #{item.createBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateBy != null">
+					update_by = #{item.updateBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateDate != null">
+					update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateDate == null">
+					update_date = current_timestamp(),
+				</if>
+				<if test="item.sort != null">
+					sort = #{item.sort,jdbcType=INTEGER},
+				</if>
+				<if test="item.leaderFlag != null">
+					leader_flag = #{item.leaderFlag,jdbcType=INTEGER},
+				</if>
+				<if test="item.ticketRule != null">
+					ticket_rule = #{item.ticketRule,jdbcType=VARCHAR},
+				</if>
+				<if test="item.checkStatus != null">
+					check_status = #{item.checkStatus,jdbcType=VARCHAR},
+				</if>
+				<if test="item.checkUserId != null">
+					check_user_id = #{item.checkUserId,jdbcType=BIGINT},
+				</if>
+				<if test="item.checkUserName != null">
+					check_user_name =
+					#{item.checkUserName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.checkDate != null">
+					check_date = #{item.checkDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.reasonRejection != null">
+					reason_rejection =
+					#{item.reasonRejection,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierId != null">
+					supplier_id = #{item.supplierId,jdbcType=BIGINT},
+				</if>
+				<if test="item.isRoot != null">
+					is_root = #{item.isRoot,jdbcType=CHAR},
+				</if>
+				<!-- 客栈属性 -->
+				<if test="item.belongScenicId != null">belongScenicId = #{item.belongScenicId,jdbcType=BIGINT},
+				</if>
+				<if test="item.hotelType != null">hotelType = #{item.hotelType,jdbcType=INTEGER},</if>
+				<if test="item.hotelMapLongitude != null">hotel_map_longitude =
+					#{item.hotelMapLongitude,jdbcType=DOUBLE},
+				</if>
+				<if test="item.hotelMapLatitude != null">hotel_map_latitude =
+					#{item.hotelMapLatitude,jdbcType=DOUBLE},
+				</if>
+				<if test="item.region != null">region = #{item.region,jdbcType=VARCHAR},</if>
+				<if test="item.scenicInfo != null">scenic_info = #{item.scenicInfo,jdbcType=VARCHAR},</if>
+				<if test="item.hotelStartDate != null">hotel_start_date =
+					#{item.hotelStartDate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.hotelEndDate != null">hotel_end_date = #{item.hotelEndDate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.hotelNum != null">hotel_num = #{item.hotelNum,jdbcType=INTEGER},</if>
+				<if test="item.treatPeopelNum != null">treat_people_num =
+					#{item.treatPeopelNum,jdbcType=INTEGER},
+				</if>
+				<if test="item.hotelFacility != null">hotel_facility = #{item.hotelFacility,jdbcType=VARCHAR},
+				</if>
+				<if test="item.hotelFeature != null">hotel_feature = #{item.hotelFeature,jdbcType=VARCHAR},
+				</if>
+				<if test="item.hotelPirture != null">hotel_pirture = #{item.hotelPirture,jdbcType=VARCHAR},
+				</if>
+				<if test="item.bossStory != null">boss_story = #{item.bossStory,jdbcType=VARCHAR},</if>
+				<if test="item.bossPirture != null">boss_pirture = #{item.bossPirture,jdbcType=VARCHAR},
+				</if>
+				<if test="item.notifyUpdateState != null">notify_update_state =
+					#{item.notifyUpdateState,jdbcType=VARCHAR},
+				</if>
+				<if test="item.invitationCode != null">invitationCode =
+					#{item.invitationCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.checkType != null">check_type =
+					#{item.checkType,jdbcType=INTEGER},
+				</if>
+				<if test="item.qualificationAudit != null">qualification_audit =
+					#{item.qualificationAudit,jdbcType=INTEGER},
+				</if>
+				<if test="item.regSource != null">
+					reg_source = #{item.regSource,jdbcType=INTEGER},
+				</if>
+				<if test="item.logo != null">
+					logo = #{item.logo,jdbcType=VARCHAR},
+				</if>
+				<if test="item.department != null">
+					department = #{item.department,jdbcType=VARCHAR},
+				</if>
+
+				<if test="item.settlement != null">
+					<if test="item.settlement.accountingUnit != null">
+						accountingUnit =
+						#{item.settlement.accountingUnit,jdbcType=BIGINT},
+					</if>
+					<if test="item.settlement.accountingUnitName != null">
+						accountingUnitName =
+						#{item.settlement.accountingUnitName,jdbcType=VARCHAR},
+					</if>
+					<if test="item.settlement.supplierBillingMode != null">
+						supplierBillingMode =
+						#{item.settlement.supplierBillingMode,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.supplierCreditPayMode != null">
+						supplierCreditPayMode =
+						#{item.settlement.supplierCreditPayMode,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.supplierPlatformPayMode != null">
+						supplierPlatformPayMode =
+						#{item.settlement.supplierPlatformPayMode,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.supplierTradeServiceFeeType != null">
+						supplierTradeServiceFeeType =
+						#{item.settlement.supplierTradeServiceFeeType,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.supplierTradeServiceFee != null">
+						supplierTradeServiceFee =
+						#{item.settlement.supplierTradeServiceFee,jdbcType=DOUBLE},
+					</if>
+					<if test="item.settlement.supplierTradeServiceRemark != null">
+						supplierTradeServiceRemark =
+						#{item.settlement.supplierTradeServiceRemark,jdbcType=VARCHAR},
+					</if>
+					<if test="item.settlement.supplierServiceFeePeriod != null">
+						supplierServiceFeePeriod =
+						#{item.settlement.supplierServiceFeePeriod,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.supplierBrokeragePeriod != null">
+						supplierBrokeragePeriod =
+						#{item.settlement.supplierBrokeragePeriod,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.currencyType != null">
+						currencyType =
+						#{item.settlement.supplierBrokeragePeriod,jdbcType=INTEGER},
+					</if>
+					<if test="item.settlement.tradePayee != null">
+						trade_payee =
+						#{item.settlement.tradePayee,jdbcType=INTEGER},
+					</if>
+				</if>
+
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	<!-- 根据关系表中的objId分页获取标签列表 -->
+	<select id="findListByObjID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_user u
+		left join sys_label_relation r on r.rel_id = u.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.obj_id = #{idParam}
+			and r.rel_type in (${relType})
+			and r.status = 1
+		</where>
+		<include refid="sql_page_limit" />
+	</select>
+	<select id="countByObjID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(u.id)
+		from sys_user u
+		left join sys_label_relation r on
+		r.rel_id = u.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.obj_id = #{idParam}
+			and r.rel_type in (${relType})
+			and r.status = 1
+		</where>
+	</select>
+	<!-- 根据关系表中的refId分页获取标签列表 -->
+	<select id="findListByRefID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_user u
+		left join sys_label_relation r on r.obj_id = u.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.rel_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status = 1
+		</where>
+		<include refid="sql_page_limit" />
+	</select>
+	<select id="countByRefID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(u.id)
+		from sys_user u
+		left join sys_label_relation r on
+		r.obj_id = u.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.rel_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status = 1
+		</where>
+	</select>
+	<!-- 通过 -->
+	<select id="selectByUserOfficeRole" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select distinct
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_user u
+		inner join sys_role_office_user rou on u.id =
+		rou.user_id
+		<where>
+			<if test="param1 != null">
+				<if test="param1.name != null">
+					AND u.name LIKE #{param1.name,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.loginName != null">
+					AND u.login_name LIKE
+					#{param1.loginName,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.corporaterMobile != null">
+					AND u.corporater_mobile LIKE
+					#{param1.corporaterMobile,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.operChargerPhone != null">
+					AND u.oper_charger_phone LIKE
+					#{param1.operChargerPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.userType != null">
+					AND u.user_type = #{param1.userType,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.identifyType != null">
+					AND u.identifyType =
+					#{param1.identifyType,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.userSource != null">
+					AND u.user_source =
+					#{param1.userSource,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.accountState != null">
+					AND u.account_state =
+					#{param1.accountState,jdbcType=INTEGER}
+				</if>
+				<if test="param1.supplierId != null">
+					AND u.supplier_id =
+					#{param1.supplierId,jdbcType=INTEGER}
+				</if>
+				<if test="param1.createBy != null">
+					and u.create_by = #{param1.createBy,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.updateBy != null">
+					and u.update_by = #{param1.updateBy,jdbcType=VARCHAR}
+				</if>
+			</if>
+			<if test="param2 != null and param2.size &gt; 0">
+				AND rou.office_id in
+				<foreach collection="param2" item="_officeId" open="( "
+					close=" )" separator=",">
+					#{_officeId, jdbcType=VARCHAR}
+				</foreach>
+			</if>
+			<if test="param3 != null and param3.size &gt; 0">
+				AND rou.role_id in
+				<foreach collection="param3" item="_roleId" open="( " close=" )"
+					separator=",">
+					#{_roleId, jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+		<if test="param4 != null">
+			<if test="param4.orderByClause == null">order by u.create_date desc</if>
+			<if test="param4.orderByClause != null">order by ${param4.orderByClause}</if>
+			<if test="param4.startIndex != null and param4.pageSize != null">
+				limit #{param4.startIndex} , #{param4.pageSize}
+			</if>
+		</if>
+	</select>
+	<select id="countByUserOfficeRole" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(distinct u.id) from sys_user u
+		inner join
+		sys_role_office_user rou on u.id = rou.user_id
+		<where>
+			<if test="param1 != null">
+				<if test="param1.name != null">
+					AND u.name LIKE #{param1.name,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.loginName != null">
+					AND u.login_name LIKE
+					#{param1.loginName,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.corporaterMobile != null">
+					AND u.corporater_mobile LIKE
+					#{param1.corporaterMobile,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.operChargerPhone != null">
+					AND u.oper_charger_phone LIKE
+					#{param1.operChargerPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.userType != null">
+					AND u.user_type = #{param1.userType,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.identifyType != null">
+					AND u.identifyType =
+					#{param1.identifyType,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.userSource != null">
+					AND u.user_source =
+					#{param1.userSource,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.accountState != null">
+					AND u.account_state =
+					#{param1.accountState,jdbcType=INTEGER}
+				</if>
+				<if test="param1.supplierId != null">
+					AND u.supplier_id =
+					#{param1.supplierId,jdbcType=INTEGER}
+				</if>
+				<if test="param1.createBy != null">
+					and u.create_by = #{param1.createBy,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.updateBy != null">
+					and u.update_by = #{param1.updateBy,jdbcType=VARCHAR}
+				</if>
+			</if>
+			<if test="param2 != null and param2.size &gt; 0">
+				AND rou.office_id in
+				<foreach collection="param2" item="_officeId" open="( "
+					close=" )" separator=",">
+					#{_officeId, jdbcType=VARCHAR}
+				</foreach>
+			</if>
+			<if test="param3 != null and param3.size &gt; 0">
+				AND rou.role_id in
+				<foreach collection="param3" item="_roleId" open="( " close=" )"
+					separator=",">
+					#{_roleId, jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="findListByUR" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_user u
+		left join sys_user_role rr on rr.user_id = u.id
+		left
+		join sys_role r on r.id = rr.role_id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			<include refid="sql_of_role_condition"></include>
+		</where>
+		group by u.id
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null">order by u.id desc</if>
+			<if test="pParam.orderByClause != null">order by ${pParam.orderByClause}</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<select id="countByUR" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(DISTINCT u.id)
+		from sys_user u
+		left join sys_user_role rr on
+		rr.user_id = u.id
+		left join sys_role r on r.id = rr.role_id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			<include refid="sql_of_role_condition"></include>
+		</where>
+	</select>
+	<!-- 获取景区分销商 -->
+	<select id="findSupplierId" resultType="java.lang.Long"
+		parameterType="map">
+		select id from sys_user
+		where id = supplier_id
+		and
+		user_source = #{dataSource}
+	</select>
+
+	<select id="countRefCustomerByRelation" resultType="java.lang.Integer">
+		select
+		count(u.id)
+		from sys_user u
+		inner join sys_user_relation relation
+		<if test="isFindMaster">
+			on relation.user_id = u.id
+		</if>
+		<if test="!isFindMaster">
+			on relation.rel_user_id = u.id
+		</if>
+		<where>
+			and relation.status = 1
+			<if test="param1 != null">
+				<if test="param1.userId != null">
+					and relation.user_id = #{param1.userId, jdbcType=BIGINT}
+				</if>
+				<if test="param1.relType != null">
+					and relation.rel_type = #{param1.relType,
+					jdbcType=VARCHAR}
+				</if>
+				<if test="param1.relUserId != null">
+					and relation.rel_user_id =
+					#{param1.relUserId,jdbcType=BIGINT}
+				</if>
+			</if>
+			<if test="param2 != null">
+				<if test="param2.loginName != null">
+					and u.login_name like #{param2.loginName,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.name != null">
+					and u.name like #{param2.name,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.resellerType != null">
+					and u.reseller_type =
+					#{param2.resellerType,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.corporaterCredentials != null">
+					and u.corporater_credentials like
+					#{param2.corporaterCredentials,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.corporaterMobile != null">
+					and u.corporater_mobile like
+					#{param2.corporaterMobile,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.guideCertificate != null">
+					and u.guideCertificate =
+					#{param2.guideCertificate,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.checkStatus != null">
+					and u.check_status =
+					#{param2.checkStatus,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.province != null">
+					and u.province =
+					#{param2.province,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.city != null">
+					and u.city =
+					#{param2.city,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.county != null">
+					and u.county =
+					#{param2.county,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.corporater != null">
+					and u.corporater =
+					#{param2.corporater,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.checkStatusQuery != null">
+					AND u.check_status in
+					<foreach collection="param2.checkStatusQuery" item="_status" open="(" separator="," close=")">
+						#{_status,jdbcType=VARCHAR}
+					</foreach>
+				</if>
+				<if test="param2.createDate != null"><![CDATA[ AND u.create_date >= #{param2.createDate,jdbcType=TIMESTAMP}]]></if>
+				<if test="param2.createDateEnd != null"><![CDATA[ AND u.create_date <= #{param2.createDateEnd,jdbcType=TIMESTAMP}]]></if>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectRefCustomerByRelation" resultMap="UserRelationResultMap">
+		select
+		<include refid="Base_Column_LeftJoin_List" /> , relation.create_date userRelationCreateDate
+		from sys_user u
+		inner join sys_user_relation relation
+		<if test="isFindMaster">
+			on relation.user_id = u.id
+		</if>
+		<if test="!isFindMaster">
+			on relation.rel_user_id = u.id
+		</if>
+		<where>
+			and relation.status=1
+			<if test="param1 != null">
+				<if test="param1.userId != null">
+					and relation.user_id = #{param1.userId, jdbcType=BIGINT}
+				</if>
+				<if test="param1.relType != null">
+					and relation.rel_type = #{param1.relType,
+					jdbcType=VARCHAR}
+				</if>
+				<if test="param1.relUserId != null">
+					and relation.rel_user_id =
+					#{param1.relUserId,jdbcType=BIGINT}
+				</if>
+			</if>
+			<if test="param2 != null">
+				<if test="param2.loginName != null">
+					and u.login_name like #{param2.loginName,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.name != null">
+					and u.name like #{param2.name,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.resellerType != null">
+					and u.reseller_type =
+					#{param2.resellerType,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.corporaterCredentials != null">
+					and u.corporater_credentials like
+					#{param2.corporaterCredentials,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.corporaterMobile != null">
+					and u.corporater_mobile like
+					#{param2.corporaterMobile,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.guideCertificate != null">
+					and u.guideCertificate =
+					#{param2.guideCertificate,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.checkStatus != null">
+					and u.check_status =
+					#{param2.checkStatus,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.province != null">
+					and u.province =
+					#{param2.province,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.city != null">
+					and u.city =
+					#{param2.city,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.county != null">
+					and u.county =
+					#{param2.county,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.corporater != null">
+					and u.corporater like
+					#{param2.corporater,jdbcType=VARCHAR}
+				</if>
+				<if test="param2.checkStatusQuery != null">
+					AND u.check_status in
+					<foreach collection="param2.checkStatusQuery" item="_status" open="(" separator="," close=")">
+						#{_status,jdbcType=VARCHAR}
+					</foreach>
+				</if>
+				<if test="param2.createDate != null"><![CDATA[ AND u.create_date >= #{param2.createDate,jdbcType=TIMESTAMP}]]></if>
+				<if test="param2.createDateEnd != null"><![CDATA[ AND u.create_date <= #{param2.createDateEnd,jdbcType=TIMESTAMP}]]></if>
+			</if>
+		</where>
+		<if test="param4 != null">
+			<if test="param4.orderByClause == null">order by u.create_date desc</if>
+			<if test="param4.orderByClause != null">order by ${param4.orderByClause}</if>
+			<if test="param4.startIndex != null and param4.pageSize != null">
+				limit #{param4.startIndex} , #{param4.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<sql id="selectUserExclusiveUserRelation_where">
+		<if test="master != null">
+			<if test="master.id != null">
+				and us.id = #{master.id, jdbcType=BIGINT}
+			</if>
+			<trim prefix="and ( " prefixOverrides="and|or" suffix=" )">
+				<if test="master.operChargerMobile != null">
+					or us.oper_charger_mobile like
+					#{master.operChargerMobile,
+					jdbcType=VARCHAR}
+				</if>
+				<if test="master.corporaterCredentials != null">
+					or us.corporater_credentials like
+					#{master.corporaterCredentials,
+					jdbcType=VARCHAR}
+				</if>
+				<if test="master.guideCertificate != null">
+					or us.guideCertificate = #{master.guideCertificate,
+					jdbcType=VARCHAR}
+				</if>
+				<if test="master.businessCertificate != null">
+					or us.business_certificate =
+					#{master.businessCertificate,
+					jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</if>
+	</sql>
+
+	<!-- 根据用户与用户关联的关系，排他查询没有关联的用户 -->
+	<select id="selectUserExclusiveUserRelation" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_user u
+		<if test="master.inclusiveRelationUser">
+			inner join (SELECT rel_user_id FROM sys_user_relation rel, sys_user
+			us where rel.user_id = us.id and rel.status=1
+			<include refid="selectUserExclusiveUserRelation_where" />
+			group by rel_user_id) r on r.rel_user_id = u.id
+			where 1 = 1
+		</if>
+		<if test="!master.inclusiveRelationUser">
+			left join (SELECT rel_user_id FROM sys_user_relation rel, sys_user us
+			where rel.user_id = us.id and rel.status=1
+			<include refid="selectUserExclusiveUserRelation_where" />
+			group by rel_user_id) r on r.rel_user_id = u.id
+			where r.rel_user_id is
+			null
+		</if>
+		<if test="master.whereIsAnd">
+			<include refid="sql_of_leftJoin_condition" />
+		</if>
+		<if test="!master.whereIsAnd">
+			<include refid="sql_of_leftJoin_condition_or" />
+		</if>
+		<if test="page != null">
+			<if test="page.orderByClause == null">order by u.create_date desc</if>
+			<if test="page.orderByClause != null">order by ${page.orderByClause}</if>
+			<if test="page.startIndex != null and page.pageSize != null">
+				limit #{page.startIndex} , #{page.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<select id="countUserExclusiveUserRelation" resultType="java.lang.Integer">
+		select count(u.id) from sys_user u
+		<if test="master.inclusiveRelationUser">
+			inner join (SELECT rel_user_id FROM sys_user_relation rel, sys_user
+			us where rel.user_id = us.id and rel.status=1
+			<include refid="selectUserExclusiveUserRelation_where" />
+			group by rel_user_id) r on r.rel_user_id = u.id
+			where 1 = 1
+		</if>
+		<if test="!master.inclusiveRelationUser">
+			left join (SELECT rel_user_id FROM sys_user_relation rel, sys_user us
+			where rel.user_id = us.id and rel.status=1
+			<include refid="selectUserExclusiveUserRelation_where" />
+			group by rel_user_id) r on r.rel_user_id = u.id
+			where r.rel_user_id is
+			null
+		</if>
+		<if test="master.whereIsAnd">
+			<include refid="sql_of_leftJoin_condition" />
+		</if>
+		<if test="!master.whereIsAnd">
+			<include refid="sql_of_leftJoin_condition_or" />
+		</if>
+	</select>
+
+	<!-- 用户字段：多选数据字典查询 start -->
+	<sql id="object_dict_relation_left">
+		<if test="dictRelationParam != null">
+			${dictRelationParam}
+		</if>
+	</sql>
+	<!-- 用户字段：多选数据字典查询 end -->
+
+	<select id="countForPMS" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(z.id) from (
+		select
+		u.id
+		from sys_user u
+		inner join
+		sys_user_role rr on rr.user_id = u.id
+		inner join sys_role r on r.id =
+		rr.role_id
+		<include refid="sql_of_role_condition" />
+		inner join  p on p.supplier_id = u.id
+		<include refid="object_dict_relation_left" />
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			<if test="bParam.searchRemark != null">
+				and u.name like #{bParam.searchRemark,jdbcType=VARCHAR}
+			</if>
+		</where>
+		group by u.id
+		) z
+	</select>
+
+	<!-- 根据用户id和推荐人信息查询推荐人-->
+	<select id="findUserByRefereeInfo" resultMap="BaseResultMap">
+		select id,supplier_id,name,invitationCode,corporater_mobile
+		from sys_user
+		where
+		user_type = 12
+		and supplier_id = #{sysUser.supplierId,jdbcType=BIGINT}
+		<if test="sysUser.refereeInfo != null">
+			and
+			(
+			name like
+			concat(concat('%',#{sysUser.refereeInfo,jdbcType=VARCHAR}),'%')
+			or invitationCode like
+			concat(concat('%',#{sysUser.refereeInfo,jdbcType=VARCHAR}),'%')
+			or corporater_mobile like
+			concat(concat('%',#{sysUser.refereeInfo,jdbcType=VARCHAR}),'%')
+			)
+		</if>
+		<if test="sysUser.accountState != null">
+			and account_state = #{sysUser.accountState,jdbcType=INTEGER}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysLogMapper">
+
+<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+	id  
+	,type 
+	,create_by 
+	,create_date 
+	,remote_addr 
+	,user_agent 
+	,request_uri 
+	,method 
+	,params 
+	,exception 
+	,data_source 
+	,create_id
+	,position
+	,telephone
+	,client
+	</sql>
+	
+<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysLog">
+	     <id column="id" property="id" jdbcType="BIGINT" />
+		<result column="type" jdbcType="CHAR" property="type" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="remote_addr" jdbcType="VARCHAR" property="remoteAddr" />
+		<result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+		<result column="request_uri" jdbcType="VARCHAR" property="requestUri" />
+		<result column="method" jdbcType="VARCHAR" property="method" />
+		<result column="params" jdbcType="LONGVARCHAR" property="params" />
+		<result column="exception" jdbcType="LONGVARCHAR" property="exception" />
+		<result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+        <result column="create_id" jdbcType="VARCHAR" property="createId" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+        <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+        <result column="client" jdbcType="VARCHAR" property="client" />
+	</resultMap>
+
+<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select  <include refid="Base_Column_List" />
+		from sys_log
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+<!-- 删除 -->	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_log where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		WHERE 1=1 
+		<if test="bParam != null" >
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.type != null and bParam.type != ''"> AND type = #{bParam.type,jdbcType=CHAR} </if>
+			<if test="bParam.createBy != null and bParam.createBy != ''"> AND create_by like #{bParam.createBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.createDate != null"> AND create_date >= #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+            <if test="bParam.createDateEnd != null"> <![CDATA[ AND create_date < #{bParam.createDateEnd,jdbcType=TIMESTAMP} ]]>  </if>
+			<if test="bParam.remoteAddr != null and bParam.remoteAddr != ''"> AND remote_addr like #{bParam.remoteAddr,jdbcType=VARCHAR} </if>
+			<if test="bParam.userAgent != null and bParam.userAgent != ''"> AND user_agent = #{bParam.userAgent,jdbcType=VARCHAR} </if>
+			<if test="bParam.requestUri != null and bParam.requestUri != ''"> AND request_uri = #{bParam.requestUri,jdbcType=VARCHAR} </if>
+			<if test="bParam.method != null and bParam.remoteAddr != ''"> AND method = #{bParam.method,jdbcType=VARCHAR} </if>
+			<if test="bParam.params != null"> AND params = #{bParam.params,jdbcType=LONGVARCHAR} </if>
+			<if test="bParam.exception != null"> AND exception = #{bParam.exception,jdbcType=LONGVARCHAR} </if>
+			<if test="bParam.dataSource != null and bParam.dataSource != ''"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+			<if test="bParam.createId != null and bParam.createId != ''"> AND create_id = #{bParam.createId,jdbcType=VARCHAR} </if>
+			<if test="bParam.position != null and bParam.position != ''"> AND position like #{bParam.position,jdbcType=VARCHAR} </if>
+			<if test="bParam.telephone != null and bParam.telephone != ''"> AND telephone = #{bParam.telephone,jdbcType=VARCHAR} </if>
+			<if test="bParam.client != null and bParam.client != ''"> AND client = #{bParam.client,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+	
+<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from sys_log
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by id desc </if>
+			<if test="pParam.orderByClause != null" > order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null" >
+			  limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from sys_log
+		<include refid="sql_of_where" />
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysLog" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_log 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				id, 
+			<if test="type != null">
+			    type,
+			</if>
+			<if test="createBy != null">
+			    create_by,
+			</if>
+			<if test="createDate != null">
+			    create_date,
+			</if>
+			<if test="remoteAddr != null">
+			    remote_addr,
+			</if>
+			<if test="userAgent != null">
+			    user_agent,
+			</if>
+			<if test="requestUri != null">
+			    request_uri,
+			</if>
+			<if test="method != null">
+			    method,
+			</if>
+			<if test="params != null">
+			    params,
+			</if>
+			<if test="exception != null">
+			    exception,
+			</if>
+			<if test="dataSource != null">
+			    data_source,
+			</if>
+			<if test="createId != null">
+                create_id,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="client != null">
+                client,
+            </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			     #{id,jdbcType=BIGINT}, 
+			<if test="type != null">
+			    #{type,jdbcType=CHAR},
+			</if>
+			<if test="createBy != null">
+			    #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+			    #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remoteAddr != null">
+			    #{remoteAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="userAgent != null">
+			    #{userAgent,jdbcType=VARCHAR},
+			</if>
+			<if test="requestUri != null">
+			    #{requestUri,jdbcType=VARCHAR},
+			</if>
+			<if test="method != null">
+			    #{method,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+			    #{params,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="exception != null">
+			    #{exception,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="dataSource != null">
+			    #{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="client != null">
+                #{client,jdbcType=VARCHAR},
+            </if>
+		</trim>
+	</insert>
+	
+<!-- 批量插入 请根据业务修改默认值-->	
+    <insert id="insertBatch"  parameterType="java.util.List">
+		insert into sys_log 
+		(id  
+		,type 
+		,create_by 
+		,create_date 
+		,remote_addr 
+		,user_agent 
+		,request_uri 
+		,method 
+		,params 
+		,exception 
+		,data_source
+        ,create_id
+	    ,position
+	    ,telephone
+	    ,client
+		) 
+		values
+		<foreach collection="list" item="item" separator=",">
+		(#{item.id,jdbcType=BIGINT}  
+			<choose>  
+				<when test="item.type != null">,#{item.type ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.remoteAddr != null">,#{item.remoteAddr ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.userAgent != null">,#{item.userAgent ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.requestUri != null">,#{item.requestUri ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.method != null">,#{item.method ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.params != null">,#{item.params ,jdbcType=LONGVARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.exception != null">,#{item.exception ,jdbcType=LONGVARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose> 
+				<when test="item.dataSource != null">,#{item.dataSource ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+            <choose> 
+                <when test="item.createId != null">,#{item.createId ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+            <choose> 
+                <when test="item.position != null">,#{item.position ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+            <choose> 
+                <when test="item.telephone != null">,#{item.telephone ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+            <choose> 
+                <when test="item.client != null">,#{item.client ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+		)
+		</foreach>
+	</insert>
+
+<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysLog">
+		update sys_log
+		<set>
+			<if test="type != null" >
+             type = #{type,jdbcType=CHAR},
+            </if>
+			<if test="createBy != null" >
+             create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+			<if test="createDate != null" >
+             create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+			<if test="remoteAddr != null" >
+             remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+            </if>
+			<if test="userAgent != null" >
+             user_agent = #{userAgent,jdbcType=VARCHAR},
+            </if>
+			<if test="requestUri != null" >
+             request_uri = #{requestUri,jdbcType=VARCHAR},
+            </if>
+			<if test="method != null" >
+             method = #{method,jdbcType=VARCHAR},
+            </if>
+			<if test="params != null" >
+             params = #{params,jdbcType=LONGVARCHAR},
+            </if>
+			<if test="exception != null" >
+             exception = #{exception,jdbcType=LONGVARCHAR},
+            </if>
+			<if test="dataSource != null" >
+             data_source = #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null" >
+             create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+             position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null" >
+             telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="client != null" >
+             client = #{client,jdbcType=VARCHAR},
+            </if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey"  parameterType="java.util.List">
+	     <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update sys_log 
+                <set>
+                  <if test="item.type != null" >
+                    type = #{item.type,jdbcType=CHAR},
+                  </if>
+                  <if test="item.createBy != null" >
+                    create_by = #{item.createBy,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.createDate != null" >
+                    create_date = #{item.createDate,jdbcType=TIMESTAMP},
+                  </if>
+                  <if test="item.remoteAddr != null" >
+                    remote_addr = #{item.remoteAddr,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.userAgent != null" >
+                    user_agent = #{item.userAgent,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.requestUri != null" >
+                    request_uri = #{item.requestUri,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.method != null" >
+                    method = #{item.method,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.params != null" >
+                    params = #{item.params,jdbcType=LONGVARCHAR},
+                  </if>
+                  <if test="item.exception != null" >
+                    exception = #{item.exception,jdbcType=LONGVARCHAR},
+                  </if>
+                  <if test="item.dataSource != null" >
+                    data_source = #{item.dataSource,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.createId != null" >
+                    createId = #{item.createId,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.position != null" >
+                    position = #{item.position,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.telephone != null" >
+                    telephone = #{item.telephone,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.client != null" >
+                    client = #{item.client,jdbcType=VARCHAR},
+                  </if>
+                </set>
+                where id = #{item.id,jdbcType=BIGINT}
+         </foreach>
+	</update>
+</mapper>

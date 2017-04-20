@@ -1,0 +1,16 @@
+{
+  "id" : "2216619736563736",
+  "name" : "abc123",
+  "phoneNumber" : "4444",
+  "typeDesc" : "1111",
+  "supplierId" : "1234541",
+  "createBy" : "3334",
+  "createDate" : "2017-10-12",
+  "updateBy" : "66666",
+  "updateDate" : "2017-11-12",
+  "dataSource" : "7546745324",
+  "nameEn" : "abcEn",
+  "email" : "abc@163.com",
+  "idNumber" : "7452341233123",
+  "isDefault" : "true"
+}

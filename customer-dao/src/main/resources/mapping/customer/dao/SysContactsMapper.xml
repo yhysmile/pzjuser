@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysContactMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id,
+		name,
+		phone_number,
+		type_desc,
+		supplier_id,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		data_source,
+        name_en,
+        id_number,
+        email,
+        is_default,
+        name_pinyin
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.ids != null"> AND id in
+				<foreach collection="bParam.ids" item="_id" open="(" separator="," close=")">
+					#{_id,jdbcType=BIGINT}
+				</foreach>
+			</if>
+			<if test="bParam.name != null"> AND name like #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.phoneNumber != null"> AND phone_number like #{bParam.phoneNumber,jdbcType=VARCHAR} </if>
+			<if test="bParam.typeDesc != null"> AND type_desc like #{bParam.typeDesc,jdbcType=VARCHAR} </if>
+			<if test="bParam.supplierId != null"> AND supplier_id = #{bParam.supplierId,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=BIGINT} </if>
+			<if test="bParam.createDate != null"> AND create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=BIGINT} </if>
+			<if test="bParam.updateDate != null"> AND update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.dataSource != null"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+			<if test="bParam.nameEn != null"> AND name_en like #{bParam.nameEn,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.idNumber != null"> AND id_number like #{bParam.idNumber,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.email != null"> AND email like #{bParam.email,jdbcType=VARCHAR} </if>
+			<if test="bParam.isDefault != null"> AND is_default = #{bParam.isDefault,jdbcType=TINYINT} </if>
+			<if test="bParam.namePinyin != null"> AND name_pinyin = #{bParam.namePinyin,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+
+	<sql id="sql_of_where_alias">
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND a.id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.ids != null"> AND a.id in
+				<foreach collection="bParam.ids" item="_id" open="(" separator="," close=")">
+					#{_id,jdbcType=BIGINT}
+				</foreach>
+			</if>
+			<if test="bParam.name != null"> AND a.name like #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.phoneNumber != null"> AND a.phone_number like #{bParam.phoneNumber,jdbcType=VARCHAR} </if>
+			<if test="bParam.typeDesc != null"> AND a.type_desc like #{bParam.typeDesc,jdbcType=VARCHAR} </if>
+			<if test="bParam.supplierId != null"> AND a.supplier_id = #{bParam.supplierId,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND a.create_by = #{bParam.createBy,jdbcType=BIGINT} </if>
+			<if test="bParam.createDate != null"> AND a.create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.updateBy != null"> AND a.update_by = #{bParam.updateBy,jdbcType=BIGINT} </if>
+			<if test="bParam.updateDate != null"> AND a.update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.dataSource != null"> AND a.data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+			<if test="bParam.nameEn != null"> AND a.name_en like #{bParam.nameEn,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.idNumber != null"> AND a.id_number like #{bParam.idNumber,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.email != null"> AND a.email like #{bParam.email,jdbcType=VARCHAR} </if>
+			<if test="bParam.isDefault != null"> AND a.is_default = #{bParam.isDefault,jdbcType=TINYINT} </if>
+			<if test="bParam.namePinyin != null"> AND a.name_pinyin = #{bParam.namePinyin,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysContacts">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+		<result column="type_desc" property="typeDesc" jdbcType="VARCHAR" />
+		<result column="supplier_id" property="supplierId" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="BIGINT" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="BIGINT" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="data_source" property="dataSource" jdbcType="VARCHAR" />
+		<result column="name_en" property="nameEn" jdbcType="TIMESTAMP" />
+		<result column="id_number" property="idNumber" jdbcType="TIMESTAMP" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="is_default" property="isDefault" jdbcType="TINYINT" />
+		<result column="name_pinyin" property="namePinyin" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_contacts
+		where
+		id = #{id, jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey">
+		delete from sys_contacts where
+		id = #{id, jdbcType=BIGINT}
+	</delete>
+
+	<delete id="deleteBatchByPrimaryKey">
+		delete from sys_contacts where id in
+		<foreach collection="list" item="_id" open="(" separator="," close=")">
+			#{_id, jdbcType=BIGINT}
+		</foreach>
+	</delete>
+
+	<delete id="deleteBatchByParam">
+		delete from sys_contacts
+		<where>
+			<trim prefix="(" suffix=")"  prefixOverrides="and|or">
+				<include refid="sql_of_where" />
+			</trim>
+			or 1 = 2
+		</where>
+	</delete>
+
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_contacts a
+		<where>
+			<include refid="sql_of_where_alias" />
+		</where>
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by a.id desc </if>
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from sys_contacts a
+		<where>
+			<include refid="sql_of_where_alias" />
+		</where>
+	</select>
+
+
+	<!-- 插入单条数据 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysContacts">
+		insert into sys_contacts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="name != null">name,</if>
+			<if test="phoneNumber != null">phone_number,</if>
+			<if test="typeDesc != null">type_desc,</if>
+			<if test="supplierId != null">supplier_id,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="createDate != null">create_date,</if>
+			<if test="updateBy != null">update_by,</if>
+			<if test="updateDate != null">update_date,</if>
+			<if test="dataSource != null">data_source,</if>
+			<if test="nameEn != null">name_en,</if>
+			<if test="idNumber != null">id_number,</if>
+			<if test="email != null">email,</if>
+			<if test="isDefault != null">is_default,</if>
+			<if test="namePinyin != null">name_pinyin,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT},
+			<if test="name != null">#{name, jdbcType=VARCHAR},</if>
+			<if test="phoneNumber != null">#{phoneNumber, jdbcType=VARCHAR},</if>
+			<if test="typeDesc != null">#{typeDesc, jdbcType=VARCHAR},</if>
+			<if test="supplierId != null">#{supplierId, jdbcType=VARCHAR},</if>
+			<if test="createBy != null">#{createBy, jdbcType=BIGINT},</if>
+			<if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
+			<if test="updateBy != null">#{updateBy, jdbcType=BIGINT},</if>
+			<if test="updateDate != null">#{updateDate, jdbcType=TIMESTAMP},</if>
+			<if test="dataSource != null">#{dataSource, jdbcType=VARCHAR},</if>
+			<if test="nameEn != null">#{nameEn, jdbcType=TIMESTAMP},</if>
+			<if test="idNumber != null">#{idNumber, jdbcType=TIMESTAMP},</if>
+			<if test="email != null">#{email, jdbcType=VARCHAR},</if>
+			<if test="isDefault != null">#{isDefault, jdbcType=TINYINT},</if>
+			<if test="namePinyin != null">#{namePinyin, jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+
+	<!-- 批量插入，请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_contacts ( <include refid="Base_Column_List"/> )
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id, jdbcType=BIGINT}
+			<choose><when test="item.name != null">, #{item.name, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+			<choose><when test="item.phoneNumber != null">, #{item.phoneNumber, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+			<choose><when test="item.typeDesc != null">, #{item.typeDesc, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+			<choose><when test="item.supplierId != null">, #{item.supplierId, jdbcType=VARCHAR}</when><otherwise>,0</otherwise></choose>
+			<choose><when test="item.createBy != null">, #{item.createBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+			<choose><when test="item.createDate != null">, #{item.createDate, jdbcType=TIMESTAMP}</when><otherwise>, '0000-00-00'</otherwise></choose>
+			<choose><when test="item.updateBy != null">, #{item.updateBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+			<choose><when test="item.updateDate != null">, #{item.updateDate, jdbcType=TIMESTAMP}</when><otherwise>, '0000-00-00'</otherwise></choose>
+			<choose><when test="item.dataSource != null">, #{item.dataSource, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+			<choose><when test="item.nameEn != null">, #{item.nameEn, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+			<choose><when test="item.idNumber != null">, #{item.idNumber, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+			<choose><when test="item.email != null">, #{item.email, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+			<choose><when test="item.isDefault != null">, #{item.isDefault, jdbcType=TINYINT}</when><otherwise>,0</otherwise></choose>
+			<choose><when test="item.namePinyin != null">, #{item.namePinyin, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>)
+		</foreach>
+	</insert>
+
+	<!-- 更新单条数据 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysMenu">
+		update sys_contacts
+		<set>
+			<if test="id != null">id = #{id, jdbcType=BIGINT},</if>
+			<if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+			<if test="phoneNumber != null">phone_number = #{phoneNumber, jdbcType=VARCHAR},</if>
+			<if test="typeDesc != null">type_desc = #{typeDesc, jdbcType=VARCHAR},</if>
+			<if test="supplierId != null">supplier_id = #{supplierId, jdbcType=VARCHAR},</if>
+			<if test="createBy != null">create_by = #{createBy, jdbcType=BIGINT},</if>
+			<if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+			<if test="updateBy != null">update_by = #{updateBy, jdbcType=BIGINT},</if>
+			<if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+			<if test="dataSource != null">data_source = #{dataSource, jdbcType=VARCHAR},</if>
+			<if test="nameEn != null">name_en = #{nameEn, jdbcType=TIMESTAMP},</if>
+			<if test="idNumber != null">id_number = #{idNumber, jdbcType=TIMESTAMP},</if>
+			<if test="email != null">email = #{email, jdbcType=VARCHAR},</if>
+			<if test="isDefault != null">is_default = #{isDefault, jdbcType=TINYINT},</if>
+			<if test="namePinyin != null">name_pinyin = #{namePinyin, jdbcType=VARCHAR},</if>
+		</set>
+		where
+		id = #{id, jdbcType=BIGINT}
+	</update>
+
+
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			update sys_contacts
+			<set>
+				<if test="item.id != null">id = #{item.id, jdbcType=BIGINT},</if>
+				<if test="item.name != null">name = #{item.name, jdbcType=VARCHAR},</if>
+				<if test="item.phoneNumber != null">phone_number = #{item.phoneNumber, jdbcType=VARCHAR},</if>
+				<if test="item.typeDesc != null">type_desc = #{item.typeDesc, jdbcType=VARCHAR},</if>
+				<if test="item.supplierId != null">supplier_id = #{item.supplierId, jdbcType=VARCHAR},</if>
+				<if test="item.createBy != null">create_by = #{item.createBy, jdbcType=BIGINT},</if>
+				<if test="item.createDate != null">create_date = #{item.createDate, jdbcType=TIMESTAMP},</if>
+				<if test="item.updateBy != null">update_by = #{item.updateBy, jdbcType=BIGINT},</if>
+				<if test="item.updateDate != null">update_date = #{item.updateDate, jdbcType=TIMESTAMP},</if>
+				<if test="item.dataSource != null">data_source = #{item.dataSource, jdbcType=VARCHAR},</if>
+				<if test="item.nameEn != null">name_en = #{item.nameEn, jdbcType=TIMESTAMP},</if>
+				<if test="item.idNumber != null">id_number = #{item.idNumber, jdbcType=TIMESTAMP},</if>
+				<if test="item.email != null">email = #{item.email, jdbcType=VARCHAR},</if>
+				<if test="item.isDefault != null">is_default = #{item.isDefault, jdbcType=TINYINT},</if>
+				<if test="item.namePinyin != null">name_pinyin = #{item.namePinyin, jdbcType=VARCHAR},</if>
+			</set>
+			where
+			id = #{item.id, jdbcType=BIGINT}
+		</foreach>
+	</update>
+</mapper>

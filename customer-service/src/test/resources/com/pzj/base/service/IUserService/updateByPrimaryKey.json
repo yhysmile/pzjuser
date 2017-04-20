@@ -1,0 +1,9 @@
+{
+  "testData" : {
+    "id" : "3376420740399104",
+    "accountState" : "1",
+    "updateBy" : 5533,
+    "updateDate" : "2017-01-12 14:22:30"
+  },
+  "testDataClass" : "com.pzj.base.entity.SysUser"
+}

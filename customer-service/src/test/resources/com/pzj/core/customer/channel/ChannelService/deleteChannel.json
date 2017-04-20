@@ -1,0 +1,10 @@
+{
+  "testData" : {
+    "id" : 3604480299368448,
+    "operator" : "123456789"
+  },
+  "testDataClass" : {
+    "id" : "long",
+    "operator" : "long"
+  }
+}

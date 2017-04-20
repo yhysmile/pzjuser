@@ -1,0 +1,15 @@
+{
+  "testData" :
+  {
+    "corporater": "李明昊",
+    "corporaterMobile": "17689756065",
+    "identifyType": "p",
+    "loginName": "we7689756065",
+    "refereeCode": "gknn",
+    "resellerType": 5,
+    "userPassword": "123456",
+    "userSource": "17"
+  }
+,
+  "testDataClass" : "com.pzj.core.customer.profile.CreateCustomerRequest"
+}

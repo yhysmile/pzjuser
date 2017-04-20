@@ -1,0 +1,5 @@
+ALTER TABLE `core_deploment`.`sys_contacts`
+ADD COLUMN `name_en` VARCHAR(45) NULL DEFAULT NULL COMMENT '英文名' ,
+ADD COLUMN `id_number` VARCHAR(20) NULL DEFAULT NULL COMMENT '身份证号' ,
+ADD COLUMN `email` VARCHAR(60) NULL COMMENT '邮箱',
+ADD COLUMN `is_default` TINYINT NULL COMMENT '是否为默认';

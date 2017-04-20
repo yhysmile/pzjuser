@@ -1,0 +1,21 @@
+{
+  "id" : 2216619736564976,
+  "corporaterMobile": "15311471210",
+  "createBy": "Junit测试数据",
+  "inclusiveRelationUser": true,
+  "isRoot": "0",
+  "loginName": "JunitTestAbc",
+  "loginPasswd": "111111",
+  "name": "liliang",
+  "needLike": false,
+  "supplierId": 2216619746563732,
+  "updateBy": "2216619746563732",
+  "userSource": "4",
+  "userType": "1",
+  "whereIsAnd": true,
+  "customerRelationList" : [{
+    "userId" : 2216619746563731,
+    "relUserId" : 12,
+    "relType" : "abc"
+  }]
+}

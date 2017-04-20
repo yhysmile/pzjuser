@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/jdbc.properties"/>
+
+	<!-- 读写数据源的父配置 -->
+	<bean id="customer.dataSource" abstract="true" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="initialSize" value="${jdbc.initialSize}"/>
+		<property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="testOnReturn" value="${jdbc.testOnReturn}" />
+
+        <property name="filters" value="stat" />
+	</bean>
+
+	<!-- 读库数据源和写库数据源 -->
+	<bean id="customer.dataSource.read" parent="customer.dataSource">
+		<property name="url"  value="${customer.read.url}"/>
+		<property name="username" value="${customer.read.username}"/>
+		<property name="password" value="${customer.read.password}"/>
+	</bean>
+	<bean id="customer.dataSource.write" parent="customer.dataSource">
+		<property name="url" value="${customer.write.url}"  />
+		<property name="username" value="${customer.write.username}"/>
+		<property name="password" value="${customer.write.password}"/>
+	</bean>
+
+	<!-- 读库Session工厂和写库Session工厂 -->
+	<bean id="customer.sqlSessionFactoryBean.read" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="customer.dataSource.read" />
+		<property name="configLocation" value="classpath:META-INF/mybatis/mybatis-config.xml"/>
+		<property name="mapperLocations">
+			<array>
+				<value>classpath*:mapping/customer/read/*Mapper.xml</value>
+			</array>
+		</property>
+	</bean>
+	<bean id="customer.sqlSessionFactoryBean.write" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="customer.dataSource.write" />
+		<property name="configLocation" value="classpath:META-INF/mybatis/mybatis-config.xml"/>
+		<property name="mapperLocations">
+			<array>
+				<value>classpath*:mapping/customer/write/*Mapper.xml</value>
+				<value>classpath*:mapping/customer/dao/*Mapper.xml</value>
+			</array>
+		</property>
+	</bean>
+
+	<!-- 读库Mapper扫描配置和写库Mapper扫描配置 -->
+	<bean id="customer.mapperScannerConfigurer.read" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.pzj.core.customer.read"/>
+		<property name="sqlSessionFactoryBeanName" value="customer.sqlSessionFactoryBean.read"/>
+	</bean>
+	<bean id="customer.mapperScannerConfigurer.write" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.pzj.core.customer.write, com.pzj.core.customer.dao"/>
+		<property name="sqlSessionFactoryBeanName" value="customer.sqlSessionFactoryBean.write"/>
+		<property name="annotationClass" value="com.pzj.base.common.persistence.annotation.MyBatisDao"/>
+	</bean>
+</beans>

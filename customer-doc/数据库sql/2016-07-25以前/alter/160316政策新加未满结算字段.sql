@@ -1,0 +1,2 @@
+ALTER TABLE `sys_channel_strategy` ADD COLUMN `not_total_settlement_type` int(10) NULL COMMENT '未满减结算规则类型';
+ALTER TABLE `sys_channel_strategy` ADD COLUMN `reduce_settlement_money` double(10,2) NULL COMMENT '减少结算金额';

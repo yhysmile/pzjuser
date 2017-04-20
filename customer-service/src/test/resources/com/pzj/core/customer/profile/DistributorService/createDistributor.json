@@ -1,0 +1,11 @@
+{
+  "testData": {
+    "corporater": "1123",
+    "corporaterMobile": "15210147640",
+    "identifyType": "p",
+    "loginName": "bbbar13343999",
+    "createBy":123456789,
+    "resellerType": 5
+  },
+  "testDataClass": "com.pzj.core.customer.profile.CreateCustomerRequest"
+}

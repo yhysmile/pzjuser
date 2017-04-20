@@ -1,0 +1,50 @@
+[
+  {
+    "id": "2216619736563734",
+    "province" : "北京123",
+    "city" : "北京123",
+    "county" : "朝阳123",
+    "address" : "麦子店西街123",
+    "postcode" : "99910",
+    "type" : "1",
+    "supplierId" : "123456789",
+    "isDefault" : "1",
+    "createBy" : "20002",
+    "createDate" : "2017-10-12",
+    "updateBy" : "20003",
+    "updateDate" : "2017-11-12",
+    "dataSource" : "4"
+  },
+  {
+    "id": "2216619736563735",
+    "province" : "北京123",
+    "city" : "北京123",
+    "county" : "朝阳123",
+    "address" : "麦子店西街123",
+    "postcode" : "99910",
+    "type" : "1",
+    "supplierId" : "123456789",
+    "isDefault" : "1",
+    "createBy" : "20002",
+    "createDate" : "2017-10-12",
+    "updateBy" : "20003",
+    "updateDate" : "2017-11-12",
+    "dataSource" : "4"
+  },
+  {
+    "id": "2216619736563736",
+    "province" : "北京123",
+    "city" : "北京123",
+    "county" : "朝阳123",
+    "address" : "麦子店西街123",
+    "postcode" : "99910",
+    "type" : "2",
+    "supplierId" : "123456789",
+    "isDefault" : "1",
+    "createBy" : "20002",
+    "createDate" : "2017-10-12",
+    "updateBy" : "20003",
+    "updateDate" : "2017-11-12",
+    "dataSource" : "4"
+  }
+]

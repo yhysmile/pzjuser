@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName">
+    <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
+          destroy-method="destroy" lazy-init="false">
+        <property name="scanPackage" value="com.pzj"/>
+    </bean>
+    <bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
+          init-method="init" destroy-method="destroy" lazy-init="false">
+    </bean>
+    <!--配置更改会自动reload-->
+    <bean id="configproperties_disconf" class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean" lazy-init="false">
+        <property name="locations">
+            <list>
+                <value type="java.lang.String">classpath*:application.properties</value>
+                <value type="java.lang.String">classpath*:config.properties</value>
+                <value type="java.lang.String">classpath*:logback.xml</value>
+                <value type="java.lang.String">classpath*:redis.properties</value>
+                <value type="java.lang.String">classpath*:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer"
+          class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer" lazy-init="false">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="propertiesArray">
+            <list>
+                <ref bean="configproperties_disconf"/>
+            </list>
+        </property>
+    </bean>
+</beans>

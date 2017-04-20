@@ -1,0 +1,11 @@
+{
+  "testData" : {
+    "id" : 3631569016717312,
+    "operator" : 123456789,
+    "accountHolder" : "wuliqingA",
+    "bank" : "nonghangA",
+    "idNum" : "140109123456789A",
+    "cardNum" : "140109123456789A",
+  },
+  "testDataClass" : "com.pzj.core.customer.bankcard.ModifyBankCardRequest"
+}

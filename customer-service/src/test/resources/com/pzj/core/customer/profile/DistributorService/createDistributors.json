@@ -1,0 +1,49 @@
+{
+  "testData" : 
+ {
+  	
+  	
+    "createBy": 123456789,
+    "createCustomerRequests": [
+    {
+      "address": "",
+      "businessCertificate": "",
+      "businessLicense": "",
+      "corporater": "ttggyyhh",
+      "corporaterCredentials": "",
+      "corporaterMobile": "15228846778",
+      "guideCertificate": "",
+      "identifyType": "p",
+      "loginName": "yyhhjj779_22",
+      "operChargerEmail": "dsdsd@dd.com",
+      "operChargerFax": "",
+      "operChargerPhone": "",
+      "province": "四川省",
+      "refereeCode": "gknn",
+      "resellerType": 5,
+      "supplierNormal": "bcvbcvbcv",
+      "hotlineReseller" : "bc"
+    },
+      {
+        "address": "",
+        "businessCertificate": "",
+        "businessLicense": "",
+        "corporater": "eerrddf",
+        "corporaterCredentials": "",
+        "corporaterMobile": "15228846778",
+        "guideCertificate": "",
+        "identifyType": "p",
+        "loginName": "yyhhjj779_23",
+        "name": "",
+        "operChargerEmail": "dsdsd@dd.com",
+        "operChargerFax": "",
+        "operChargerPhone": "86789098",
+        "province": "北京",
+        "refereeCode": "gknn",
+        "resellerType": 5,
+        "supplierNormal": ""
+      }]
+  }
+ ,
+  "testDataClass" : "com.pzj.core.customer.profile.CreateManyCustomerRequest"
+}

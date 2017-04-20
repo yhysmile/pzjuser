@@ -1,0 +1,9 @@
+{
+	"testData":
+	{
+	"channelId":3573127461142528,
+	"rootId":2216619736770346
+	}
+	,
+	"testDataClass" : "com.pzj.core.customer.commons.ChannelResellerQueryModel"
+}

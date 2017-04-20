@@ -1,0 +1,30 @@
+{
+  "testData": {
+    "id": "3707634087100416",
+    "supplierId": null,
+    "supplierNormal": "",
+    "identifyType": "q",
+    "corporaterMobile": "18752508475",
+    "corporater": "ycdxl1",
+    "corporaterCredentials": "",
+    "businessCertificate": "3123123123123123",
+    "businessQualification": "23eb78a2cb1d772bd8e7f29624a778e8,e01b97af86671b0e2bb4be5ad835358b,e8872d78bd4735bd8bf790ea1f77d1c5",
+    "businessLicense": "312323123123123",
+    "guideCertificate": "",
+    "address": "address",
+    "operChargerPhone": null,
+    "operChargerFax": "222223332",
+    "operChargerEmail": "de@q.com",
+    "refereeId": null,
+    "businessId": null,
+    "province": "四川省",
+    "city": "成都市",
+    "county": "武侯区",
+    "resellerType": 3,
+    "updateBy": "3707634087100416",
+    "hotlineSupplier": "123123123",
+    "hotlineReseller": "1234567890",
+    "logo": null
+  },
+  "testDataClass": "com.pzj.core.customer.profile.ModifyCustomerRequest"
+}

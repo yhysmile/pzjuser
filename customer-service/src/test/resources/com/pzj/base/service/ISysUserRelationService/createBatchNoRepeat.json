@@ -1,0 +1,19 @@
+{
+  "testData": [
+    {
+      "userId": 123,
+      "relUserId": 456,
+      "relType": "6",
+      "createBy": 213,
+      "createDate": "2016-11-21 16:36:51"
+    },
+    {
+      "userId": 123,
+      "relUserId": 789,
+      "relType": "6",
+      "createBy": 213,
+      "createDate": "2016-11-11 16:36:35"
+    }
+  ],
+  "testDataClass": "com.pzj.base.entity.SysUserRelation"
+}

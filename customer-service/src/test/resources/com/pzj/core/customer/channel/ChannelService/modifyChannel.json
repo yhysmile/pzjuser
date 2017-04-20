@@ -1,0 +1,8 @@
+{
+  "testData" : {
+    "id" : 3614343184252928,
+    "name" : "newChannelFF",
+    "updateBy" : 123456789
+  },
+  "testDataClass" : "com.pzj.core.customer.channel.ModifyChannelRequest"
+}

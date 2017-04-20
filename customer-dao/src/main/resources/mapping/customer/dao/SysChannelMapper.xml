@@ -1,0 +1,1078 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysChannelMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,name
+		,channel_principal
+		,city
+		,county
+		,province
+		,spell
+		,create_date
+		,del_flag
+		,sort
+		,update_date
+		,update_by
+		,create_by
+		,remark
+		,channel_type
+		,channel_category
+		,data_source
+		,supplier_id
+	</sql>
+	<sql id="Base_Column_List2">
+		sy.id
+		,sy.name
+		,sy.channel_principal
+		,sy.city
+		,sy.county
+		,sy.province
+		,sy.spell
+		,sy.create_date
+		,sy.del_flag
+		,sy.sort
+		,sy.update_date
+		,sy.update_by
+		,sy.create_by
+		,sy.remark
+		,sy.channel_type
+		,sy.channel_category
+		,sy.data_source
+		,sy.supplier_id
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysChannel">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="channel_principal" jdbcType="VARCHAR" property="channelPrincipal" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="county" jdbcType="VARCHAR" property="county" />
+		<result column="province" jdbcType="VARCHAR" property="province" />
+		<result column="spell" jdbcType="VARCHAR" property="spell" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="channel_type" jdbcType="CHAR" property="channelType" />
+		<result column="channel_category" jdbcType="VARCHAR" property="channelCategory" />
+		<result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+	</resultMap>
+
+	<!-- 字段映射 -->
+	<resultMap id="channel_users" type="com.pzj.core.customer.profile.ChannelUsers">
+		<result column="obj_id" property="channelId" jdbcType="BIGINT" />
+		<result column="user_Num" property="userNum" jdbcType="INTEGER" />
+		<result column="user_ids" property="userIds" jdbcType="VARCHAR" />
+		<result column="user_names" property="userNames" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_channel
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_channel where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+	<if test="bParam != null">
+	    <if test="bParam.queryUserIds != null">
+            inner join sys_label_relation sc on sc.obj_id = sy.id and sc.rel_type in ('channelUser', 'directChannelUser')
+            and sc.rel_id in
+            <foreach collection="bParam.queryUserIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+		WHERE 1=1		
+			<if test="bParam.id != null"> AND sy.id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.name != null"> AND sy.name like #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.channelPrincipal != null"> AND sy.channel_principal like #{bParam.channelPrincipal,jdbcType=VARCHAR} </if>
+			<if test="bParam.city != null"> AND sy.city = #{bParam.city,jdbcType=VARCHAR} </if>
+			<if test="bParam.county != null"> AND sy.county = #{bParam.county,jdbcType=VARCHAR} </if>
+			<if test="bParam.province != null"> AND sy.province = #{bParam.province,jdbcType=VARCHAR} </if>
+			<if test="bParam.spell != null"> AND sy.spell = #{bParam.spell,jdbcType=VARCHAR} </if>
+			<if test="bParam.createDate != null"> AND sy.create_date >= #{bParam.createDate,jdbcType=TIMESTAMP}</if>
+			<if test="bParam.createDateEnd != null"><![CDATA[ AND sy.create_date <= #{bParam.createDateEnd,jdbcType=TIMESTAMP} ]]></if>
+			<if test="bParam.delFlag != null"> AND sy.del_flag = #{bParam.delFlag,jdbcType=CHAR} </if>
+			<if test="bParam.sort != null"> AND sy.sort = #{bParam.sort,jdbcType=INTEGER} </if>
+			<if test="bParam.updateDate != null"> AND sy.update_date =
+				#{bParam.updateDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="bParam.updateBy != null"> AND sy.update_by = #{bParam.updateBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND sy.create_by = #{bParam.createBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.remark != null"> AND sy.remark = #{bParam.remark,jdbcType=VARCHAR} </if>
+			<if test="bParam.channelType != null"> AND sy.channel_type = #{bParam.channelType,jdbcType=CHAR}
+			</if>
+			<if test="bParam.channelCategory != null"> AND sy.channel_category =
+				#{bParam.channelCategory,jdbcType=VARCHAR}
+			</if>
+			<if test="bParam.dataSource != null"> AND sy.data_source =
+				#{bParam.dataSource,jdbcType=VARCHAR}
+			</if>
+			<if test="bParam.supplierId != null"> AND sy.supplier_id =
+				#{bParam.supplierId,jdbcType=BIGINT}
+			</if>
+			<if test="bParam.queryIds != null">
+				AND sy.id in
+				<foreach collection="bParam.queryIds" item="item" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			
+			
+		</if>
+	</sql>
+
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List2" />
+		from sys_channel sy
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause}
+			</if>
+			<if test="pParam.orderByClause == null">
+				order by create_date desc
+			</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(id) from sys_channel sy
+		<include refid="sql_of_where" />
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysChannel">
+		insert into sys_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="name != null">
+				name,
+			</if>
+			<if test="channelPrincipal != null">
+				channel_principal,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="county != null">
+				county,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="spell != null">
+				spell,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="channelType != null">
+				channel_type,
+			</if>
+			<if test="channelCategory != null">
+				channel_category,
+			</if>
+			<if test="dataSource != null">
+				data_source,
+			</if>
+			<if test="supplierId != null">
+				supplier_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="channelPrincipal != null">
+				#{channelPrincipal,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				#{county,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="spell != null">
+				#{spell,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="channelType != null">
+				#{channelType,jdbcType=CHAR},
+			</if>
+			<if test="channelCategory != null">
+				#{channelCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSource != null">
+				#{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierId != null">
+				#{supplierId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_channel
+		(id
+		,name
+		,channel_principal
+		,city
+		,county
+		,province
+		,spell
+		,create_date
+		,del_flag
+		,sort
+		,update_date
+		,update_by
+		,create_by
+		,remark
+		,channel_type
+		,channel_category
+		,data_source
+		,supplier_id
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.name != null">,#{item.name ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.channelPrincipal != null">,#{item.channelPrincipal ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.city != null">,#{item.city ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.county != null">,#{item.county ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.province != null">,#{item.province ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.spell != null">,#{item.spell ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.delFlag != null">,#{item.delFlag ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.sort != null">,#{item.sort ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.remark != null">,#{item.remark ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.channelType != null">,#{item.channelType ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.channelCategory != null">,#{item.channelCategory ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.dataSource != null">,#{item.dataSource ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierId != null">,#{item.supplierId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysChannel">
+		update sys_channel
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="channelPrincipal != null">
+				channel_principal = #{channelPrincipal,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				county = #{county,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="spell != null">
+				spell = #{spell,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate == null">
+				update_date = current_timestamp(),
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="channelType != null">
+				channel_type = #{channelType,jdbcType=CHAR},
+			</if>
+			<if test="channelCategory != null">
+				channel_category = #{channelCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSource != null">
+				data_source = #{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="supplierId != null">
+				supplier_id = #{supplierId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update sys_channel
+			<set>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.channelPrincipal != null">
+					channel_principal =
+					#{item.channelPrincipal,jdbcType=VARCHAR},
+				</if>
+				<if test="item.city != null">
+					city = #{item.city,jdbcType=VARCHAR},
+				</if>
+				<if test="item.county != null">
+					county = #{item.county,jdbcType=VARCHAR},
+				</if>
+				<if test="item.province != null">
+					province = #{item.province,jdbcType=VARCHAR},
+				</if>
+				<if test="item.spell != null">
+					spell = #{item.spell,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createDate != null">
+					create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.delFlag != null">
+					del_flag = #{item.delFlag,jdbcType=CHAR},
+				</if>
+				<if test="item.sort != null">
+					sort = #{item.sort,jdbcType=INTEGER},
+				</if>
+				<if test="item.updateDate != null">
+					update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateDate == null">
+					update_date = current_timestamp(),
+				</if>
+				<if test="item.updateBy != null">
+					update_by = #{item.updateBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createBy != null">
+					create_by = #{item.createBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.remark != null">
+					remark = #{item.remark,jdbcType=VARCHAR},
+				</if>
+				<if test="item.channelType != null">
+					channel_type = #{item.channelType,jdbcType=CHAR},
+				</if>
+				<if test="item.channelCategory != null">
+					channel_category =
+					#{item.channelCategory,jdbcType=VARCHAR},
+				</if>
+				<if test="item.dataSource != null">
+					data_source = #{item.dataSource,jdbcType=VARCHAR},
+				</if>
+				<if test="item.supplierId != null">
+					supplier_id = #{item.supplierId,jdbcType=BIGINT},
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_channel
+		<where>
+			<if test="channelIds != null">
+				and id in (${channelIds})
+			</if>
+			or 1=2
+		</where>
+		order by create_date desc
+	</select>
+
+	<select id="findByIdList" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_channel
+		<where>
+			<if test="channelIds != null">
+				and id in
+				<foreach collection="channelIds" item="item" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			or 1=2
+		</where>
+		order by create_date desc
+	</select>
+
+
+	<!-- 左连接实体多蚕食查询sql -->
+	<sql id="Base_Column_LeftJoin_List">
+		c.id
+		,c.name
+		,c.channel_principal
+		,c.city
+		,c.county
+		,c.province
+		,c.spell
+		,c.create_date
+		,c.del_flag
+		,c.sort
+		,c.update_date
+		,c.update_by
+		,c.create_by
+		,c.remark
+		,c.channel_type
+		,c.channel_category
+		,c.data_source
+		,c.supplier_id
+	</sql>
+	<sql id="sql_of_leftJoin_condition">
+		<if test="bParam != null">
+			<if test="bParam != null">
+				<if test="bParam.id != null"> AND c.id = #{bParam.id,jdbcType=BIGINT} </if>
+				<if test="bParam.name != null"> AND c.name like
+				concat(concat('%',#{bParam.name,jdbcType=VARCHAR}),'%')</if>
+				<if test="bParam.channelPrincipal != null"> AND c.channel_principal =
+					#{bParam.channelPrincipal,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.city != null"> AND c.city = #{bParam.city,jdbcType=VARCHAR} </if>
+				<if test="bParam.county != null"> AND c.county = #{bParam.county,jdbcType=VARCHAR} </if>
+				<if test="bParam.province != null"> AND c.province = #{bParam.province,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.spell != null"> AND c.spell = #{bParam.spell,jdbcType=VARCHAR} </if>
+				<if test="bParam.createDate != null"> AND c.create_date >=
+					#{bParam.createDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.createDateEnd != null"><![CDATA[ AND c.create_date <=
+					#{bParam.createDateEnd,jdbcType=TIMESTAMP} ]]>
+				</if>
+				<if test="bParam.delFlag != null"> AND c.del_flag = #{bParam.delFlag,jdbcType=CHAR} </if>
+				<if test="bParam.sort != null"> AND c.sort = #{bParam.sort,jdbcType=INTEGER} </if>
+				<if test="bParam.updateDate != null"> AND c.update_date =
+					#{bParam.updateDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.updateBy != null"> AND c.update_by = #{bParam.updateBy,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.createBy != null"> AND c.create_by = #{bParam.createBy,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.remark != null"> AND c.remark = #{bParam.remark,jdbcType=VARCHAR} </if>
+				<if test="bParam.channelType != null"> AND c.channel_type =
+					#{bParam.channelType,jdbcType=CHAR}
+				</if>
+				<if test="bParam.channelCategory != null"> AND c.channel_category =
+					#{bParam.channelCategory,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.dataSource != null"> AND c.data_source =
+					#{bParam.dataSource,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.supplierId != null"> AND c.supplier_id =
+					#{bParam.supplierId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.queryIds != null and bParam.queryIds.size &gt; 0">
+					AND c.id in
+					<foreach collection="bParam.queryIds" item="item" open="("
+							 separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+			</if>
+		</if>
+
+	</sql>
+
+	<!-- 根据关系表中的objId分页获取标签列表 -->
+	<select id="findListByObjID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_channel c
+		left join sys_label_relation r on r.rel_id = c.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.obj_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status =1
+		</where>
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause}
+			</if>
+			<if test="pParam.orderByClause == null">
+				order by c.create_date desc
+			</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	<select id="countByObjID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(c.id)
+		from sys_channel c
+		left join sys_label_relation r on
+		r.rel_id = c.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.obj_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status = 1
+		</where>
+	</select>
+
+	<!-- 根据关系表中的refId分页获取标签列表 -->
+	<select id="findListByRefID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_channel c
+		left join sys_label_relation r on r.obj_id = c.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.rel_id = #{idParam}
+			and r.rel_type in (${relType})
+			and r.status = 1
+		</where>
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause}
+			</if>
+			<if test="pParam.orderByClause == null">
+				order by c.create_date desc
+			</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+
+
+	</select>
+	<select id="countByRefID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(c.id)
+		from sys_channel c
+		left join sys_label_relation r on
+		r.obj_id = c.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.rel_id = #{idParam}
+			and r.rel_type in (${relType})
+			and r.status = 1
+		</where>
+	</select>
+
+	<!-- 根据渠道信息分页获取与产品id未关联的渠道列表 -->
+	<select id="findNotByProductID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_channel c
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			<if test="idParam != null">
+				and not exists(
+				select r.id from sys_label_relation r left join sys_label_relation r1 on
+				r.obj_id= r1.obj_id
+				where c.id = r.rel_id
+				and r.rel_type= #{strategyChannel}
+				and r1.rel_type= #{strategyProduct}
+				and r1.rel_id = #{idParam}
+				and r.status = 1
+				)
+			</if>
+		</where>
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause}
+			</if>
+			<if test="pParam.orderByClause == null">
+				order by c.create_date desc
+			</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<select id="countNotByProductID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(c.id)
+		from sys_channel c
+		left join sys_label_relation r on
+		r.obj_id = c.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and not exists(
+			select r.id from sys_label_relation r left join
+			sys_label_relation r1 on
+			r.obj_id= r1.obj_id
+			where c.id = r.rel_id
+			and
+			r.rel_type= #{strategyChannel}
+			and r1.rel_type= #{strategyProduct}
+			and
+			r1.rel_id = #{idParam}
+			)
+			and r.status = 1
+		</where>
+	</select>
+	
+	<select id="countPageSingleTable" parameterType="map" resultType="int">
+	select count(*) from sys_channel 
+			where supplier_id = #{bParam,jdbcType=BIGINT}
+	
+	</select>
+	<select id="queryPageSingleTable" resultMap="BaseResultMap" parameterType="map">
+		select <include refid="Base_Column_List" /> from sys_channel 
+			where supplier_id = #{bParam,jdbcType=BIGINT}
+		<if test="pParam != null">
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<select id="selectChannelContainUser" resultMap="BaseResultMap">
+		select <include refid="Base_Column_LeftJoin_List"/> from sys_channel c
+		<if test="user != null
+		and (
+			(user.id != null and user.id &gt; 0)
+			or
+			(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+			or
+			(user.corporater != null and user.corporater.length() &gt; 0)
+			or
+			(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+			or
+			(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+		)">
+			inner join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type in ('directChannelUser')
+			inner join sys_user u on u.id = rel.rel_id
+		</if>
+		<where>
+			1 = 1
+		    <if test="user != null
+		    and (
+				(user.id != null and user.id &gt; 0)
+				or
+				(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+				or
+				(user.corporater != null and user.corporater.length() &gt; 0)
+				or
+				(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+				or
+				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+			)">
+				and (rel.status = 1 or rel.status is NULL)
+				<if test="user.id != null and user.id &gt; 0">
+					AND rel.rel_id = #{user.id,jdbcType=BIGINT}
+				</if>
+				<if test="user.name != null and user.name.length() &gt; 0">
+					AND u.name like
+					concat(concat('%',#{user.name,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0">
+					AND u.corporater_mobile like
+					concat(concat('%',#{user.corporaterMobile,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.corporater != null and user.corporater.length() &gt; 0">
+					AND u.corporater like
+					concat(concat('%',#{user.corporater,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.supplierNormal != null and user.supplierNormal.length() &gt; 0">
+					AND u.supplier_normal like
+					concat(concat('%',#{user.supplierNormal,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0">
+					AND (
+						u.name like
+						concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+						OR u.supplier_normal like
+						concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+					)
+				</if>
+			</if>
+
+			<include refid="sql_of_leftJoin_condition"/>
+		</where>
+		group by c.id
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause}</if>
+			<if test="pParam.orderByClause == null"> order by c.create_date desc</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<select id="countChannelContainUser" resultType="int">
+		select count(d.id) from (
+			select c.id from sys_channel c
+			<if test="user != null
+		    and (
+				(user.id != null and user.id &gt; 0)
+				or
+				(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+				or
+				(user.corporater != null and user.corporater.length() &gt; 0)
+				or
+				(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+				or
+				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+			)">
+				inner join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type in ('directChannelUser')
+				inner join sys_user u on u.id = rel.rel_id
+			</if>
+			<where>
+				1 = 1
+			    <if test="user != null
+				and (
+					(user.id != null and user.id &gt; 0)
+					or
+					(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+					or
+					(user.corporater != null and user.corporater.length() &gt; 0)
+					or
+					(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+					or
+					(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+				)">
+					and (rel.status = 1 or rel.status is NULL)
+					<if test="user.id != null and user.id &gt; 0">
+						AND rel.rel_id = #{user.id,jdbcType=BIGINT}
+					</if>
+					<if test="user.name != null and user.name.length() &gt; 0">
+						AND u.name like
+						concat(concat('%',#{user.name,jdbcType=VARCHAR}),'%')
+					</if>
+					<if test="user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0">
+						AND u.corporater_mobile like
+						concat(concat('%',#{user.corporaterMobile,jdbcType=VARCHAR}),'%')
+					</if>
+					<if test="user.corporater != null and user.corporater.length() &gt; 0">
+						AND u.corporater like
+						concat(concat('%',#{user.corporater,jdbcType=VARCHAR}),'%')
+					</if>
+					<if test="user.supplierNormal != null and user.supplierNormal.length() &gt; 0">
+						AND u.supplier_normal like
+						concat(concat('%',#{user.supplierNormal,jdbcType=VARCHAR}),'%')
+					</if>
+					<if test="user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0">
+						AND (
+							u.name like
+							concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+							OR u.supplier_normal like
+							concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+						)
+					</if>
+				</if>
+
+				<include refid="sql_of_leftJoin_condition"/>
+			</where>
+			group by c.id
+		) d
+	</select>
+
+	<select id="countChannelContainNotUser" resultType="int">
+		select count(d.id) from (
+		select c.id from sys_channel c
+		<if test="user != null
+		    and (
+				(user.id != null and user.id &gt; 0)
+				or
+				(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+				or
+				(user.corporater != null and user.corporater.length() &gt; 0)
+				or
+				(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+				or
+				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+			)">
+			left join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type = 'directChannelUser'
+			left join sys_user u on u.id = rel.rel_id
+		</if>
+		<where>
+			1 = 1
+		    <if test="user != null
+				and (
+					(user.id != null and user.id &gt; 0)
+					or
+					(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+					or
+					(user.corporater != null and user.corporater.length() &gt; 0)
+					or
+					(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+					or
+					(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+				)">
+				and (rel.status = 1 or rel.status is NULL)
+				<if test="user.name != null and user.name.length() &gt; 0">
+					AND u.name like
+					concat(concat('%',#{user.name,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0">
+					AND u.corporater_mobile like
+					concat(concat('%',#{user.corporaterMobile,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.corporater != null and user.corporater.length() &gt; 0">
+					AND u.corporater like
+					concat(concat('%',#{user.corporater,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.supplierNormal != null and user.supplierNormal.length() &gt; 0">
+					AND u.supplier_normal like
+					concat(concat('%',#{user.supplierNormal,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0">
+					AND (
+						u.name like
+						concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+						OR u.supplier_normal like
+						concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+					)
+				</if>
+			</if>
+			<if test="channelIds != null and channelIds.size &gt; 0">
+				AND c.id NOT IN
+				<foreach collection="channelIds" item="_channelId" open="( " close=" )"
+						 separator=",">
+					#{_channelId, jdbcType=BIGINT}
+				</foreach>
+			</if>
+
+			<include refid="sql_of_leftJoin_condition"/>
+		</where>
+		group by c.id
+		) d
+	</select>
+
+	<select id="queryChannelsUserNotJoin" resultMap="BaseResultMap">
+		select <include refid="Base_Column_LeftJoin_List"/> from sys_channel c
+		<if test="user != null
+		    and (
+				(user.id != null and user.id &gt; 0)
+				or
+				(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+				or
+				(user.corporater != null and user.corporater.length() &gt; 0)
+				or
+				(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+				or
+				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+			)">
+			left join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type = 'directChannelUser'
+			left join sys_user u on u.id = rel.rel_id
+		</if>
+		<where>
+		    1 = 1
+		    <if test="user != null
+				and (
+					(user.id != null and user.id &gt; 0)
+					or
+					(user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0)
+					or
+					(user.corporater != null and user.corporater.length() &gt; 0)
+					or
+					(user.supplierNormal != null and user.supplierNormal.length() &gt; 0)
+					or
+					(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
+				)">
+				and (rel.status = 1 or rel.status is NULL)
+				<if test="user.name != null and user.name.length() &gt; 0">
+					AND u.name like
+					concat(concat('%',#{user.name,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.corporaterMobile != null and user.corporaterMobile.length() &gt; 0">
+					AND u.corporater_mobile like
+					concat(concat('%',#{user.corporaterMobile,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.corporater != null and user.corporater.length() &gt; 0">
+					AND u.corporater like
+					concat(concat('%',#{user.corporater,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.supplierNormal != null and user.supplierNormal.length() &gt; 0">
+					AND u.supplier_normal like
+					concat(concat('%',#{user.supplierNormal,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0">
+					AND (
+						u.name like
+						concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+						OR u.supplier_normal like
+						concat(concat('%',#{user.nameOrNormal,jdbcType=VARCHAR}),'%')
+					)
+				</if>
+			</if>
+			<if test="channelIds != null and channelIds.size &gt; 0">
+				AND c.id NOT IN
+				<foreach collection="channelIds" item="_channelId" open="( " close=" )"
+						 separator=",">
+					#{_channelId, jdbcType=BIGINT}
+				</foreach>
+			</if>
+
+			<include refid="sql_of_leftJoin_condition"/>
+		</where>
+		group by c.id
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause}</if>
+			<if test="pParam.orderByClause == null"> order by c.create_date desc</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	
+	<select id="queryChannelUsers" resultMap="channel_users">
+	SELECT obj_id,COUNT(rel_id) AS user_num,
+	SUBSTRING_INDEX(GROUP_CONCAT(u.name),',',3) AS user_names, 
+	GROUP_CONCAT(rel_id) AS user_ids
+	  FROM `sys_label_relation` l
+	INNER JOIN 
+	sys_user u 
+	ON l.rel_id = u.`id`
+	 WHERE  rel_type = 'directChannelUser' 
+	 <if test="channel.queryIds != null and channel.queryIds.size &gt; 0">
+				AND l.obj_id IN
+				<foreach collection="channel.queryIds" item="_channelId" open="( " close=" )"
+						 separator=",">
+					#{_channelId, jdbcType=BIGINT}
+				</foreach>
+	</if>
+	 GROUP BY l.obj_id
+	</select>
+</mapper>

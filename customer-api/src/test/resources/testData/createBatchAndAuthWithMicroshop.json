@@ -1,0 +1,120 @@
+[
+  {
+    "id" : 2216619741565440,
+    "createBy": "Junit测试同步微店测试",
+    "createDate": null,
+    "updateBy": "Junit测试同步微店测试",
+    "updateDate": null,
+    "type": "2",
+    "name": "Junit测试同步微店测试1",
+    "remark": "abc",
+    "strategyExpireType": null,
+    "beginDate": null,
+    "endDate": null,
+    "checkinExpireType": null,
+    "checkinExpireNum": 0,
+    "checkinExpireUnit": 0,
+    "ticketVarie": "0",
+    "price": 254.0,
+    "settlementPrice": 234.0,
+    "salesType": [
+      {
+        "key": "strategy:salesType",
+        "value": "3"
+      },
+      {
+        "key": "strategy:salesType",
+        "value": "6"
+      }
+    ],
+    "expire": 0,
+    "expireMode": 0,
+    "scope": [
+      {
+        "key": "strategy:scope",
+        "value": "1"
+      },
+      {
+        "key": "strategy:scope",
+        "value": "2"
+      },
+      {
+        "key": "strategy:scope",
+        "value": "3"
+      },
+      {
+        "key": "strategy:scope",
+        "value": "4"
+      },
+      {
+        "key": "strategy:scope",
+        "value": "5"
+      },
+      {
+        "key": "strategy:scope",
+        "value": "6"
+      },
+      {
+        "key": "strategy:scope",
+        "value": "7"
+      }
+    ],
+    "status": 1,
+    "publishStatus": 1,
+    "publishBy": null,
+    "publishDate": null,
+    "auditStatus": null,
+    "refuseReason": null,
+    "isMF": null,
+    "delFlag": "1",
+    "dataSource": "2",
+    "supplierId": 123456789,
+    "subProductId": null,
+    "isNeedUpdateNull": null,
+    "notTotalSettlementType": null,
+    "reduceSettlementMoney": null,
+    "marketPrice": null,
+    "advicePrice": null,
+    "parentId": null,
+    "preSale": 0,
+    "preSaleMode": 1,
+    "dictValue": null,
+    "quantity": 1,
+    "isOpenMultiRebate": null,
+    "channelList": [
+      {
+        "id": 2116619736563720
+      },
+      {
+        "id": 2216619736563722
+      },
+      {
+        "id": 2216619736563724
+      }
+    ],
+    "productList": [
+      2216619736566719
+    ],
+    "rebateStrategyList": [],
+    "settlementRuleList": [],
+    "productVoList": null,
+    "ids": null,
+    "channelIds": null,
+    "queryDateList": null,
+    "rebateIds": null,
+    "auditStatusList": null,
+    "publishStatusList": null,
+    "checkinExpireTypeList": null,
+    "isLimitAdvanceDue": 1,
+    "advanceDueDays": 2,
+    "advanceDueHour": 12,
+    "advanceDueMinute": 30,
+    "isLimitDelayConsume": 0,
+    "delayConsumeHour": 0,
+    "leastPerdueNumber": 3,
+    "mostPerdueNumber": 6,
+    "advanceDueUnit": null,
+    "productId": null,
+    "advicePrice" : 260
+  }
+]

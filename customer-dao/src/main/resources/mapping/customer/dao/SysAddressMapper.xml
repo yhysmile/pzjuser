@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysAddressMapper">
+
+    <!-- 所有字段 -->
+    <sql id="Base_Column_List">
+        id,
+        province,
+        city,
+        county,
+        address,
+        postcode,
+        type,
+        supplier_id,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        data_source,
+        is_default,
+        name
+    </sql>
+
+    <!-- 字段映射 -->
+    <resultMap id="BaseResultMap" type="com.pzj.base.entity.SysAddress">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="county" property="county" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="supplier_id" property="supplierId" jdbcType="BIGINT" />
+        <result column="create_by" property="createBy" jdbcType="BIGINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="data_source" property="dataSource" jdbcType="VARCHAR" />
+        <result column="is_default" property="isDefault" jdbcType="TINYINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- 主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from sys_address
+        where
+        id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <!-- 删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from sys_address where
+        id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteBatchByPrimaryKey">
+        delete from sys_address where id in
+        <foreach collection="list" item="_id" open="(" separator="," close=")">
+            #{_id, jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchByParam">
+        delete from sys_contacts
+        <where>
+            <trim prefix="(" suffix=")"  prefixOverrides="and|or">
+                <include refid="sql_of_where" />
+            </trim>
+            or 1 = 2
+        </where>
+    </delete>
+
+    <!-- 通用查询条件 -->
+    <sql id="sql_of_where">
+        <if test="bParam != null">
+            <if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+            <if test="bParam.ids != null"> AND id in
+                <foreach collection="bParam.ids" item="_id" open="(" separator="," close=")">
+                    #{_id,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            <if test="bParam.province != null"> AND province = #{bParam.province,jdbcType=VARCHAR} </if>
+            <if test="bParam.city != null"> AND city = #{bParam.city,jdbcType=VARCHAR} </if>
+            <if test="bParam.county != null"> AND county = #{bParam.county,jdbcType=VARCHAR} </if>
+            <if test="bParam.address != null"> AND address = #{bParam.address,jdbcType=VARCHAR} </if>
+            <if test="bParam.postcode != null"> AND postcode = #{bParam.postcode,jdbcType=VARCHAR} </if>
+            <if test="bParam.type != null"> AND type = #{bParam.type,jdbcType=INTEGER} </if>
+            <if test="bParam.supplierId != null"> AND supplier_id = #{bParam.supplierId,jdbcType=BIGINT} </if>
+            <if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=BIGINT} </if>
+            <if test="bParam.createDate != null"> AND create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+            <if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=BIGINT} </if>
+            <if test="bParam.updateDate != null"> AND update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+            <if test="bParam.dataSource != null"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+            <if test="bParam.isDefault != null"> AND is_default = #{bParam.isDefault,jdbcType=TINYINT} </if>
+            <if test="bParam.name != null"> AND name = #{bParam.name,jdbcType=VARCHAR} </if>
+        </if>
+    </sql>
+
+    <!-- 具有表别名的通用查询条件 -->
+    <sql id="sql_of_where_alias">
+        <if test="bParam != null">
+            <if test="bParam.id != null"> AND a.id = #{bParam.id,jdbcType=BIGINT} </if>
+            <if test="bParam.ids != null"> AND a.id in
+                <foreach collection="bParam.ids" item="_id" open="(" separator="," close=")">
+                    #{_id,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            <if test="bParam.province != null"> AND a.province = #{bParam.province,jdbcType=VARCHAR} </if>
+            <if test="bParam.city != null"> AND a.city = #{bParam.city,jdbcType=VARCHAR} </if>
+            <if test="bParam.county != null"> AND a.county = #{bParam.county,jdbcType=VARCHAR} </if>
+            <if test="bParam.address != null"> AND a.address = #{bParam.address,jdbcType=VARCHAR} </if>
+            <if test="bParam.postcode != null"> AND a.postcode = #{bParam.postcode,jdbcType=VARCHAR} </if>
+            <if test="bParam.type != null"> AND a.type = #{bParam.type,jdbcType=INTEGER} </if>
+            <if test="bParam.supplierId != null"> AND a.supplier_id = #{bParam.supplierId,jdbcType=BIGINT} </if>
+            <if test="bParam.createBy != null"> AND a.create_by = #{bParam.createBy,jdbcType=BIGINT} </if>
+            <if test="bParam.createDate != null"> AND a.create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+            <if test="bParam.updateBy != null"> AND a.update_by = #{bParam.updateBy,jdbcType=BIGINT} </if>
+            <if test="bParam.updateDate != null"> AND a.update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+            <if test="bParam.dataSource != null"> AND a.data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+            <if test="bParam.isDefault != null"> AND a.is_default = #{bParam.isDefault,jdbcType=TINYINT} </if>
+            <if test="bParam.name != null"> AND a.name = #{bParam.name,jdbcType=VARCHAR} </if>
+        </if>
+    </sql>
+
+    <!-- 通用分页查询 -->
+    <select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_address a
+        <where>
+            <include refid="sql_of_where_alias" />
+        </where>
+        <if test="pParam != null">
+            <if test="pParam.orderByClause == null"> order by a.id desc </if>
+            <if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+            <if test="pParam.startIndex != null and pParam.pageSize != null">
+                limit #{pParam.startIndex} , #{pParam.pageSize}
+            </if>
+        </if>
+    </select>
+
+    <!-- 通用分页查询记录总数 -->
+    <select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(a.id) from sys_address a
+        <where>
+            <include refid="sql_of_where_alias" />
+        </where>
+    </select>
+    <select id="queryByManyParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_address a
+        <where>
+            <foreach collection="list" item="bParam" separator=" or ">
+                <trim prefix="(" suffix=")" prefixOverrides="AND|OR">
+                <include refid="sql_of_where_alias" />
+                </trim>
+            </foreach>
+        </where>
+    </select>
+
+
+    <!-- 插入单条数据 -->
+    <insert id="insert" parameterType="com.pzj.base.entity.SysAddress">
+        insert into sys_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="county != null">county,</if>
+            <if test="address != null">address,</if>
+            <if test="postcode != null">postcode,</if>
+            <if test="type != null">type,</if>
+            <if test="supplierId != null">supplier_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="dataSource != null">data_source,</if>
+            <if test="isDefault != null">is_default,</if>
+            <if test="name != null">name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id, jdbcType=BIGINT},
+            <if test="province != null">#{province, jdbcType=VARCHAR},</if>
+            <if test="city != null">#{city, jdbcType=VARCHAR},</if>
+            <if test="county != null">#{county, jdbcType=VARCHAR},</if>
+            <if test="address != null">#{address, jdbcType=VARCHAR},</if>
+            <if test="postcode != null">#{postcode, jdbcType=VARCHAR},</if>
+            <if test="type != null">#{type, jdbcType=INTEGER},</if>
+            <if test="supplierId != null">#{supplierId, jdbcType=BIGINT},</if>
+            <if test="createBy != null">#{createBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=BIGINT},</if>
+            <if test="updateDate != null">#{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="dataSource != null">#{dataSource, jdbcType=VARCHAR},</if>
+            <if test="isDefault != null">#{isDefault, jdbcType=TINYINT},</if>
+            <if test="name != null">#{name, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 批量插入，请根据业务修改默认值 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into sys_address ( <include refid="Base_Column_List"/> )
+        values
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id, jdbcType=BIGINT}
+            <choose><when test="item.province != null">, #{item.province, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.city != null">, #{item.city, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.county != null">, #{item.county, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.address != null">, #{item.address, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.postcode != null">, #{item.postcode, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.type != null">, #{item.type, jdbcType=INTEGER}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.supplierId != null">, #{item.supplierId, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.createBy != null">, #{item.createBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.createDate != null">, #{item.createDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            <choose><when test="item.updateBy != null">, #{item.updateBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.updateDate != null">, #{item.updateDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            <choose><when test="item.dataSource != null">, #{item.dataSource, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.isDefault != null">, #{item.isDefault, jdbcType=TINYINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.name != null">, #{item.name, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新单条数据 -->
+    <update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysMenu">
+        update sys_address
+        <set>
+            <if test="id != null">id = #{id, jdbcType=BIGINT},</if>
+            <if test="province != null">province = #{province, jdbcType=VARCHAR},</if>
+            <if test="city != null">city = #{city, jdbcType=VARCHAR},</if>
+            <if test="county != null">county = #{county, jdbcType=VARCHAR},</if>
+            <if test="address != null">address = #{address, jdbcType=VARCHAR},</if>
+            <if test="postcode != null">postcode = #{postcode, jdbcType=VARCHAR},</if>
+            <if test="type != null">type = #{type, jdbcType=INTEGER},</if>
+            <if test="supplierId != null">supplier_id = #{supplierId, jdbcType=BIGINT},</if>
+            <if test="createBy != null">create_by = #{createBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateBy != null">update_by = #{updateBy, jdbcType=BIGINT},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="dataSource != null">data_source = #{dataSource, jdbcType=VARCHAR},</if>
+            <if test="isDefault != null">is_default = #{isDefault, jdbcType=TINYINT},</if>
+            <if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+        </set>
+        where
+        id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <!-- 批量更新 -->
+    <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update sys_address
+            <set>
+                <if test="item.id != null">id = #{item.id, jdbcType=BIGINT},</if>
+                <if test="item.province != null">province = #{item.province, jdbcType=VARCHAR},</if>
+                <if test="item.city != null">city = #{item.city, jdbcType=VARCHAR},</if>
+                <if test="item.county != null">county = #{item.county, jdbcType=VARCHAR},</if>
+                <if test="item.address != null">address = #{item.address, jdbcType=VARCHAR},</if>
+                <if test="item.postcode != null">postcode = #{item.postcode, jdbcType=VARCHAR},</if>
+                <if test="item.type != null">type = #{item.type, jdbcType=INTEGER},</if>
+                <if test="item.supplierId != null">supplier_id = #{item.supplierId, jdbcType=BIGINT},</if>
+                <if test="item.createBy != null">create_by = #{item.createBy, jdbcType=BIGINT},</if>
+                <if test="item.createDate != null">create_date = #{item.createDate, jdbcType=TIMESTAMP},</if>
+                <if test="item.updateBy != null">update_by = #{item.updateBy, jdbcType=BIGINT},</if>
+                <if test="item.updateDate != null">update_date = #{item.updateDate, jdbcType=TIMESTAMP},</if>
+                <if test="item.dataSource != null">data_source = #{item.dataSource, jdbcType=VARCHAR},</if>
+                <if test="item.isDefault != null">is_default = #{item.isDefault, jdbcType=TINYINT},</if>
+                <if test="item.name != null">name = #{item.name, jdbcType=VARCHAR},</if>
+            </set>
+            where
+            id = #{item.id, jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+</mapper>

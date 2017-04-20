@@ -1,0 +1,18 @@
+{
+  "testData" : {
+    "userRelationList" : [
+      {
+        "userId" : 2216619741563915,
+        "relUserId" : 3694397061857281,
+        "relType" : "5",
+        "createBy" : 213,
+        "createDate" : "2016-11-21 16:36:51"
+      }
+    ]
+  },
+  "testDataClass" : {
+    "userRelationList" : "com.pzj.base.entity.SysUserRelation"
+  },
+  "expectData" : "1",
+  "expectDataClass" : 1.123
+}

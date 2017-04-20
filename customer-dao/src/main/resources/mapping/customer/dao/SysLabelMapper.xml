@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysLabelMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,name
+		,pid
+		,create_date
+		,flag
+		,sort
+		,update_date
+		,update_by
+		,create_by
+		,remarks
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysLabel">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="pid" jdbcType="BIGINT" property="pid" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="flag" jdbcType="CHAR" property="flag" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+	</resultMap>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_label
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_label where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		WHERE 1=1
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.name != null"> AND name = #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.pid != null"> AND pid = #{bParam.pid,jdbcType=BIGINT} </if>
+			<if test="bParam.createDate != null"> AND create_date =
+				#{bParam.createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="bParam.flag != null"> AND flag = #{bParam.flag,jdbcType=CHAR} </if>
+			<if test="bParam.sort != null"> AND sort = #{bParam.sort,jdbcType=INTEGER} </if>
+			<if test="bParam.updateDate != null"> AND update_date =
+				#{bParam.updateDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.remarks != null"> AND remarks = #{bParam.remarks,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_label
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by id desc </if>
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(id) from sys_label
+		<include refid="sql_of_where" />
+	</select>
+
+	<select id="selectByRelation" parameterType="com.pzj.base.entity.SysLabelRelationKey"
+		resultMap="BaseResultMap">
+		select la.id, la.name, la.pid, la.create_date, la.flag,
+		la.sort,
+		la.update_date, la.update_by, la.create_by, la.remarks
+		from
+		sys_label_relation re
+		left join sys_label la on re.rel_id = la.id
+		where
+		re.rel_type = #{relType,jdbcType=VARCHAR} 
+		and re.obj_id = #{objId,jdbcType=BIGINT}
+		and re.status = 1
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysLabel"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_label
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="name != null">
+				name,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="flag != null">
+				flag,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flag != null">
+				#{flag,jdbcType=CHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_label
+		(id
+		,name
+		,pid
+		,create_date
+		,flag
+		,sort
+		,update_date
+		,update_by
+		,create_by
+		,remarks
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.name != null">,#{item.name ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.pid != null">,#{item.pid ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.flag != null">,#{item.flag ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.sort != null">,#{item.sort ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.remarks != null">,#{item.remarks ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysLabel">
+		update sys_label
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=BIGINT},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flag != null">
+				flag = #{flag,jdbcType=CHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate == null">
+				update_date = current_timestamp(),
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update sys_label
+			<set>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.pid != null">
+					pid = #{item.pid,jdbcType=BIGINT},
+				</if>
+				<if test="item.createDate != null">
+					create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.flag != null">
+					flag = #{item.flag,jdbcType=CHAR},
+				</if>
+				<if test="item.sort != null">
+					sort = #{item.sort,jdbcType=INTEGER},
+				</if>
+				<if test="item.updateBy != null">
+					update_by = #{item.updateBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createBy != null">
+					create_by = #{item.createBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.remarks != null">
+					remarks = #{item.remarks,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateDate != null">
+					update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateDate == null">
+					update_date = current_timestamp(),
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_label
+		<where>
+			<if test="labelIds != null">
+				and id in (${labelIds})
+			</if>
+			or 1=2
+		</where>
+	</select>
+	<!-- 根据关系表中的objId分页获取标签列表 -->
+	<sql id="Base_Column_LeftJoin_List">
+		l.id
+		,l.name
+		,l.pid
+		,l.create_date
+		,l.flag
+		,l.sort
+		,l.update_date
+		,l.update_by
+		,l.create_by
+		,l.remarks
+	</sql>
+	<sql id="sql_of_leftJoin_condition">
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND l.id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.name != null"> AND l.name = #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.pid != null"> AND l.pid = #{bParam.pid,jdbcType=BIGINT} </if>
+			<if test="bParam.createDate != null"> AND l.create_date =
+				#{bParam.createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="bParam.flag != null"> AND l.flag = #{bParam.flag,jdbcType=CHAR} </if>
+			<if test="bParam.sort != null"> AND l.sort = #{bParam.sort,jdbcType=INTEGER} </if>
+			<if test="bParam.updateDate != null"> AND l.update_date =
+				#{bParam.updateDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="bParam.updateBy != null"> AND l.update_by = #{bParam.updateBy,jdbcType=VARCHAR}
+			</if>
+			<if test="bParam.createBy != null"> AND l.create_by = #{bParam.createBy,jdbcType=VARCHAR}
+			</if>
+			<if test="bParam.remarks != null"> AND l.remarks = #{bParam.remarks,jdbcType=VARCHAR} </if>
+		</if>
+
+
+	</sql>
+	<select id="findLabelListByObjID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_label l
+		left join sys_label_relation r on r.rel_id = l.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.obj_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status = 1
+		</where>
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by l.id desc </if>
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause}
+			</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	<select id="countLabelByObjID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(l.id)
+		from sys_label l
+		left join sys_label_relation r on r.rel_id = l.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.obj_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status = 1
+		</where>
+	</select>
+
+	<select id="findLabelListByRefID" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_LeftJoin_List" />
+		from sys_label l
+		left join sys_label_relation r on r.obj_id = l.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.rel_id = #{idParam}
+			and r.rel_type = #{refType}
+			and r.status = 1
+		</where>
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by l.id desc </if>
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause}
+			</if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+
+
+	</select>
+	<select id="countLabelByRefID" resultType="java.lang.Integer"
+		parameterType="map">
+		select
+		count(l.id)
+		from sys_label l
+		left join sys_label_relation r on r.obj_id = l.id
+		<where>
+			<include refid="sql_of_leftJoin_condition" />
+			and r.rel_id = #{idParam}
+			and r.rel_type = #{relType}
+			and r.status = 1
+		</where>
+	</select>
+
+</mapper>

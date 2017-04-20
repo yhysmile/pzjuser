@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.ISysUserRelationMapper">
+
+<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+	id  
+	,user_id 
+	,rel_user_id 
+	,rel_type
+	,create_by
+	,create_date
+	,status
+	,update_by
+	,update_date
+	</sql>
+	
+<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysUserRelation">
+	    <id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="rel_user_id" jdbcType="BIGINT" property="relUserId" />
+		<result column="rel_type" jdbcType="VARCHAR" property="relType" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+	</resultMap>
+	
+	<select id="queryUserRelationByParam" resultMap="BaseResultMap">
+		select
+			id  
+			,user_id 
+			,rel_user_id 
+			,rel_type
+			,create_by
+			,create_date
+			,status
+			,update_by
+			,update_date
+		from 
+			sys_user_relation
+		<where>
+			<if test="userId != null">
+				user_id = #{userId}
+			</if>
+			<if test="relUserId != null">
+				and rel_user_id = #{relUserId}
+			</if>
+			<if test="relType != null">
+				and rel_type = #{relType}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateUserRelationStatus" parameterType="com.pzj.base.entity.SysUserRelation">
+		update 
+			sys_user_relation
+		set
+			status = #{status}
+			,update_by = #{updateBy}
+			,update_date = now()
+		where
+			id=#{id}
+	</update>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select  
+			<include refid="Base_Column_List" />
+		from 
+			sys_user_relation
+		where 
+			id = #{id,jdbcType=BIGINT}
+		and
+			status=1
+	</select>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		WHERE status=1
+		<if test="bParam != null" >
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.userId != null"> AND user_id = #{bParam.userId,jdbcType=BIGINT} </if>
+			<if test="bParam.relUserId != null"> AND rel_user_id = #{bParam.relUserId,jdbcType=BIGINT} </if>
+			<if test="bParam.relType != null"> AND rel_type = #{bParam.relType,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=BIGINT} </if>
+			<if test="bParam.createDate != null"> AND create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+		</if>
+	</sql>
+	
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select 
+			<include refid="Base_Column_List" />
+		from 
+			sys_user_relation
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null" > order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null" >
+			  limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select 
+			count(id) 
+		from 
+			sys_user_relation
+		<include refid="sql_of_where" />
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysUserRelation" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_user_relation 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				id,status,
+			<if test="userId != null">
+			    user_id,
+			</if>
+			<if test="relUserId != null">
+			    rel_user_id,
+			</if>
+			<if test="relType != null">
+			    rel_type,
+			</if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT}, 1,
+			<if test="userId != null">
+			    #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="relUserId != null">
+			    #{relUserId,jdbcType=BIGINT},
+			</if>
+			<if test="relType != null">
+			    #{relType,jdbcType=VARCHAR},
+			</if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+		</trim>
+	</insert>
+	
+<!-- 批量插入 请根据业务修改默认值-->	
+    <insert id="insertBatch"  parameterType="java.util.List">
+		insert into sys_user_relation 
+		(id  
+		,status
+		,user_id 
+		,rel_user_id 
+		,rel_type
+        ,create_by
+        ,create_date
+		) 
+		values
+		<foreach collection="list" item="item" separator=",">
+		(#{item.id,jdbcType=BIGINT}  , 1
+			<choose>  
+				<when test="item.userId != null">,#{item.userId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.relUserId != null">,#{item.relUserId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.relType != null">,#{item.relType ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+            <choose>
+                <when test="item.createBy != null">,#{item.createBy ,jdbcType=BIGINT}</when>
+                <otherwise>,0</otherwise>
+            </choose>
+            <choose>
+                <when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+                <otherwise>,'0000-00-00'</otherwise>
+            </choose>
+            )
+		</foreach>
+	</insert>
+
+    <!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysUserRelation">
+		update sys_user_relation
+		<set>
+			<if test="userId != null" >
+             user_id = #{userId,jdbcType=BIGINT},
+            </if>
+			<if test="relUserId != null" >
+             rel_user_id = #{relUserId,jdbcType=BIGINT},
+            </if>
+			<if test="relType != null" >
+             rel_type = #{relType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=BIGINT},
+            </if>
+            update_date=now()
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+<!-- 批量更新 -->
+	<!-- <update id="updateBatchByPrimaryKey"  parameterType="java.util.List">
+	     <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update sys_user_relation 
+                <set>
+                  <if test="item.userId != null" >
+                    user_id = #{item.userId,jdbcType=BIGINT},
+                  </if>
+                  <if test="item.relUserId != null" >
+                    rel_user_id = #{item.relUserId,jdbcType=BIGINT},
+                  </if>
+                  <if test="item.relType != null" >
+                    rel_type = #{item.relType,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.createBy != null" >
+                      create_by = #{item.createBy,jdbcType=BIGINT},
+                  </if>
+                  <if test="item.createDate != null" >
+                      create_date = #{item.createDate,jdbcType=TIMESTAMP},
+                  </if>
+                  <if test="item.updateBy != null" >
+	                  update_by = #{item.updateBy,jdbcType=BIGINT},
+	              </if>
+                  update_date=now()
+                </set>
+                where id = #{item.id,jdbcType=BIGINT}
+         </foreach>
+	</update> -->
+	
+	<!-- 新加的东西 -->
+	<sql id="sql_of_where_ID">
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="relUserId != null">
+                and rel_user_id = #{relUserId,jdbcType=BIGINT}
+            </if>
+                and rel_type = #{relType,jdbcType=VARCHAR} or (1=2)
+        </where>
+    </sql>
+    
+    <!-- 删除 -->
+    <update id="deleteSelective" parameterType="com.pzj.base.entity.SysUserRelation">
+    	update 
+    		sys_user_relation
+    	set 
+    		status=0
+    	<include refid="sql_of_where_ID" />
+    </update>
+    
+    <update id="deleteByIdsMap" parameterType="map">
+    	update 
+    		sys_user_relation
+    	set 
+    		status=0
+    	<include refid="sql_of_where_string" />
+    </update>
+    
+  	<update id="deleteByIdList" parameterType="map">
+  		update 
+    		sys_user_relation
+    	set 
+    		status=0
+    	<include refid="sql_of_where_list" />	
+  	</update>
+  	
+  	<update id="deleteBatchByPrimaryKey" parameterType="list">
+  		update 
+    		sys_user_relation
+    	set 
+    		status=0
+    	where 
+    		id
+    	in
+    		<foreach collection="list" item="item" index="index" separator=",">
+    			#{item}
+    		</foreach>
+  	</update>
+  	
+  	<update id="deleteBatchSelective" parameterType="list">
+  		<foreach collection="list" item="item"  index="index"  separator=";">
+  			update 
+	    		sys_user_relation
+	    	set 
+	    		status=0
+	    	<where>
+	             <if test="item.id != null">
+	                and id = #{item.id,jdbcType=BIGINT}
+	            </if>
+	            <if test="item.userId != null">
+	                and user_id = #{item.userId,jdbcType=BIGINT}
+	            </if>
+	            <if test="item.relUserId != null">
+	                and rel_user_id = #{item.relUserId,jdbcType=BIGINT}
+	            </if>
+	                and rel_type = #{item.relType,jdbcType=VARCHAR} or (1=2)
+	        </where>
+  		</foreach>
+  	</update>
+    <!-- 删除结束 -->
+    <!-- <delete id="deleteSelective" parameterType="com.pzj.base.entity.SysUserRelation">
+        delete from sys_user_relation
+        <include refid="sql_of_where_ID" />
+
+    </delete>
+
+    <delete id="deleteByIdsMap" parameterType="map">
+        delete from sys_user_relation
+        <include refid="sql_of_where_string" />
+    </delete>
+
+    <delete id="deleteByIdList" parameterType="map">
+        delete from sys_user_relation
+        <include refid="sql_of_where_list" />
+    </delete>
+
+    <delete id="deleteBatchByPrimaryKey" parameterType="list">
+        <foreach collection="list" item="item" index="index" separator=";">
+            delete from sys_user_relation where id = #{id,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchSelective" parameterType="list">
+        <foreach collection="list" item="item"  index="index"  separator=";">
+            delete from sys_user_relation
+            <where>
+             <if test="item.id != null">
+                and id = #{item.id,jdbcType=BIGINT}
+            </if>
+            <if test="item.userId != null">
+                and user_id = #{item.userId,jdbcType=BIGINT}
+            </if>
+            <if test="item.relUserId != null">
+                and rel_user_id = #{item.relUserId,jdbcType=BIGINT}
+            </if>
+                and rel_type = #{item.relType,jdbcType=VARCHAR} or (1=2)
+        </where>
+        </foreach>
+    </delete> -->
+    
+    <!-- 查询 -->
+    <select id="findByIdsMap" resultMap="BaseResultMap" parameterType="map">
+        select
+        	<include refid="Base_Column_List" />
+        from 
+        	sys_user_relation
+        <include refid="sql_of_where_string" />
+    </select>
+    <sql id="sql_of_where_string">
+        <where>
+            <if test="userIds != null">
+                and user_id in (${userIds})
+            </if>
+            <if test="relIds != null">
+                and rel_user_id in (${relIds})
+            </if>
+            <if test="relTypes != null">
+                and rel_type in (${relTypes})
+            </if>
+            <if test="relType != null">
+                and rel_type = #{relType}
+            </if>
+            and status=1
+        </where>
+    </sql>
+    
+    <select id="findByIdListMap" resultMap="BaseResultMap" parameterType="map">
+        select
+        	<include refid="Base_Column_List" />
+        from 
+        	sys_user_relation
+        <include refid="sql_of_where_list" />
+    </select>
+    <sql id="sql_of_where_list">
+        <where>
+            <if test="userIds != null">
+                and user_id in
+                <foreach collection="userIds" item="item" open="(" separator=","
+                    close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="relIds != null">
+                and rel_user_id in
+                <foreach collection="relIds" item="item" open="(" separator=","
+                    close=")">
+                    #{item}
+                </foreach>
+            </if>
+            and rel_type = #{relTypes} or (1=2)
+            and status=1
+        </where>
+    </sql>
+    
+    <!-- 查询用户关系和用户的名称信息 -->
+    <resultMap id="BaseLeftJoinResultMap" type="com.pzj.base.entity.SysUserRelation">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="rel_user_id" jdbcType="BIGINT" property="relUserId" />
+        <result column="rel_type" jdbcType="VARCHAR" property="relType" />
+        <result column="create_by" jdbcType="BIGINT" property="createBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="relUserName" jdbcType="VARCHAR" property="relUserName" />
+    </resultMap>
+    
+    <select id="queryAuthByParamMap" parameterType="java.util.Map" resultMap="BaseLeftJoinResultMap">
+        select 
+	        r.id  
+		    ,r.user_id 
+		    ,r.rel_user_id 
+		    ,r.rel_type 
+	        ,u.name as userName,
+	        ru.name as relUserName
+        from 
+        	sys_user_relation r
+        left join 
+        	sys_user u on u.id = r.user_id
+        left join 
+        	sys_user ru on ru.id = r.rel_user_id
+        <include refid="sql_LeftJoin_of_where" />
+        <if test="pParam != null">
+            <if test="pParam.orderByClause != null" > order by ${pParam.orderByClause} </if>
+            <if test="pParam.startIndex != null and pParam.pageSize != null" >
+              limit #{pParam.startIndex} , #{pParam.pageSize}
+            </if>
+        </if>
+    </select>
+    <sql id="sql_LeftJoin_of_where">
+        WHERE r.status=1
+        <if test="bParam != null" >
+            <if test="bParam.id != null"> AND r.id = #{bParam.id,jdbcType=BIGINT} </if>
+            <if test="bParam.userId != null"> AND r.user_id = #{bParam.userId,jdbcType=BIGINT} </if>
+            <if test="bParam.relUserId != null"> AND r.rel_user_id = #{bParam.relUserId,jdbcType=BIGINT} </if>
+            <if test="bParam.relType != null"> AND r.rel_type = #{bParam.relType,jdbcType=VARCHAR} </if>
+            <if test="bParam.createBy != null"> AND r.create_by = #{bParam.createBy,jdbcType=BIGINT} </if>
+            <if test="bParam.createDate != null"> AND r.create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+            <if test="bParam.relUserName != null"> AND ru.name like #{bParam.relUserName,jdbcType=VARCHAR}"%" </if>
+        </if>
+    </sql>
+    
+    <select id="selectRepeat" resultType="com.pzj.base.entity.SysUserRelation">
+        SELECT 
+        	<include refid="Base_Column_List"/> 
+        FROM 
+        	sys_user_relation
+        WHERE 
+        	status=1 
+        and 
+        	(user_id, rel_user_id, rel_type) 
+        IN
+        <foreach collection="list" item="_item" open="(" separator="," close=")">
+            (#{_item.userId, jdbcType=BIGINT}, #{_item.relUserId, jdbcType=BIGINT}, #{_item.relType, jdbcType=VARCHAR})
+        </foreach>
+    </select>
+</mapper>

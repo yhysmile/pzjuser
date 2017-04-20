@@ -1,0 +1,12 @@
+{
+  "testData": {
+    "channelId": 3608338319802368,
+    "rootId": 3180074621206529,
+    "name": "品牌名称",
+    "tempRelResellers": [
+      3667275905761280,
+      3661111757373440
+    ]
+  },
+  "testDataClass": "com.pzj.core.customer.commons.ChannelResellerQueryModel"
+}

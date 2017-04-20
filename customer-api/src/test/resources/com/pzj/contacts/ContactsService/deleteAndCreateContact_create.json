@@ -1,0 +1,30 @@
+[
+  {
+    "id": null,
+    "isNeedUpdateNull": false,
+    "name": "1",
+    "phoneNumber": "1",
+    "typeDesc": "1",
+    "supplierId": 2216619741564435,
+    "createBy": 2216619736763720,
+    "createDate": null,
+    "updateBy": 2216619736763720,
+    "updateDate": "2016-10-14 17:39:48",
+    "dataSource": "1",
+    "dictRelationList": null
+  },
+  {
+    "id": null,
+    "isNeedUpdateNull": false,
+    "name": "2",
+    "phoneNumber": "2",
+    "typeDesc": "2",
+    "supplierId": 2216619741564435,
+    "createBy": 2216619736763720,
+    "createDate": null,
+    "updateBy": 2216619736763720,
+    "updateDate": "2016-10-14 17:39:48",
+    "dataSource": "1",
+    "dictRelationList": null
+  }
+]

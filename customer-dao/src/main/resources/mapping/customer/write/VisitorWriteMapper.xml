@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.VisitorWriteMapper">
+    <!-- 所有字段 -->
+    <sql id="Base_Column_List">
+        id,
+        status,
+        name,
+        phone_num,
+        id_num,
+        remark,
+        owner_id,
+        create_by,
+        create_date,
+        update_by,
+        update_date
+    </sql>
+
+    <!-- 字段映射 -->
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.VisitorEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="id_num" property="idNum" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+        <result column="create_by" property="createBy" jdbcType="BIGINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!-- 主键查询 -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select <include refid="Base_Column_List" /> from visitor  where
+        id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <!-- 插入单条数据 -->
+    <insert id="insert" parameterType="com.pzj.core.customer.profile.VisitorEntity">
+        insert into visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="status != null">status,</if>
+            <if test="name != null">name,</if>
+            <if test="phoneNum != null">phone_num,</if>
+            <if test="idNum != null">id_num,</if>
+            <if test="remark != null">remark,</if>
+            <if test="ownerId != null">owner_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id, jdbcType=BIGINT},
+            <if test="status != null">#{status, jdbcType=INTEGER},</if>
+            <if test="name != null">#{name, jdbcType=VARCHAR},</if>
+            <if test="phoneNum != null">#{phoneNum, jdbcType=VARCHAR},</if>
+            <if test="idNum != null">#{idNum, jdbcType=VARCHAR},</if>
+            <if test="remark != null">#{remark, jdbcType=VARCHAR},</if>
+            <if test="ownerId != null">#{ownerId, jdbcType=BIGINT},</if>
+            <if test="createBy != null">#{createBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=BIGINT},</if>
+            <if test="updateDate != null">#{updateDate, jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <!-- 批量插入，请根据业务修改默认值 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into visitor ( <include refid="Base_Column_List"/> )
+        values
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id, jdbcType=BIGINT}
+            <choose><when test="item.status != null">, #{item.status, jdbcType=INTEGER}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.name != null">, #{item.name, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.phoneNum != null">, #{item.phoneNum, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.idNum != null">, #{item.idNum, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.remark != null">, #{item.remark, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
+            <choose><when test="item.ownerId != null">, #{item.ownerId, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.createBy != null">, #{item.createBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.createDate != null">, #{item.createDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            <choose><when test="item.updateBy != null">, #{item.updateBy, jdbcType=BIGINT}</when><otherwise>,0</otherwise></choose>
+            <choose><when test="item.updateDate != null">, #{item.updateDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新单条数据 -->
+    <update id="update" parameterType="com.pzj.core.customer.profile.VisitorEntity">
+        update visitor
+        <set>
+            <if test="status != null">status = #{status, jdbcType=INTEGER},</if>
+            <if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+            <if test="phoneNum != null">phone_num = #{phoneNum, jdbcType=VARCHAR},</if>
+            <if test="idNum != null">id_num = #{idNum, jdbcType=VARCHAR},</if>
+            <if test="remark != null">remark = #{remark, jdbcType=VARCHAR},</if>
+            <if test="ownerId != null">owner_id = #{ownerId, jdbcType=BIGINT},</if>
+            <if test="createBy != null">create_by = #{createBy, jdbcType=BIGINT},</if>
+            <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
+            <if test="updateBy != null">update_by = #{updateBy, jdbcType=BIGINT},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+        </set>
+        where
+        id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <!-- 批量更新 -->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update visitor
+            <set>
+                <if test="item.status != null">status = #{item.status, jdbcType=INTEGER},</if>
+                <if test="item.name != null">name = #{item.name, jdbcType=VARCHAR},</if>
+                <if test="item.phoneNum != null">phone_num = #{item.phoneNum, jdbcType=VARCHAR},</if>
+                <if test="item.idNum != null">id_num = #{item.idNum, jdbcType=VARCHAR},</if>
+                <if test="item.remark != null">remark = #{item.remark, jdbcType=VARCHAR},</if>
+                <if test="item.ownerId != null">owner_id = #{item.ownerId, jdbcType=BIGINT},</if>
+                <if test="item.createBy != null">create_by = #{item.createBy, jdbcType=BIGINT},</if>
+                <if test="item.createDate != null">create_date = #{item.createDate, jdbcType=TIMESTAMP},</if>
+                <if test="item.updateBy != null">update_by = #{item.updateBy, jdbcType=BIGINT},</if>
+                <if test="item.updateDate != null">update_date = #{item.updateDate, jdbcType=TIMESTAMP},</if>
+            </set>
+            where
+            id = #{item.id, jdbcType=BIGINT}
+        </foreach>
+    </update>
+</mapper>

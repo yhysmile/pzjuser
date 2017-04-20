@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.dao.SysUserRoleMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,user_id
+		,role_id
+		,dataSource
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysUserRoleKey">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="role_id" jdbcType="VARCHAR" property="roleId" />
+		<result column="dataSource" jdbcType="VARCHAR" property="dataSource" />
+	</resultMap>
+
+	<!-- 字段映射 -->
+	<resultMap id="findURMByIdsResultMap" type="com.pzj.base.entity.SysUserRoleMenuVo">
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="menu_id" jdbcType="VARCHAR" property="menuId" />
+		<result column="role_id" jdbcType="VARCHAR" property="roleId" />
+		<result column="dataSource" jdbcType="VARCHAR" property="dataSource" />
+	</resultMap>
+	
+	<resultMap id="BaseResultAndRoles" type="com.pzj.base.entity.SysUserRoleKey">
+		<id column="relation_user_id" jdbcType="VARCHAR" property="userId" />
+		<collection property="roles" ofType="com.pzj.base.entity.SysRole">
+			<id column="id" property="id" jdbcType="BIGINT" />
+			<result column="name" jdbcType="VARCHAR" property="name" />
+	        <result column="type" jdbcType="VARCHAR" property="type" />
+			<result column="data_scope" jdbcType="CHAR" property="dataScope" />
+			<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+			<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+			<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+			<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+			<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+			<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+			<result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+			<result column="is_bingding" jdbcType="INTEGER" property="bingding" />
+		</collection>
+	</resultMap>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		<where>
+			1=1
+			<if test="bParam != null">
+				<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+				<if test="bParam.userId != null"> AND user_id = #{bParam.userId,jdbcType=VARCHAR} </if>
+				<if test="bParam.roleId != null"> AND role_id = #{bParam.roleId,jdbcType=VARCHAR} </if>
+				<if test="bParam.dataSource != null"> AND dataSource = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+			</if>
+		</where>
+	</sql>
+	<sql id="sql_of_where_ID">
+		<where>
+			<if test="id != null">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="roleId != null and roleId &gt; 0">
+				and role_id = #{roleId,jdbcType=VARCHAR}
+			</if>
+			<if test="userId != null and roleId &gt; 0">
+				and user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test="dataSource != null">
+				and dataSource = #{dataSource,jdbcType=VARCHAR}
+			</if>
+			or (1=2)
+		</where>
+	</sql>
+	<sql id="sql_of_where_map">
+		<where>
+			<if test="userIds != null">
+				and user_id in (${userIds})
+			</if>
+			<if test="roleIds != null">
+				and role_id in (${roleIds})
+			</if>
+			<if test="dataSources != null">
+				and dataSource in (${dataSources})
+			</if>
+			or (1=2)
+		</where>
+	</sql>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_user_role where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<delete id="deleteSelective" parameterType="com.pzj.base.entity.SysUserRoleKey">
+		delete from sys_user_role
+		<include refid="sql_of_where_ID" />
+
+	</delete>
+
+	<delete id="deleteByIdsMap" parameterType="map">
+		delete from sys_user_role
+		<include refid="sql_of_where_map" />
+	</delete>
+
+	<!-- 批量删除 -->
+	<delete id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			delete from sys_user_role
+			where id = #{item.id ,jdbcType=BIGINT}
+		</foreach>
+	</delete>
+	<delete id="deleteBatchSelective" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			delete from sys_user_role
+			<where>
+				<if test="item.id != null">
+					and id = #{item.id,jdbcType=BIGINT}
+				</if>
+				<if test="item.roleId != null and item.roleId &gt; 0">
+					and role_id = #{item.roleId,jdbcType=VARCHAR}
+				</if>
+				<if test="item.userId != null and item.userId &gt; 0">
+					and user_id = #{item.userId,jdbcType=VARCHAR}
+				</if>
+				<if test="item.dataSource != null">
+					and dataSource = #{item.dataSource,jdbcType=VARCHAR}
+				</if>
+				or (1=2)
+			</where>
+		</foreach>
+	</delete>
+
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from sys_user_role
+		<include refid="sql_of_where_map" />
+	</select>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role
+		<include refid="sql_of_where_map" />
+	</select>
+
+
+	<!-- 左连接查询 用户角色菜单关系 -->
+	<select id="findURMByIds" resultMap="findURMByIdsResultMap" parameterType="map">
+		select ur.user_id,ur.role_id,ur.dataSource,rm.menu_id
+		from sys_user_role ur left join sys_role_menu rm on ur.role_id = rm.role_id
+		<where>
+			<if test="userIds != null">
+				and ur.user_id in (${userIds})
+			</if>
+			<if test="roleIds != null">
+				and ur.role_id in (${roleIds})
+			</if>
+			<if test="dataSources != null">
+				and ur.dataSource in (${dataSources})
+			</if>
+			<if test="menuIds != null">
+				and rm.menu_id in (${menuIds})
+			</if>
+		</where>
+	</select>
+
+	<!-- 左连接查询 用户角色菜单关系 -->
+	<select id="findURMById" resultMap="findURMByIdsResultMap" parameterType="com.pzj.base.entity.SysUserRoleMenuVo">
+		select ur.user_id,ur.role_id, ur.dataSource, rm.menu_id
+		from sys_user_role ur left join sys_role_menu rm on ur.role_id = rm.role_id
+		<where>
+			<if test="userId != null">
+				and ur.user_id = ${userId}
+			</if>
+			<if test="roleId != null">
+				and ur.role_id = ${roleId}
+			</if>
+			<if test="dataSources != null">
+				and ur.dataSource =  ${dataSources}
+			</if>
+			<if test="menuId != null">
+				and rm.menu_id = ${menuId}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectAllObj" resultMap="BaseResultMap" parameterType="com.pzj.base.entity.SysUserRoleKey">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role
+		<where>
+			1 = 1
+			<if test="id != null">
+				and id = ${id}
+			</if>
+			<if test="userId != null">
+				and user_id = ${userId}
+			</if>
+			<if test="roleId != null">
+				and role_id = ${roleId}
+			</if>
+			<if test="dataSource != null">
+				and dataSource = #{dataSource}
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysUserRoleKey">
+		insert into sys_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="dataSource != null">
+				dataSource,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				#{roleId,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSource != null">
+				#{dataSource,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_user_role (id, user_id, role_id, dataSource)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.userId != null">, #{item.userId ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.roleId != null">, #{item.roleId ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.dataSource != null">, #{item.dataSource ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysUserRoleKey">
+		update sys_user_role
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSource != null">
+				dataSource = #{dataSource,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			update sys_user_role
+			<set>
+				<if test="item.userId != null">
+					user_id = #{item.userId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.roleId != null">
+					role_id = #{item.roleId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.dataSource != null">
+					dataSource = #{item.dataSource,jdbcType=VARCHAR},
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	
+	<select id="selectRoleByRelationRole" resultMap="BaseResultAndRoles">
+		select relation.id relation_id, relation.user_id relation_user_id, relation.role_id relation_role_id, role.* 
+		from sys_user_role relation
+		inner join sys_role role on relation.role_id = role.id
+		<where>
+			<if test="param1.userId != null">
+				relation.user_id = #{param1.userId}
+			</if>
+			<if test="param2.dataSource != null">
+				and role.data_source = #{param2.dataSource}
+			</if>
+			or (1=2)
+		</where>
+	</select>
+</mapper>

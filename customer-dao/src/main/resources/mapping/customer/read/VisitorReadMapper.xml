@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.read.VisitorReadMapper">
+
+    <!-- 所有字段 -->
+    <sql id="Base_Column_List">
+        id,
+        status,
+        name,
+        phone_num,
+        id_num,
+        remark,
+        owner_id,
+        create_by,
+        create_date,
+        update_by,
+        update_date
+    </sql>
+
+    <!-- 字段映射 -->
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.VisitorEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="id_num" property="idNum" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+        <result column="create_by" property="createBy" jdbcType="BIGINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <select id="queryVisitorPage" resultMap="BaseResultMap">
+    	select
+    		id,
+	        status,
+	        name,
+	        phone_num,
+	        id_num,
+	        remark
+    	from
+    		visitor
+    	<include refid="paramQuerySql"></include>
+    	<include refid="pageSql"></include>
+    </select>
+    
+    <select id="countVisitorPage" resultType="java.lang.Integer">
+    	select
+    		count(id)
+    	from
+    		visitor
+    	<include refid="paramQuerySql"></include>
+    </select>
+    
+    <select id="queryVisitorDetailById" resultType="com.pzj.core.customer.profile.VisitorEntity">
+    	select
+    		id,
+	        status,
+	        name,
+	        phone_num,
+	        id_num,
+	        remark,
+	        owner_id,
+	        create_by,
+	        create_date,
+	        update_by,
+	        update_date
+    	from
+    		visitor
+    	where
+    		id=#{id}
+    	and
+    		status=1
+    </select>
+    
+    <select id="queryVisitorByNameMobile" resultMap="BaseResultMap">
+    	select
+    		id,
+    		owner_id,
+	        status,
+	        name,
+	        phone_num,
+	        id_num,
+	        remark
+    	from
+    		visitor
+    	where 
+    		(name like concat('%', concat(#{nameOrMobile},'%')) or phone_num like concat('%', concat(#{nameOrMobile},'%')))
+    	and
+    		owner_id=#{supplierId}
+    	and
+    		status=1
+    </select>
+    
+    <sql id="pageSql">
+    	<if test="page != null">
+            <if test="page.orderByClause == null"> order by create_date desc </if>
+            <if test="page.orderByClause != null"> order by ${page.orderByClause} </if>
+            <if test="page.startIndex != null and page.pageSize != null">
+                limit #{page.startIndex} , #{page.pageSize}
+            </if>
+        </if>
+    </sql>
+
+
+    <!-- 通用查询条件 -->
+    <sql id="paramQuerySql">
+    	<where>
+    		status=1
+    		<if test="visitor != null">
+	            <if test="visitor.id != null"> AND id = #{visitor.id, jdbcType=BIGINT}</if>
+	            <if test="visitor.name != null"> AND name = #{visitor.name, jdbcType=VARCHAR}</if>
+	            <if test="visitor.phoneNum != null"> AND phone_num = #{visitor.phoneNum, jdbcType=VARCHAR}</if>
+	            <if test="visitor.idNum != null"> AND id_num = #{visitor.idNum, jdbcType=VARCHAR}</if>
+	            <if test="visitor.ownerId != null"> AND owner_id = #{visitor.ownerId, jdbcType=BIGINT}</if>
+	            <if test="visitor.createBy != null"> AND create_by = #{visitor.createBy, jdbcType=BIGINT}</if>
+	            <if test="visitor.updateBy != null"> AND update_by = #{visitor.updateBy, jdbcType=BIGINT}</if>
+	        </if>
+    	</where>
+    </sql>
+
+</mapper>
