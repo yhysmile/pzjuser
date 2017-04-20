@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.read.CustomerReadMapper">
+	<!-- 字段映射 -->
+	<resultMap id="ResellerBaseInfo" type="com.pzj.core.customer.profile.ResellerEntity">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
+		<result column="corporater" jdbcType="VARCHAR" property="corporater" />
+		<result column="corporater_mobile" jdbcType="VARCHAR" property="corporaterMobile" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="reseller_type" jdbcType="VARCHAR" property="resellerType" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="account_state" jdbcType="INTEGER" property="accountState" />
+		<result column="check_status" jdbcType="VARCHAR" property="checkState" />
+		<result column="province" jdbcType="VARCHAR" property="province" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="county" jdbcType="VARCHAR" property="county" />
+	</resultMap>
+	
+	<!-- 查询分销商列表基本信息 -->
+	<select id="queryResellerBaseInfoList" resultMap="ResellerBaseInfo">
+		select
+			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,sur.create_date,province,city,county
+		from 
+			sys_user suser
+		<if test="reseller.userRelType != null">
+		left join
+			sys_user_relation sur
+		on
+			suser.id=sur.rel_user_id
+		</if>
+		<if test="reseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+		<include refid="resellerBaseInfo"></include>
+		<include refid="userQueryParam"></include>
+		<include refid="pageInfo"></include>
+	</select>
+	
+	<select id="countResellerSum" resultType="java.lang.Integer">
+		select
+			count(distinct suser.id)
+		from
+			sys_user suser
+		<if test="channelReseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+        <include refid="channelUserBaseParam"></include>
+        <if test="channelReseller.tempRelResellers != null and channelReseller.tempRelResellers.size &gt; 0">
+        and 
+        	suser.id 
+		in
+			<foreach collection="channelReseller.tempRelResellers" item="resellerId" index="index" open="(" close=")" separator=",">
+	            #{resellerId}
+	        </foreach>
+        </if>
+	</select>
+	
+	<select id="queryUserBaseInfoById" resultMap="ResellerBaseInfo">
+		select 
+			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county
+		from
+			sys_user
+		where
+			id=#{id}
+		and
+			account_state = 1
+	</select>
+	
+	<select id="judgeUserNameMate" resultType="java.lang.Long">
+		select
+			id
+		from
+			sys_user
+		where
+			login_name=#{loginName}
+		and
+			corporater_mobile=#{mobile}
+		and
+			account_state = 1
+		limit 1;
+	</select>
+	
+	<select id="queryUserBaseByInviteCode" resultMap="ResellerBaseInfo">
+		select
+			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,account_state,province,city,county, supplier_id
+		from
+			sys_user
+		where
+			invitationCode=#{inviteCode}
+		and
+			account_state = 1
+	    and user_type = 12
+	</select>
+	
+	<select id="queryChannelRelUsers" resultMap="ResellerBaseInfo">
+		(select
+			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
+		from
+			sys_user suser
+		left join
+			sys_label_relation channelUser
+		on
+			suser.id=channelUser.rel_id
+		<if test="channelReseller.rootId != null">
+		left join
+			sys_user_relation userRel
+		on
+			suser.id=userRel.rel_user_id
+		</if>
+		<if test="channelReseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+		<include refid="channelUserBaseParam"></include>
+		<include refid="rootUserQueryParam"></include>
+		<include refid="channelUserQueryParam"></include>
+		)
+		<if test="channelReseller.tempRelResellers != null and channelReseller.tempRelResellers.size &gt; 0">
+		union
+		(
+		select
+			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,account_state,province,city,county
+		from
+			sys_user suser
+        <include refid="channelUserBaseParam"></include>
+        and 
+        	id 
+		in
+		<foreach collection="channelReseller.tempRelResellers" item="resellerId" index="index" open="(" close=")" separator=",">
+            #{resellerId}
+        </foreach>
+		)
+		</if>
+		<include refid="channelUserPageInfo"></include>
+	</select>
+	
+	<select id="countChannelRelUsers" resultType="java.lang.Long">
+		select
+			suser.id
+		from
+			sys_user suser
+		left join
+			sys_label_relation channelUser
+		on
+			suser.id=channelUser.rel_id
+		<if test="channelReseller.rootId != null">
+		left join
+			sys_user_relation userRel
+		on
+			suser.id=userRel.rel_user_id
+		</if>
+		<if test="channelReseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+		<include refid="channelUserBaseParam"></include>
+		<include refid="rootUserQueryParam"></include>
+		<include refid="channelUserQueryParam"></include>
+	</select>
+	
+	<select id="queryChannelNotRelUsers" resultMap="ResellerBaseInfo">
+		(select
+			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
+		from
+			sys_user suser
+		left join
+			sys_user_relation userRel
+		on
+			suser.id=userRel.rel_user_id
+		<if test="channelReseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+		<include refid="channelUserBaseParam"></include>
+		<include refid="rootUserQueryParam"></include>
+		<include refid="noChannelUserQueryParam"></include>
+		)
+		<if test="channelReseller.tempRelResellers != null and channelReseller.tempRelResellers.size &gt; 0">
+		union
+		(
+		select
+			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,account_state,province,city,county
+		from
+			sys_user suser
+		<include refid="channelUserBaseParam"></include>
+		and 
+			id 
+		in
+		<foreach collection="channelReseller.tempRelResellers" item="resellerId" index="index" open="(" close=")" separator=",">
+            #{resellerId}
+        </foreach>
+		)
+		</if>
+		<include refid="channelUserPageInfo"></include>
+	</select>
+	
+	<select id="countChannelNotRelUsers" resultType="java.lang.Long">
+		select
+			distinct suser.id
+		from
+			sys_user suser
+		left join
+			sys_user_relation userRel
+		on
+			suser.id=userRel.rel_user_id
+		<if test="channelReseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+		<include refid="channelUserBaseParam"></include>
+		<include refid="rootUserQueryParam"></include>
+		<include refid="noChannelUserQueryParam"></include>
+	</select>
+	
+	<select id="queryChannelUsers" resultMap="ResellerBaseInfo">
+		select
+			suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
+		from
+			sys_user suser
+		left join
+			sys_label_relation channelUser
+		on
+			suser.id=channelUser.rel_id
+		<include refid="channelUserBaseParam"></include>
+		<include refid="channelUserQueryParam"></include>
+		<include refid="channelUserPageInfo"></include>
+	</select>
+	
+	<select id="countChannelUsers" resultType="java.lang.Integer">
+		select
+			count(suser.id)
+		from
+			sys_user suser
+		left join
+			sys_label_relation channelUser
+		on
+			suser.id=channelUser.rel_id
+		<include refid="channelUserBaseParam"></include>
+		<include refid="channelUserQueryParam"></include>
+	</select>
+	
+	<select id="queryRootUsers" resultMap="ResellerBaseInfo">
+		select
+			suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
+		from
+			sys_user suser
+		left join
+			sys_user_relation userRel
+		on
+			suser.id=userRel.rel_user_id
+		<include refid="channelUserBaseParam"></include>
+		<include refid="rootUserQueryParam"></include>
+		<include refid="channelUserPageInfo"></include>
+	</select>
+	
+	<select id="countRootUsers" resultType="java.lang.Integer">
+		select 
+			count(suser.id)
+		from
+			sys_user suser
+		left join
+			sys_user_relation userRel
+		on
+			suser.id=userRel.rel_user_id
+		<include refid="channelUserBaseParam"></include>
+		<include refid="rootUserQueryParam"></include>
+	</select>
+	
+	<sql id="noChannelUserQueryParam">
+		<if test="channelReseller.channelId != null">
+			and 
+				suser.id
+			not in
+			(
+			select 
+				rel_id 
+			from 
+				sys_label_relation 
+			where
+				status=1
+			and 
+				obj_id=#{channelReseller.channelId}
+			<if test="channelReseller.relType != null">
+				and rel_type = #{channelReseller.relType}
+			</if>
+			)
+		</if>
+	</sql>
+	<sql id="channelUserQueryParam">
+		<if test="channelReseller.channelId != null">
+			and channelUser.status=1
+			and obj_id=#{channelReseller.channelId}
+		</if>
+		<if test="channelReseller.relType != null">
+			and channelUser.rel_type = #{channelReseller.relType}
+		</if>
+	</sql>
+	<sql id="rootUserQueryParam">
+		<if test="channelReseller.rootId != null">
+			and userRel.status=1
+			and user_id=#{channelReseller.rootId}
+		</if>
+		<if test="channelReseller.userRelType != null">
+			and userRel.rel_type = #{channelReseller.userRelType}
+		</if>
+	</sql>
+	<sql id="channelUserBaseParam">
+		where
+			account_state = 1
+		and 
+			check_status=1
+		<if test="channelReseller.loginName != null">
+			and login_name like CONCAT(CONCAT('%', #{channelReseller.loginName}),'%')
+		</if>
+		<if test="channelReseller.name != null">
+			and (name like CONCAT(CONCAT('%', #{channelReseller.name}),'%') or supplier_normal like CONCAT(CONCAT('%', #{channelReseller.name}),'%'))
+		</if>
+		<if test="channelReseller.concat != null">
+			and corporater like CONCAT(CONCAT('%', #{channelReseller.concat}),'%')
+		</if>
+		<if test="channelReseller.mobile != null">
+			and corporater_mobile = #{channelReseller.mobile}
+		</if>
+		<if test="channelReseller.address != null">
+			and address like CONCAT(CONCAT('%', #{channelReseller.address}),'%')
+		</if>
+		<if test="channelReseller.resellerType != null">
+			and reseller_type = #{channelReseller.resellerType}
+		</if>
+		<if test="channelReseller.userType != null">
+			and user_type = #{channelReseller.userType}
+		</if>
+		<if test="channelReseller.province != null">
+			and province=#{channelReseller.province}
+		</if>
+		<if test="channelReseller.city != null">
+			and city=#{channelReseller.city}
+		</if>
+		<if test="channelReseller.county != null">
+			and county=#{channelReseller.county}
+		</if>
+		<if test="channelReseller.isRoot != null">
+			and is_root = #{channelReseller.isRoot}
+		</if>
+		<if test="channelReseller.bindSDate != null">
+			<![CDATA[
+			and suser.create_date >= #{channelReseller.bindSDate}
+			]]>
+		</if>
+		<if test="channelReseller.bindEDate != null">
+			<![CDATA[
+			and suser.create_date <= #{channelReseller.bindEDate}
+			]]>
+		</if>
+		<if test="channelReseller.refereeId != null">
+			and custext.referee_id = #{channelReseller.refereeId}
+		</if>
+		<if test="channelReseller.tempRemoveResellers != null and channelReseller.tempRemoveResellers.size &gt; 0">
+			and suser.id not in
+			<foreach collection="channelReseller.tempRemoveResellers" item="removeId" open="(" close=")" separator=",">
+			#{removeId}
+			</foreach>
+		</if>
+	</sql>
+	<sql id="channelUserPageInfo">
+		<if test="page != null">
+			order by create_date desc
+			<if test="page.startIndex != null and page.pageSize != null">
+				limit #{page.startIndex} , #{page.pageSize}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="countResellerBaseInfoPage" resultType="java.lang.Integer">
+		select
+			count(distinct suser.id)
+		from 
+			sys_user suser
+		<if test="reseller.userRelType != null">
+		left join
+			sys_user_relation sur
+		on
+			suser.id=sur.rel_user_id
+		</if>
+		<if test="reseller.refereeId != null">
+		left join 
+			customer_extends custext
+		on
+			suser.id=custext.customer_id
+		</if>
+		<include refid="resellerBaseInfo"></include>
+		<include refid="userQueryParam"></include>
+	</select>
+	
+	<sql id="userQueryParam">
+		<if test="reseller.userRelType != null and reseller.supplierId != null">
+			and sur.user_id= #{reseller.supplierId}
+		</if>
+		<if test="reseller.userRelType != null">
+			and sur.status=1
+			and sur.rel_type = #{reseller.userRelType}
+		</if>
+	</sql>
+	<sql id="resellerBaseInfo">
+		where
+			suser.account_state = 1
+		and 
+			suser.check_status=1
+		<!-- <if test="reseller.supplierId != null">
+			and suser.supplier_id = #{reseller.supplierId}
+		</if> -->
+		<if test="reseller.loginName != null">
+			and suser.login_name like concat('%',#{reseller.loginName},'%')
+		</if>
+		<if test="reseller.name != null">
+			and (suser.name like CONCAT(CONCAT('%', #{reseller.name}),'%') or suser.supplier_normal like CONCAT(CONCAT('%', #{reseller.name}),'%'))
+		</if>
+		<if test="reseller.corporater != null">
+			and suser.corporater like CONCAT(CONCAT('%', #{reseller.corporater}),'%')
+		</if>
+		<if test="reseller.corporaterMobile != null">
+			and suser.corporater_mobile = #{reseller.corporaterMobile}
+		</if>
+		<if test="reseller.address != null">
+			and suser.address like CONCAT(CONCAT('%', #{reseller.address}),'%')
+		</if>
+		<if test="reseller.resellerType != null">
+			and suser.reseller_type = #{reseller.resellerType}
+		</if>
+		<if test="reseller.userType != null">
+			and suser.user_type = #{reseller.userType}
+		</if>
+		<if test="reseller.createDate != null">
+			and suser.create_date = DATE_FORMAT(#{reseller.createDate}, '%Y-%m-%d')
+		</if>
+		<if test="reseller.isRoot != null">
+			and suser.is_root = #{reseller.isRoot}
+		</if>
+		<if test="reseller.province != null">
+			and suser.province=#{reseller.province}
+		</if>
+		<if test="reseller.city != null">
+			and suser.city=#{reseller.city}
+		</if>
+		<if test="reseller.county != null">
+			and suser.county=#{reseller.county}
+		</if>
+		<if test="reseller.bindDateBegin != null">
+			<![CDATA[
+			and suser.create_date >= #{reseller.bindDateBegin}
+			]]>
+		</if>
+		<if test="reseller.bindDateEnd != null">
+			<![CDATA[
+			and suser.create_date <= #{reseller.bindDateEnd}
+			]]>
+		</if>
+		<if test="reseller.refereeId != null">
+			and custext.referee_id = #{reseller.refereeId}
+		</if>
+		
+	</sql>
+	<sql id="pageInfo">
+		<if test="page != null">
+			order by sur.create_date desc
+			<if test="page.startIndex != null and page.pageSize != null">
+				limit #{page.startIndex} , #{page.pageSize}
+			</if>
+		</if>
+		<if test="page == null">
+			order by sur.create_date desc
+		</if>
+	</sql>
+</mapper>

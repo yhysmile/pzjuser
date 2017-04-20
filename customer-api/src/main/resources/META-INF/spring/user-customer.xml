@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:reference id="iuserService"
+		interface="com.pzj.base.service.sys.IUserService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iroleService"
+		interface="com.pzj.base.service.sys.IRoleService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iofficeService"
+		interface="com.pzj.base.service.sys.IOfficeService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="imenuService"
+		interface="com.pzj.base.service.sys.IMenuService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="ilogService"
+		interface="com.pzj.base.service.sys.ILogService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="idictService"
+		interface="com.pzj.base.service.sys.IDictService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iuserAuthOfficeService"
+		interface="com.pzj.base.service.sys.IUserAuthOfficeService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iuserAuthRoleService"
+		interface="com.pzj.base.service.sys.IUserAuthRoleService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iuserAuthMenuService"
+		interface="com.pzj.base.service.sys.IUserAuthMenuService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iroleAuthOfficeService"
+		interface="com.pzj.base.service.sys.IRoleAuthOfficeService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference id="iroleAuthMenuService"
+		interface="com.pzj.base.service.sys.IRoleAuthMenuService" version="1.0" check="false"
+		timeout="30000" retries="3" />
+
+	<dubbo:reference interface="com.pzj.base.service.sys.ISysUserRelationService" check="false"
+		id="sysUserRelationService" version="1.0" timeout="30000" />
+
+	<dubbo:reference id="ichannelService"
+		interface="com.pzj.base.service.sys.IChannelService" version="1.0" check="false"
+		timeout="30000" />
+
+	<dubbo:reference id="ilabelService"
+		interface="com.pzj.base.service.sys.ILabelService" version="1.0" check="false"
+		timeout="30000" />
+
+	<dubbo:reference id="ilabelRelationService"
+		interface="com.pzj.base.service.sys.ILabelRelationService" version="1.0" check="false"
+		timeout="30000" />
+
+
+	<dubbo:reference id="isysUserAgentService"
+		interface="com.pzj.base.service.sys.ISysUserAgentService" version="1.0" check="false"
+		timeout="30000" />
+
+	<dubbo:reference id="icontactsService"
+					 interface="com.pzj.base.service.sys.IContactsService" version="1.0" check="false"
+					 timeout="30000" />
+
+	<dubbo:reference id="iaddressService"
+					 interface="com.pzj.base.service.sys.IAddressService" version="1.0" check="false"
+					 timeout="30000" />
+
+	<dubbo:reference id="itagService"
+					 interface="com.pzj.base.service.sys.ITagService" version="1.0" check="false"
+					 timeout="30000" />
+
+	<dubbo:reference id="iuserTagService"
+					 interface="com.pzj.base.service.sys.IUserTagService" version="1.0" check="false"
+					 timeout="30000" />
+	<dubbo:reference id="iuserMicroshopService"
+					 interface="com.pzj.base.service.sys.IUserMicroshopService" version="1.0" check="false"
+					 timeout="30000" />
+
+	<dubbo:reference interface="com.pzj.base.service.sys.cache.UserRedisService" check="false"
+		id="userRedisService" version="1.0" timeout="30000" />
+
+	<dubbo:reference interface="com.pzj.base.service.sys.cache.SysRedisService" check="false"
+		id="sysCacheService" version="1.0" timeout="30000" />
+
+	<dubbo:reference id="appEquipmentService"
+		interface="com.pzj.base.service.sys.app.IAppEquipmentService" version="1.0" check="false"
+		timeout="30000" />
+
+	<dubbo:reference id="appFeedbackService"
+		interface="com.pzj.base.service.sys.app.IAppFeedbackService" version="1.0" check="false"
+		timeout="30000" />
+
+	<dubbo:reference id="appMessageService"
+		interface="com.pzj.base.service.sys.app.IAppMessageService" version="1.0" check="false"
+		timeout="30000" />
+</beans>

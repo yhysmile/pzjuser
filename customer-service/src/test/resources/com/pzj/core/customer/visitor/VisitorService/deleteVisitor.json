@@ -1,0 +1,10 @@
+{
+  "testData" : {
+    "visitorId" : 3593655469735936,
+    "operator" : "565474567657789"
+  },
+  "testDataClass" : {
+    "visitorId" : "long",
+    "operator" : "long"
+  }
+}

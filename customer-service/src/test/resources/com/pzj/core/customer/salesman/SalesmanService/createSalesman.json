@@ -1,0 +1,13 @@
+{
+  "testData" : {
+    "corporater" : "xiaoshou1001",
+    "corporaterMobile" : "12432345",
+    "department" : "bumeng",
+    "province" : "beijing",
+    "city" : "beijing",
+    "county" : "chaoyang",
+    "address" : "chuangmei",
+    "createBy" : 2216619736563723
+  },
+  "testDataClass" : "com.pzj.core.customer.salesman.CreateSalesmanRequest"
+}

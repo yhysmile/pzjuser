@@ -1,0 +1,18 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+
+    <bean id="mqUtil" class="com.pzj.common.util.MQUtil">
+        <constructor-arg index="0" name="productName" value="${rocketmq.productName}" />
+        <constructor-arg index="1" name="serviceAddress" value="${rocketmq.address}" />
+        <constructor-arg index="2" name="maxPoolSize" value="${rocketmq.maxPoolSize}" />
+        <constructor-arg index="3" name="minPoolSize" value="${rocketmq.minPoolSize}" />
+        <constructor-arg index="4" name="keepAliveTime" value="${rocketmq.keepAliveTime}" />
+    </bean>
+    <bean id="mqMessageService" class="com.pzj.service.Impl.mq.MqMessageService">
+        <constructor-arg index="0" name="mqUtil" ref="mqUtil" />
+        <constructor-arg index="1" name="config" ref="userConfig" />
+    </bean>
+
+</beans>

@@ -1,0 +1,12 @@
+{
+  "salesType": [
+    {
+      "key": "strategy:salesType",
+      "value": "3"
+    },
+    {
+      "key": "strategy:salesType",
+      "value": "6"
+    }
+  ]
+}

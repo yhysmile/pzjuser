@@ -1,0 +1,22 @@
+{
+  "testData" :[{
+    "userId" : 2216619736563789,
+    "checkUserId" : 2216619736563714,
+    "checkData" : "2016-11-01",
+    "checkStatus" : 1,
+    "reasonRejection" : "wefwefwefwef"
+  },{
+    "userId" : 3316619736563789,
+    "checkUserId" : 3316619736563714,
+    "checkData" : "2016-12-01",
+    "checkStatus" : 1,
+    "reasonRejection" : "hjsdry35t623454r3"
+  },{
+    "userId" : 4416619736563789,
+    "checkUserId" : 3316619736563714,
+    "checkData" : "2017-01-01",
+    "checkStatus" : 1,
+    "reasonRejection" : "y45tsdftr12343"
+  }],
+  "testDataClass" : "com.pzj.base.entity.SysUser"
+}

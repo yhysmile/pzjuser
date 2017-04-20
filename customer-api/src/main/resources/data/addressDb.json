@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "province" : "北京",
+    "city" : "北京",
+    "county" : "朝阳",
+    "address" : "麦子店西街",
+    "postcode" : "10010",
+    "type" : "1",
+    "supplierId" : "123456789",
+    "isDefault" : "1",
+    "createBy" : "10001",
+    "createDate" : "2016-10-12",
+    "updateBy" : "10002",
+    "updateDate" : "2016-11-12",
+    "dataSource" : "4"
+  },
+  {
+    "id": "2",
+    "province" : "北京",
+    "city" : "北京",
+    "county" : "朝阳",
+    "address" : "朝阳公园南路",
+    "postcode" : "10010",
+    "type" : "1",
+    "supplierId" : "123456789",
+    "isDefault" : "1",
+    "createBy" : "10001",
+    "createDate" : "2016-10-12",
+    "updateBy" : "10002",
+    "updateDate" : "2016-11-12",
+    "dataSource" : "4"
+  },
+  {
+    "id": "3",
+    "province" : "北京",
+    "city" : "北京",
+    "county" : "海淀",
+    "address" : "中关村大街",
+    "postcode" : "10010",
+    "type" : "1",
+    "supplierId" : "123456789",
+    "isDefault" : "1",
+    "createBy" : "10001",
+    "createDate" : "2016-10-12",
+    "updateBy" : "10002",
+    "updateDate" : "2016-11-12",
+    "dataSource" : "4"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "testData" : {
+    "channelRequest" : {
+      "supplierId": 3180074621206529
+    },
+    "customerRequest" : {
+      "id": 3631956273659904
+    },
+    "pageModel" : {
+      "pageNo": 1,
+      "pageSize": 100,
+      "startIndex": 40
+    },
+    "tmpAddIds" : null,
+    "tmpDelIds" : [3608256916750336,
+      3608256312770560,
+      3608255708790784,
+      3608255507464192,
+      3608254836375552,
+      3608251615150080,
+      3608243702792192,
+      3608243434356736,
+      3608240078913536,
+      3608236381437952,
+      3608236180111360]
+  },
+  "testDataClass" : {
+    "channelRequest" : "com.pzj.core.customer.channel.QueryChannelRequest",
+    "customerRequest" : "com.pzj.core.customer.profile.QueryCustomerRequest",
+    "pageModel" : "com.pzj.base.common.utils.PageModel"
+  }
+}

@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.dao.SysRoleMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,name
+		,type
+		,data_scope
+		,create_by
+		,create_date
+		,update_by
+		,update_date
+		,remarks
+		,del_flag
+		,data_source
+		,is_bingding
+		,supplier_id
+	</sql>
+	<sql id="Base_Column_Join_List">
+		ro.id
+		,ro.name
+		,ro.type
+		,ro.data_scope
+		,ro.create_by
+		,ro.create_date
+		,ro.update_by
+		,ro.update_date
+		,ro.remarks
+		,ro.del_flag
+		,ro.data_source
+		,ro.is_bingding
+		,ro.supplier_id
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysRole">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="data_scope" jdbcType="CHAR" property="dataScope" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		<result column="del_flag" jdbcType="CHAR" property="delFlag" />
+		<result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+		<result column="is_bingding" jdbcType="INTEGER" property="bingding" />
+		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+	</resultMap>
+
+
+	<resultMap id="AliasResultMap" type="com.pzj.base.entity.SysRole">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="data_scope" property="dataScope" jdbcType="CHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="CHAR" />
+		<result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+		<result column="office_id" jdbcType="VARCHAR" property="officeId" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="is_bingding" jdbcType="INTEGER" property="bingding" />
+		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+	</resultMap>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_role where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		<where>
+			1=1
+			<if test="bParam != null">
+				<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+				<if test="bParam.name != null"> AND name like #{bParam.name,jdbcType=VARCHAR} </if>
+				<if test="bParam.type != null"> AND type = #{bParam.type,jdbcType=VARCHAR} </if>
+				<if test="bParam.dataScope != null"> AND data_scope = #{bParam.dataScope,jdbcType=CHAR} </if>
+				<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.createDate != null"> AND create_date =
+					#{bParam.createDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.updateDate != null"> AND update_date =
+					#{bParam.updateDate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="bParam.remarks != null"> AND remarks = #{bParam.remarks,jdbcType=VARCHAR} </if>
+				<if test="bParam.delFlag != null"> AND del_flag = #{bParam.delFlag,jdbcType=CHAR} </if>
+				<if test="bParam.dataSource != null"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR}
+				</if>
+				<if test="bParam.bingding != null"> AND is_bingding = #{bParam.bingding,jdbcType=INTEGER}
+				</if>
+				<if test="bParam.supplierId != null">
+					AND supplier_id =
+					#{bParam.supplierId,jdbcType=BIGINT}
+				</if>
+				<if test="bParam.queryDataScope != null and bParam.queryDataScope.size &gt; 0">
+					and data_scope in
+					<foreach collection="bParam.queryDataScope" item="item"
+						open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by id desc </if>
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(id) from sys_role
+		<include refid="sql_of_where" />
+	</select>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		<where>
+			<if test="roleIds != null and roleIds != '' ">
+				and id in (${roleIds})
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=CHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="countByOfficeRole" resultType="java.lang.Integer"
+		parameterType="com.pzj.base.entity.SysRole">
+		select count(ro.id)
+		from sys_role_office_user as re
+		inner join
+		sys_office as of on of.id = re.office_id
+		inner join sys_role as ro on
+		ro.id = re.role_id
+		<where>
+			<if test="alias != null">
+				and of.name like #{alias,jdbcType=VARCHAR}
+			</if>
+			<if test="dataSource != null">
+				and ro.data_source = #{dataSource,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				and ro.name like #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="bingding != null">
+				and ro.is_bingding = #{bingding,jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				and ro.create_by = #{createBy,jdbcType=VARCHAR}
+			</if>
+			<if test="updateBy != null">
+				and ro.update_by = #{updateBy,jdbcType=VARCHAR}
+			</if>
+			and ( 1=1
+			<if test="supplierId != null">
+				and ro.supplier_id = #{supplierId,jdbcType=BIGINT}
+			</if>
+			<if test="needBingdingRole != null and needBingdingRole">
+				or ro.is_bingding = 1
+			</if>
+			)
+			<if test="supplierId != null">
+				and of.supplier_id = #{supplierId, jdbcType=BIGINT}
+			</if>
+			and (re.user_id is null || re.user_id = '')
+		</where>
+
+	</select>
+
+	<select id="findByOfficeRole" resultMap="AliasResultMap">
+		select
+		<include refid="Base_Column_Join_List" />
+		, of.id as office_id, of.name as alias
+		from sys_role_office_user as re
+		inner join sys_office as of on of.id = re.office_id
+		inner join sys_role
+		as ro on ro.id = re.role_id
+		<where>
+			<if test="param1 != null">
+				<if test="param1.alias != null">
+					and of.name like #{param1.alias,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.dataSource != null">
+					and ro.data_source =
+					#{param1.dataSource,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.name != null">
+					and ro.name like #{param1.name,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.bingding != null">
+					and ro.is_bingding = #{param1.bingding,jdbcType=INTEGER}
+				</if>
+				<if test="param1.createBy != null">
+					and ro.create_by = #{param1.createBy,jdbcType=VARCHAR}
+				</if>
+				<if test="param1.updateBy != null">
+					and ro.update_by = #{param1.updateBy,jdbcType=VARCHAR}
+				</if>
+				and ( 1=1
+				<if test="param1.supplierId != null">
+					and ro.supplier_id =
+					#{param1.supplierId,jdbcType=BIGINT}
+				</if>
+				<if test="param1.needBingdingRole != null and param1.needBingdingRole">
+					or ro.is_bingding = 1
+				</if>
+				)
+				<if test="param1.supplierId != null">
+					and of.supplier_id = #{param1.supplierId,
+					jdbcType=BIGINT}
+				</if>
+
+				and (re.user_id is null || re.user_id = '')
+			</if>
+		</where>
+		<if test="param2 != null">
+			<if test="param2.orderByClause == null"> order by id desc </if>
+			<if test="param2.orderByClause != null"> order by ${param2.orderByClause} </if>
+			<if test="param2.startIndex != null and param2.pageSize != null">
+				limit #{param2.startIndex} , #{param2.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<select id="findByOffice" resultMap="BaseResultMap"
+		parameterType="com.pzj.base.entity.SysOffice">
+		select
+		<include refid="Base_Column_Join_List" />
+		from sys_role as ro
+		inner join sys_role_office_user as re on ro.id =
+		re.role_id and
+		re.office_id = #{id} and re.user_id = #{parentId,
+		jdbcType=VARCHAR}
+		<where>
+			<if test="delFlag != null">
+				and ro.del_flag = #{delFlag,jdbcType=CHAR}
+			</if>
+			<if test="supplierId != null">
+				and ro.supplier_id = #{supplierId,jdbcType=BIGINT}
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysRole">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="name != null">
+				name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="dataScope != null">
+				data_scope,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="dataSource != null">
+				data_source,
+			</if>
+			<if test="bingding != null">
+				is_bingding,
+			</if>
+			<if test="supplierId != null">
+				supplier_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="dataScope != null">
+				#{dataScope,jdbcType=CHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="dataSource != null">
+				#{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="bingding != null">
+				#{bingding,jdbcType=INTEGER},
+			</if>
+			<if test="supplierId != null">
+				#{supplierId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_role
+		(id
+		,name
+		,type
+		,data_scope
+		,create_by
+		,create_date
+		,update_by
+		,update_date
+		,remarks
+		,del_flag
+		,data_source
+		,is_bingding
+		,supplier_id
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.name != null">,#{item.name ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.type != null">,#{item.type ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.dataScope != null">,#{item.dataScope ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.remarks != null">,#{item.remarks ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.delFlag != null">,#{item.delFlag ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.dataSource != null">,#{item.dataSource ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.bingding != null">,#{item.bingding ,jdbcType=INTEGER}</when>
+				<otherwise>,null</otherwise>
+			</choose>
+			<choose>
+				<when test="item.supplierId != null">,#{item.supplierId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysRole">
+		update sys_role
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="dataScope != null">
+				data_scope = #{dataScope,jdbcType=CHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate == null">
+				update_date = current_timestamp(),
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="dataSource != null">
+				data_source = #{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="bingding != null">
+				is_bingding = #{bingding,jdbcType=INTEGER},
+			</if>
+			<if test="supplierId != null">
+				supplier_id = #{supplierId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			update sys_role
+			<set>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.type != null">
+					type = #{item.type,jdbcType=VARCHAR},
+				</if>
+				<if test="item.dataScope != null">
+					data_scope = #{item.dataScope,jdbcType=CHAR},
+				</if>
+				<if test="item.createBy != null">
+					create_by = #{item.createBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createDate != null">
+					create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateBy != null">
+					update_by = #{item.updateBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateDate != null">
+					update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateDate == null">
+					update_date = current_timestamp(),
+				</if>
+				<if test="item.remarks != null">
+					remarks = #{item.remarks,jdbcType=VARCHAR},
+				</if>
+				<if test="item.delFlag != null">
+					del_flag = #{item.delFlag,jdbcType=CHAR},
+				</if>
+				<if test="item.dataSource != null">
+					data_source = #{item.dataSource,jdbcType=VARCHAR},
+				</if>
+				<if test="item.bingding != null">
+					is_bingding = #{item.bingding,jdbcType=INTEGER},
+				</if>
+				<if test="item.supplierId != null">
+					supplier_id = #{item.supplierId,jdbcType=BIGINT},
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+</mapper>

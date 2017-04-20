@@ -1,0 +1,11 @@
+{
+  "testData" : {
+    "name" : "testLogo",
+    "loginName" : "testLogo",
+    "logo" : "vvvaaa",
+    "settlement" : {
+      "tradePayee" : "3"
+    }
+  },
+  "testDataClass" : "com.pzj.base.entity.SysUser"
+}

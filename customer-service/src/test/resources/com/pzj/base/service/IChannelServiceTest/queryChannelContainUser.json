@@ -1,0 +1,20 @@
+{
+  "testData" : {
+    "channelParam" : {
+      "id" : 2216619736563716
+    },
+    "distributorParam" : {
+    },
+    "pageModel" : {
+      "pageNo" : 1,
+      "pageSize" : 20
+    }
+  },
+  "testDataClass" : {
+    "channelParam" : "com.pzj.base.entity.SysChannel",
+    "distributorParam" : "com.pzj.base.entity.SysUser",
+    "pageModel" : "com.pzj.base.common.utils.PageModel"
+  },
+  "expectData" : "1",
+  "expectDataClass" : 1.123
+}

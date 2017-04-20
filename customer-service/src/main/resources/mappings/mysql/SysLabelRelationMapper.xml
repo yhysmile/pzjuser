@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.dao.SysLabelRelationMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,obj_id
+		,rel_id
+		,rel_type
+		,s_id
+		,status
+		,create_by
+		,create_date
+		,update_by
+		,update_date
+	</sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysLabelRelationKey">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="obj_id" jdbcType="BIGINT" property="objId" />
+		<result column="rel_id" jdbcType="BIGINT" property="relId" />
+		<result column="rel_type" jdbcType="VARCHAR" property="relType" />
+		<result column="s_id" jdbcType="BIGINT" property="sId" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+	</resultMap>
+    
+    <!-- 字段映射 -->
+    <resultMap id="LabelResultMap" type="com.pzj.base.entity.SysLabelRelationKey">
+        <id column="re_id" property="id" jdbcType="BIGINT" />
+        <result column="re_obj_id" jdbcType="BIGINT" property="objId" />
+        <result column="re_rel_id" jdbcType="BIGINT" property="relId" />
+        <result column="re_rel_type" jdbcType="VARCHAR" property="relType" />
+        <result column="s_id" jdbcType="BIGINT" property="sId" />
+        <collection property="labels" columnPrefix="la_" javaType="com.pzj.base.entity.SysLabel">
+            <id column="id" property="id" jdbcType="BIGINT" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="pid" jdbcType="BIGINT" property="pid" />
+            <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+            <result column="flag" jdbcType="CHAR" property="flag" />
+            <result column="sort" jdbcType="INTEGER" property="sort" />
+            <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+            <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+            <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+            <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        </collection>
+    </resultMap>
+
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+			<include refid="Base_Column_List" />
+		from
+			sys_label_relation
+		where
+			id = #{id,jdbcType=BIGINT}
+		and
+			status=1
+	</select>
+
+	<!-- 删除 -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		update
+			sys_label_relation
+		set
+			status=0
+		where
+			id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_label_relation where id = #{id,jdbcType=BIGINT}
+	</delete> -->
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		WHERE status=1
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.objId != null"> AND obj_id = #{bParam.objId,jdbcType=BIGINT} </if>
+			<if test="bParam.relId != null"> AND rel_id = #{bParam.relId,jdbcType=BIGINT} </if>
+			<if test="bParam.relType != null"> AND rel_type = #{bParam.relType,jdbcType=VARCHAR} </if>
+			<if test="bParam.sId != null"> AND s_id = #{bParam.sId,jdbcType=BIGINT} </if>
+			<if test="bParam.queryObjIds != null and bParam.queryObjIds.size &gt; 0">
+			  and obj_id in
+			  <foreach collection="bParam.queryObjIds" item="item" open="(" close=")" separator=",">
+			   #{item} 
+			  </foreach>
+			</if>
+			<if test="bParam.queryRelIds != null and bParam.queryRelIds.size &gt; 0">
+			  and rel_id in
+			  <foreach collection="bParam.queryRelIds" item="item" open="(" close=")" separator=",">
+			   #{item} 
+			  </foreach>
+			</if>
+		</if>
+	</sql>
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from
+			sys_label_relation
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause != null"> order by
+				${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select
+			count(id)
+		from
+			sys_label_relation
+		<include refid="sql_of_where" />
+	</select>
+	
+	<!-- 查询标签与其它数据的关联关系，并查询标签信息 -->
+    <select id="selectLabelByRelation" parameterType="com.pzj.base.entity.SysLabelRelationKey" resultMap="LabelResultMap">
+        select
+	        re.id re_id, re.obj_id re_obj_id, la.id la_id, la.name la_name, la.pid la_pid, la.create_date la_create_date, la.flag la_flay,
+	        la.sort la_sort, la.update_date la_update_date, la.update_by la_update_by, la.create_by la_create_by, la.remarks la_remarks
+        from
+        	sys_label_relation re
+        left join
+        	sys_label la on re.rel_id = la.id
+        where
+        	re.rel_type = #{relType,jdbcType=VARCHAR}
+        and
+        	re.obj_id = #{objId,jdbcType=BIGINT}
+        and
+        	re.status=1
+    </select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysLabelRelationKey"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_label_relation
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,status,
+			<if test="objId != null">
+				obj_id,
+			</if>
+			<if test="relId != null">
+				rel_id,
+			</if>
+			<if test="relType != null">
+				rel_type,
+			</if>
+			<if test="sId != null">
+				s_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},1,
+			<if test="objId != null">
+				#{objId,jdbcType=BIGINT},
+			</if>
+			<if test="relId != null">
+				#{relId,jdbcType=BIGINT},
+			</if>
+			<if test="relType != null">
+				#{relType,jdbcType=VARCHAR},
+			</if>
+			<if test="sId != null">
+				#{sId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_label_relation
+		(id
+		,status
+		,create_date
+		,obj_id
+		,rel_id
+		,rel_type
+		,s_id,
+		create_by
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT},1,now()
+			<choose>
+				<when test="item.objId != null">,#{item.objId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.relId != null">,#{item.relId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.relType != null">,#{item.relType ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.sId != null">,#{item.sId ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=BIGINT}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysLabelRelationKey">
+		update sys_label_relation
+		<set>
+			<if test="objId != null">
+				obj_id = #{objId,jdbcType=BIGINT},
+			</if>
+			<if test="relId != null">
+				rel_id = #{relId,jdbcType=BIGINT},
+			</if>
+			<if test="relType != null">
+				rel_type = #{relType,jdbcType=VARCHAR},
+			</if>
+			<if test="sId != null">
+				s_id = #{sId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update sys_label_relation
+			<set>
+				<if test="item.objId != null">
+					obj_id = #{item.objId,jdbcType=BIGINT},
+				</if>
+				<if test="item.relId != null">
+					rel_id = #{item.relId,jdbcType=BIGINT},
+				</if>
+				<if test="item.relType != null">
+					rel_type = #{item.relType,jdbcType=VARCHAR},
+				</if>
+				<if test="item.sId != null">
+					s_id = #{item.sId,jdbcType=BIGINT},
+				</if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	
+	<!-- 新加的操作 -->
+	
+    <sql id="sql_of_where_ID">
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="objId != null">
+                and obj_id = #{objId,jdbcType=VARCHAR}
+            </if>
+            <if test="relId != null">
+                and rel_id = #{relId,jdbcType=VARCHAR}
+            </if>
+            <if test="sId != null">
+                and s_id = #{sId,jdbcType=BIGINT}
+            </if>
+                and rel_type = #{relType,jdbcType=VARCHAR} or (1=2)
+                and status = 1
+        </where>
+    </sql>
+    <sql id="sql_of_where_list">
+        <where>
+            <if test="objIds != null">
+                and obj_id in
+                <foreach collection="objIds" item="item" open="(" separator=","
+                    close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="relIds != null">
+                and rel_id in
+                <foreach collection="relIds" item="item" open="(" separator=","
+                    close=")">
+                    #{item}
+                </foreach>
+            </if>
+            and rel_type = #{relType}
+            and status=1
+        </where>
+    </sql>
+    <sql id="sql_of_where_string">
+        <where>
+            <if test="objIds != null">
+                and obj_id in (${objIds})
+            </if>
+            <if test="relIds != null">
+                and rel_id in (${relIds})
+            </if>
+            and rel_type in (${relType})
+			and status=1
+            or (1=2)
+        </where>
+    </sql>
+	
+	<!-- 删除开始 -->
+	<update id="deleteSelective" parameterType="com.pzj.base.entity.SysLabelRelationKey">
+		update
+			sys_label_relation
+		set
+			status=0
+		<include refid="sql_of_where_ID" />
+	</update>
+	<update id="deleteByIdsMap" parameterType="map">
+		update
+			sys_label_relation
+		set
+			status=0
+		<include refid="sql_of_where_string" />
+	</update>
+	<update id="deleteByIdList" parameterType="map">
+		update
+			sys_label_relation
+		set
+			status=0
+		<include refid="sql_of_where_list" />
+	</update>
+	<update id="deleteBatchByPrimaryKey" parameterType="list">
+		update
+			sys_label_relation
+		set
+			status=0
+		where
+			id
+		in
+		<foreach collection="list" item="item" index="index" separator=",">
+            #{item, jdbcType=BIGINT}
+        </foreach>
+	</update>
+	<update id="deleteBatchSelective" parameterType="list">
+		<foreach collection="list" item="item"  index="index"  separator=";">
+            update
+				sys_label_relation
+			set
+				status=0
+            <where>
+	            <if test="item.id != null">
+	                and id = #{item.id,jdbcType=BIGINT}
+	            </if>
+	            <if test="item.objId != null">
+	                and obj_id = #{item.objId,jdbcType=VARCHAR}
+	            </if>
+	            <if test="item.relId != null">
+	                and rel_id = #{item.relId,jdbcType=VARCHAR}
+	            </if>
+	             <if test="item.sId != null">
+	                and s_id = #{item.sId,jdbcType=BIGINT}
+	            </if>
+	                and rel_type = #{item.relType,jdbcType=VARCHAR} or (1=2)
+	        </where>
+        </foreach>
+	</update>
+	<!-- 删除结束-->
+    <!-- <delete id="deleteSelective" parameterType="com.pzj.base.entity.SysLabelRelationKey">
+        delete from sys_label_relation
+        <include refid="sql_of_where_ID" />
+
+    </delete>
+
+    <delete id="deleteByIdsMap" parameterType="map">
+        delete from sys_label_relation
+        <include refid="sql_of_where_string" />
+    </delete>
+
+    <delete id="deleteByIdList" parameterType="map">
+        delete from sys_label_relation
+        <include refid="sql_of_where_list" />
+    </delete>
+
+    <delete id="deleteBatchByPrimaryKey" parameterType="list">
+        <foreach collection="list" item="item" index="index" separator=";">
+            delete from sys_label_relation where id = #{id,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchSelective" parameterType="list">
+        <foreach collection="list" item="item"  index="index"  separator=";">
+            delete from sys_label_relation
+            <where>
+            <if test="item.id != null">
+                and id = #{item.id,jdbcType=BIGINT}
+            </if>
+            <if test="item.objId != null">
+                and obj_id = #{item.objId,jdbcType=VARCHAR}
+            </if>
+            <if test="item.relId != null">
+                and rel_id = #{item.relId,jdbcType=VARCHAR}
+            </if>
+             <if test="item.sId != null">
+                and s_id = #{item.sId,jdbcType=BIGINT}
+            </if>
+                and rel_type = #{item.relType,jdbcType=VARCHAR} or (1=2)
+        </where>
+        </foreach>
+    </delete> -->
+    
+    <!-- 查询 -->
+    <select id="findByIdsMap" resultMap="BaseResultMap" parameterType="map">
+        select
+        	<include refid="Base_Column_List" />
+        from
+        	sys_label_relation
+        <include refid="sql_of_where_string" />
+    </select>
+    
+    <select id="findByIdListMap" resultMap="BaseResultMap" parameterType="map">
+        select
+        	<include refid="Base_Column_List" />
+        from
+        	sys_label_relation
+        <include refid="sql_of_where_list" />
+    </select>
+
+	<update id="updateStatusByIds" >
+		UPDATE
+			sys_label_relation
+		SET
+			status = #{status,jdbcType=INTEGER},
+			update_by = #{updateBy,jdbcType=BIGINT},
+			update_date = now()
+		WHERE
+			id
+		IN
+		<foreach collection="ids" item="item" open="(" separator=","  close=")">
+			#{item}
+		</foreach>
+
+	</update>
+    
+</mapper>

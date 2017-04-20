@@ -1,0 +1,22 @@
+{
+  "testData" : {
+    "channelRequest" : {
+      "supplierId": 3180074621206529
+    },
+    "customerRequest" : {
+      "nameOrNormal": "测试"
+    },
+    "pageModel" : {
+      "pageNo": 1,
+      "pageSize": 100,
+      "startIndex": 40
+    },
+    "tmpAddIds" : null,
+    "tmpDelIds" : null
+  },
+  "testDataClass" : {
+    "channelRequest" : "com.pzj.core.customer.channel.QueryChannelRequest",
+    "customerRequest" : "com.pzj.core.customer.profile.QueryCustomerRequest",
+    "pageModel" : "com.pzj.base.common.utils.PageModel"
+  }
+}

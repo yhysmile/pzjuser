@@ -1,0 +1,14 @@
+{
+  "testData": {
+    "userParam": {
+    },
+    "pageModel": {
+      "pageNo": 1,
+      "pageSize": 20
+    }
+  },
+  "testDataClass": {
+    "userParam": "com.pzj.base.entity.SysUser",
+    "pageModel": "com.pzj.base.common.utils.PageModel"
+  }
+}

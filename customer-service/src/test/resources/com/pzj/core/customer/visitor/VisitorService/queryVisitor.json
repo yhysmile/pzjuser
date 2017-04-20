@@ -1,0 +1,6 @@
+{
+	"queryVisitorRequest" : {"ownerId":"2216619741563734","name":null,"phoneNum":null,"idNum":null},
+	"visitorObject" : "com.pzj.core.customer.visitor.QueryVisitorRequest",
+	"page" : {"currentPage":1,"pageSize":20,"startIndex":0},
+	"pageObject" : "com.pzj.core.customer.profile.PageBean"
+}

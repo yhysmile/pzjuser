@@ -1,0 +1,10 @@
+{
+  "testData": {
+    "corporater": "发撒旦法",
+    "corporaterMobile": "18113015707",
+    "identifyType": "p",
+    "loginName": "cd0009",
+    "resellerType": 5
+  },
+  "testDataClass": "com.pzj.core.customer.profile.CreateCustomerRequest"
+}

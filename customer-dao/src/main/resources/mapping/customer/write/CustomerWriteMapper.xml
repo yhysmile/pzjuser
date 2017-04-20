@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.CustomerWriteMapper">
+	<!-- 字段映射 -->
+	<resultMap id="ResellerBaseInfo" type="com.pzj.core.customer.profile.ResellerEntity">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
+		<result column="corporater" jdbcType="VARCHAR" property="corporater" />
+		<result column="corporater_mobile" jdbcType="VARCHAR" property="corporaterMobile" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="reseller_type" jdbcType="VARCHAR" property="resellerType" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="account_state" jdbcType="INTEGER" property="accountState" />
+		<result column="check_status" jdbcType="VARCHAR" property="checkState" />
+		<result column="is_root" jdbcType="VARCHAR" property="isRoot" />
+	</resultMap>
+	<select id="selectById" resultMap="ResellerBaseInfo">
+		select id,supplier_id,login_name,corporater,corporater_mobile,name,address,reseller_type,account_state,check_status,is_root
+		from sys_user where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="queryUserByName" resultMap="ResellerBaseInfo">
+		select
+		id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county
+		from
+		sys_user
+		where
+		login_name=#{loginName}
+		and
+		account_state
+		in
+		(1, 0)
+		limit 1;
+	</select>
+
+
+	<select id="queryUserBaseInfoById" resultMap="ResellerBaseInfo">
+		select id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county
+		from sys_user where id=#{id} and account_state = 1
+	</select>
+
+	<insert id="insertDistributor" parameterType="com.pzj.core.customer.profile.ResellerEntity">	
+		insert into sys_user(
+			id,login_name,corporater,corporater_mobile,supplier_id,update_by,identifyType,reseller_type,name,supplier_normal,address,
+			corporater_credentials,business_license,oper_charger_phone,oper_charger_fax,business_certificate,
+			oper_charger_email,business_qualification,guideCertificate,province,city,county,account_state,check_status,
+			create_by,is_root,check_type,user_source,hotline_supplier,hotline_reseller,login_passwd,user_type,create_date
+		)
+		values(
+			#{id,jdbcType=BIGINT},
+			#{loginName,jdbcType=VARCHAR},
+			#{corporater,jdbcType=VARCHAR},
+			#{corporaterMobile,jdbcType=VARCHAR},
+			#{supplierId,jdbcType=BIGINT},
+			#{updateUserId,jdbcType=VARCHAR},
+			#{identifyType,jdbcType=VARCHAR},
+			#{resellerType,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{supplierNormal,jdbcType=VARCHAR},
+			#{address,jdbcType=VARCHAR},
+			#{corporaterCredentials,jdbcType=VARCHAR},
+			#{businessLicense,jdbcType=VARCHAR},
+			#{operChargerPhone,jdbcType=VARCHAR},
+			#{operChargerFax,jdbcType=VARCHAR},
+			#{businessCertificate,jdbcType=VARCHAR},
+			#{operChargerEmail,jdbcType=VARCHAR},
+			#{businessQualification,jdbcType=VARCHAR},
+			#{guideCertificate,jdbcType=VARCHAR},
+			#{province,jdbcType=VARCHAR},
+			#{city,jdbcType=VARCHAR},
+			#{county,jdbcType=VARCHAR},
+			#{accountState,jdbcType=INTEGER},
+			#{checkState,jdbcType=VARCHAR},
+			#{createUserId,jdbcType=VARCHAR},
+			#{isRoot,jdbcType=VARCHAR},
+			#{checkType,jdbcType=INTEGER},
+			#{userSource,jdbcType=VARCHAR},
+			#{hotlineSupplier,jdbcType=VARCHAR},
+			#{hotlineReseller,jdbcType=VARCHAR},
+			#{userPassword,jdbcType=VARCHAR},
+			#{userType,jdbcType=VARCHAR},
+			now()
+		)
+	</insert>
+</mapper>

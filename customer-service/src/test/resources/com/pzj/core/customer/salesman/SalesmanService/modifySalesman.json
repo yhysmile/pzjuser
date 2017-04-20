@@ -1,0 +1,14 @@
+{
+  "testData" : {
+    "id" : 3614585770213376,
+    "corporater" : "xiaoshou0001AA",
+    "corporaterMobile" : "12432345AA",
+    "department" : "bumengAA",
+    "province" : "beijingAA",
+    "city" : "beijingAA",
+    "county" : "chaoyangAA",
+    "address" : "chuangmeiAAA",
+    "updateBy" : 123456789
+  },
+  "testDataClass" : "com.pzj.core.customer.salesman.ModifySalesmanRequest"
+}

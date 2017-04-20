@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.dao.SysDictMapper">
+
+<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+	id  
+	,label 
+	,value 
+	,type 
+	,description 
+	,sort 
+	,create_date 
+	,create_by 
+	,update_by 
+	,update_date 
+	,remarks 
+	,flag 
+	,data_source 
+	</sql>
+	
+<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysDict">
+	     <id column="id" property="id" jdbcType="BIGINT" />
+		<result column="label" jdbcType="VARCHAR" property="label" />
+		<result column="value" jdbcType="VARCHAR" property="value" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="create_by" jdbcType="CHAR" property="createBy" />
+		<result column="update_by" jdbcType="CHAR" property="updateBy" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		<result column="flag" jdbcType="CHAR" property="delFlag" />
+		<result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+	</resultMap>
+
+<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select  <include refid="Base_Column_List" />
+		from product_dict
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<sql id="sql_all_where">
+	   where 1=1
+	   <if test="id != null"> AND id = #{id,jdbcType=BIGINT} </if>
+            <if test="label != null"> AND label = #{label,jdbcType=VARCHAR} </if>
+            <if test="value != null"> AND value = #{value,jdbcType=VARCHAR} </if>
+            <if test="type != null"> AND type = #{type,jdbcType=VARCHAR} </if>
+            <if test="description != null"> AND description = #{description,jdbcType=VARCHAR} </if>
+            <if test="sort != null"> AND sort = #{sort,jdbcType=INTEGER} </if>
+            <if test="createDate != null"> AND create_date = #{createDate,jdbcType=TIMESTAMP} </if>
+            <if test="createBy != null"> AND create_by = #{createBy,jdbcType=CHAR} </if>
+            <if test="updateBy != null"> AND update_by = #{updateBy,jdbcType=CHAR} </if>
+            <if test="updateDate != null"> AND update_date = #{updateDate,jdbcType=TIMESTAMP} </if>
+            <if test="remarks != null"> AND remarks = #{remarks,jdbcType=VARCHAR} </if>
+            <if test="delFlag != null"> AND flag = #{delFlag,jdbcType=CHAR} </if>
+            <if test="dataSource != null"> AND data_source = #{dataSource,jdbcType=VARCHAR} </if>
+	</sql>
+	
+	<!-- 查询集合 -->
+	<select id="selectAllObj" resultMap="BaseResultMap" parameterType="com.pzj.base.entity.SysDict" >
+	   select 
+	   <include refid="Base_Column_List"/>
+	   from
+	   product_dict
+	   <include refid="sql_all_where" />
+	   order by sort
+	</select>
+
+<!-- 删除 -->	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from product_dict where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		WHERE 1=1 
+		<if test="bParam != null" >
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.label != null"> AND label = #{bParam.label,jdbcType=VARCHAR} </if>
+			<if test="bParam.value != null"> AND value = #{bParam.value,jdbcType=VARCHAR} </if>
+			<if test="bParam.type != null"> AND type = #{bParam.type,jdbcType=VARCHAR} </if>
+			<if test="bParam.description != null"> AND description = #{bParam.description,jdbcType=VARCHAR} </if>
+			<if test="bParam.sort != null"> AND sort = #{bParam.sort,jdbcType=INTEGER} </if>
+			<if test="bParam.createDate != null"> AND create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=CHAR} </if>
+			<if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=CHAR} </if>
+			<if test="bParam.updateDate != null"> AND update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.remarks != null"> AND remarks = #{bParam.remarks,jdbcType=VARCHAR} </if>
+			<if test="bParam.delFlag != null"> AND flag = #{bParam.delFlag,jdbcType=CHAR} </if>
+			<if test="bParam.dataSource != null"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+		</if>
+	</sql>
+	
+<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from product_dict
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by id desc </if>
+			<if test="pParam.orderByClause != null" > order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null" >
+			  limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+	
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from product_dict
+		<include refid="sql_of_where" />
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysDict" useGeneratedKeys="true" keyProperty="id">
+		insert into product_dict 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				id, 
+			<if test="label != null">
+			    label,
+			</if>
+			<if test="value != null">
+			    value,
+			</if>
+			<if test="type != null">
+			    type,
+			</if>
+			<if test="description != null">
+			    description,
+			</if>
+			<if test="sort != null">
+			    sort,
+			</if>
+			<if test="createDate != null">
+			    create_date,
+			</if>
+			<if test="createBy != null">
+			    create_by,
+			</if>
+			<if test="updateBy != null">
+			    update_by,
+			</if>
+			<if test="updateDate != null">
+			    update_date,
+			</if>
+			<if test="remarks != null">
+			    remarks,
+			</if>
+			<if test="delFlag != null">
+			    flag,
+			</if>
+			<if test="dataSource != null">
+			    data_source,
+			</if> 
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			     #{id,jdbcType=BIGINT}, 
+			<if test="label != null">
+			    #{label,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+			    #{value,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+			    #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+			    #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+			    #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+			    #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+			    #{createBy,jdbcType=CHAR},
+			</if>
+			<if test="updateBy != null">
+			    #{updateBy,jdbcType=CHAR},
+			</if>
+			<if test="updateDate != null">
+			    #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+			    #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+			    #{delFlag,jdbcType=CHAR},
+			</if>
+			<if test="dataSource != null">
+			    #{dataSource,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+<!-- 批量插入 请根据业务修改默认值-->	
+    <insert id="insertBatch"  parameterType="java.util.List">
+		insert into product_dict 
+		(id  
+		,label 
+		,value 
+		,type 
+		,description 
+		,sort 
+		,create_date 
+		,create_by 
+		,update_by 
+		,update_date 
+		,remarks 
+		,flag 
+		,data_source  
+		) 
+		values
+		<foreach collection="list" item="item" separator=",">
+		(#{item.id,jdbcType=BIGINT}  
+			<choose>  
+				<when test="item.label != null">,#{item.label ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.value != null">,#{item.value ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.type != null">,#{item.type ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.description != null">,#{item.description ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.sort != null">,#{item.sort ,jdbcType=INTEGER}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.remarks != null">,#{item.remarks ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.delFlag != null">,#{item.delFlag ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>  
+				<when test="item.dataSource != null">,#{item.dataSource ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose> 
+		)
+		</foreach>
+	</insert>
+
+<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysDict">
+		update product_dict
+		<set>
+			<if test="label != null" >
+             label = #{label,jdbcType=VARCHAR},
+            </if>
+			<if test="value != null" >
+             value = #{value,jdbcType=VARCHAR},
+            </if>
+			<if test="type != null" >
+             type = #{type,jdbcType=VARCHAR},
+            </if>
+			<if test="description != null" >
+             description = #{description,jdbcType=VARCHAR},
+            </if>
+			<if test="sort != null" >
+             sort = #{sort,jdbcType=INTEGER},
+            </if>
+			<if test="createDate != null" >
+             create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+			<if test="createBy != null" >
+             create_by = #{createBy,jdbcType=CHAR},
+            </if>
+			<if test="updateBy != null" >
+             update_by = #{updateBy,jdbcType=CHAR},
+            </if>
+			<if test="updateDate != null" >
+             update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+			<if test="remarks != null" >
+             remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+			<if test="delFlag != null" >
+             flag = #{delFlag,jdbcType=CHAR},
+            </if>
+			<if test="dataSource != null" >
+             data_source = #{dataSource,jdbcType=VARCHAR},
+            </if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey"  parameterType="java.util.List">
+	     <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update product_dict 
+                <set>
+                  <if test="item.label != null" >
+                    label = #{item.label,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.value != null" >
+                    value = #{item.value,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.type != null" >
+                    type = #{item.type,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.description != null" >
+                    description = #{item.description,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.sort != null" >
+                    sort = #{item.sort,jdbcType=INTEGER},
+                  </if>
+                  <if test="item.createDate != null" >
+                    create_date = #{item.createDate,jdbcType=TIMESTAMP},
+                  </if>
+                  <if test="item.createBy != null" >
+                    create_by = #{item.createBy,jdbcType=CHAR},
+                  </if>
+                  <if test="item.updateBy != null" >
+                    update_by = #{item.updateBy,jdbcType=CHAR},
+                  </if>
+                  <if test="item.updateDate != null" >
+                    update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+                  </if>
+                  <if test="item.remarks != null" >
+                    remarks = #{item.remarks,jdbcType=VARCHAR},
+                  </if>
+                  <if test="item.delFlag != null" >
+                    flag = #{item.delFlag,jdbcType=CHAR},
+                  </if>
+                  <if test="item.dataSource != null" >
+                    data_source = #{item.dataSource,jdbcType=VARCHAR},
+                  </if>
+                </set>
+                where id = #{item.id,jdbcType=BIGINT}
+         </foreach>
+	</update>
+</mapper>

@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.pzj.core</groupId>
+        <artifactId>customer</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>customer-facade</artifactId>
+    <name>用户服务对外接口层</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.pzj.framework</groupId>
+            <artifactId>pzj-toolkit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pzj.core</groupId>
+            <artifactId>pzj.service.base</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

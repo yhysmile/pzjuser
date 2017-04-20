@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+       default-lazy-init="false">
+
+    <description>Spring Configuration</description>
+
+    <!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 -->
+    <context:component-scan base-package="com.pzj"/>
+
+    <bean id="userConfig" class="com.pzj.core.customer.utils.UserConfig">
+        <property name="configs">
+            <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                <property name="location" value="classpath:/config.properties" />
+                <property name="fileEncoding" value="UTF-8" />
+            </bean>
+        </property>
+    </bean>
+
+    <!-- 加载配置属性文件 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/redis.properties"/>
+
+    <import resource="classpath:/META-INF/spring/spring-disconf.xml"/>
+    <import resource="classpath:/META-INF/spring/spring-mybatis.xml"/>
+    <import resource="classpath:/META-INF/spring/spring-redis.xml"/>
+    <import resource="classpath:/META-INF/spring/spring-rocketmq.xml"/>
+    <import resource="classpath:/META-INF/spring/applicationContext.xml"/>
+    <import resource="classpath*:/META-INF/spring/coutomer-applicationContext-mybatis.xml"/>
+
+    <!-- 调用链 -->
+    <bean id="orangeConfig" class="com.pzj.orange.client.OrangeConfig" >
+        <property name="sysName" value="customer-service"/>
+    </bean>
+
+</beans>

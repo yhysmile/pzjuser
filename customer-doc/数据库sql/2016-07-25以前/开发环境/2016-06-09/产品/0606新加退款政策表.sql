@@ -1,0 +1,32 @@
+-- ----------------------------
+-- Table structure for `TICKETRULE`
+-- ----------------------------
+DROP TABLE IF EXISTS `TICKETRULE`;
+CREATE TABLE `TICKETRULE` (
+  `ID` bigint(20) NOT NULL DEFAULT '0' COMMENT '规则ID',
+  `SUPID` bigint(20) DEFAULT NULL COMMENT '供应商ID',
+  `NAME` varchar(20) DEFAULT NULL COMMENT '规则名称',
+  `SORT` int(3) DEFAULT NULL COMMENT '规则序号',
+  `STATUS` smallint(1) DEFAULT NULL COMMENT '规则状态',
+  `REFUND` smallint(1) DEFAULT NULL COMMENT '是否允许退票',
+  `TIMETYPE` smallint(1) DEFAULT NULL COMMENT '退票时间类型',
+  `DAYS` int(3) DEFAULT NULL COMMENT '以天为单位',
+  `HOURS` double(3,0) DEFAULT NULL COMMENT '以时间为单位',
+  `MINUTES` int(2) DEFAULT NULL COMMENT '以分钟为单位',
+  `REFUNDTYPE` smallint(1) DEFAULT NULL COMMENT '退票扣款方式',
+  `REFUNDVALUE` double(7,2) DEFAULT NULL COMMENT '退票扣款值',
+  `EXCHANGETYPE` smallint(1) DEFAULT NULL COMMENT '换票扣款方式',
+  `EXCHANGEVALUE` double(7,2) DEFAULT NULL COMMENT '换票扣款值',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `PRODUCT_RULE_REL`;
+CREATE TABLE `PRODUCT_RULE_REL` (
+  `ID` bigint(20) NOT NULL DEFAULT '0' COMMENT '关系表ID',
+  `S_ID` bigint(20) DEFAULT NULL COMMENT '供应商ID',
+  `P_ID` bigint(20) DEFAULT NULL COMMENT '产品ID',
+  `R_ID` bigint(20) DEFAULT NULL COMMENT '退换票规则ID',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

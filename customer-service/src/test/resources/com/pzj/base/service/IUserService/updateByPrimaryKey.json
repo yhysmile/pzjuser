@@ -1,0 +1,10 @@
+{
+  "testData" : {
+    "id" : "3376420740399104",
+    "logo" : "ffffwe",
+    "settlement" : {
+      "tradePayee" : "4"
+    }
+  },
+  "testDataClass" : "com.pzj.base.entity.SysUser"
+}

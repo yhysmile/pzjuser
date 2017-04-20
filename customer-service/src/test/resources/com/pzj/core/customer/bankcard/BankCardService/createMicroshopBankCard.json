@@ -1,0 +1,11 @@
+{
+  "testData" : {
+    "accountHolder" : "wuliqing",
+    "bank" : "nonghang",
+    "idNum" : "140109123456789",
+    "cardNum" : "140109123456789",
+    "dataSource" : "1",
+    "operator" : 123456789
+  },
+  "testDataClass" : "com.pzj.core.customer.bankcard.CreateBankCardRequest"
+}

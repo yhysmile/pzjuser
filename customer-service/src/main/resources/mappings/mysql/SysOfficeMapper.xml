@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.dao.SysOfficeMapper">
+
+	<!-- 所有字段 -->
+	<sql id="Base_Column_List">
+		id
+		,parent_id
+		,parent_ids
+		,area_id
+		,code
+		,name
+		,type
+		,grade
+		,address
+		,zip_code
+		,master
+		,phone
+		,fax
+		,email
+		,create_by
+		,create_date
+		,update_by
+		,update_date
+		,remarks
+		,del_flag
+		,audit_status
+		,data_source
+		,supplier_id
+	</sql>
+	
+	<sql id="Base_Office_Role_List">
+		of.id as ofid
+		,of.parent_id as ofparent_id
+		,of.parent_ids as ofparent_ids
+		,of.area_id as ofarea_id
+		,of.code as ofcode
+		,of.name as ofname
+		,of.type as oftype
+		,of.grade as ofgrade
+		,of.address as ofaddress
+		,of.zip_code as ofzip_code
+		,of.master as ofmater
+		,of.phone as ofphone
+		,of.fax as offax
+		,of.email as ofemail
+		,of.create_by as ofcreate_by
+		,of.create_date as ofcreate_date
+		,of.update_by as ofupdate_by
+		,of.update_date as ofupdate_date
+		,of.remarks as ofremarks
+		,of.del_flag as ofdel_flag
+		,of.audit_status as ofaudit_status
+		,of.data_source as ofdata_source
+		,of.supplier_id as ofsupplier_id
+       	,ro.id as roid
+        ,ro.name as roname
+        ,ro.type as rotype
+        ,ro.data_scope as rodata_scope
+        ,ro.create_by as rocreate_by
+        ,ro.create_date as rocreate_date
+        ,ro.update_by as roupdate_by
+        ,ro.update_date as roupdate_date
+        ,ro.remarks as roremarks
+        ,ro.del_flag as rodel_flag
+        ,ro.data_source as rodata_source
+        ,ro.is_bingding as rois_bingding
+        ,ro.supplier_id as rosupplier_id
+    </sql>
+
+	<!-- 字段映射 -->
+	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysOffice">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+		<result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
+		<result column="area_id" jdbcType="VARCHAR" property="areaId" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="type" jdbcType="CHAR" property="type" />
+		<result column="grade" jdbcType="CHAR" property="grade" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="zip_code" jdbcType="VARCHAR" property="zipCode" />
+		<result column="master" jdbcType="VARCHAR" property="master" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="fax" jdbcType="VARCHAR" property="fax" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		<result column="audit_status" jdbcType="VARCHAR" property="auditStatus"/>
+        <result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+	</resultMap>
+	
+	<resultMap id="OfficeRoleResultMap" type="com.pzj.base.entity.SysOffice">
+		<id column="ofid" property="id" jdbcType="BIGINT" />
+		<result column="ofparent_id" jdbcType="VARCHAR" property="parentId" />
+		<result column="ofparent_ids" jdbcType="VARCHAR" property="parentIds" />
+		<result column="ofarea_id" jdbcType="VARCHAR" property="areaId" />
+		<result column="ofcode" jdbcType="VARCHAR" property="code" />
+		<result column="ofname" jdbcType="VARCHAR" property="name" />
+		<result column="oftype" jdbcType="CHAR" property="type" />
+		<result column="ofgrade" jdbcType="CHAR" property="grade" />
+		<result column="ofaddress" jdbcType="VARCHAR" property="address" />
+		<result column="ofzip_code" jdbcType="VARCHAR" property="zipCode" />
+		<result column="ofmaster" jdbcType="VARCHAR" property="master" />
+		<result column="ofphone" jdbcType="VARCHAR" property="phone" />
+		<result column="offax" jdbcType="VARCHAR" property="fax" />
+		<result column="ofemail" jdbcType="VARCHAR" property="email" />
+		<result column="ofcreate_by" jdbcType="VARCHAR" property="createBy" />
+		<result column="ofcreate_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="ofupdate_by" jdbcType="VARCHAR" property="updateBy" />
+		<result column="ofupdate_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="ofremarks" jdbcType="VARCHAR" property="remarks" />
+		<result column="ofaudit_status" jdbcType="VARCHAR" property="auditStatus"/>
+        <result column="ofdata_source" jdbcType="VARCHAR" property="dataSource" />
+        <result column="ofsupplier_id" jdbcType="BIGINT" property="supplierId" />
+        <collection property="roles" ofType="com.pzj.base.entity.SysRole" resultMap="sysRoleResultMap" />
+	</resultMap>
+	
+	
+	<resultMap id="sysRoleResultMap" type="com.pzj.base.entity.SysRole">
+        <id column="roid" property="id" jdbcType="BIGINT" />
+        <result column="roname" property="name" jdbcType="VARCHAR" />
+        <result column="rotype" jdbcType="VARCHAR" property="type" />
+        <result column="rodata_scope" property="dataScope" jdbcType="CHAR" />
+        <result column="rocreate_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="rocreate_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="roupdate_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="roupdate_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="roremarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="rodel_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="rodata_source" jdbcType="VARCHAR" property="dataSource" />
+        <result column="rooffice_id" jdbcType="VARCHAR" property="officeId" />
+        <result column="roalias" property="alias" jdbcType="VARCHAR" />
+		<result column="rois_bingding" jdbcType="INTEGER" property="bingding" />
+		<result column="rosupplier_id" jdbcType="BIGINT" property="supplierId" />
+    </resultMap>
+
+	<!-- 根据部门及岗位通用查询,其中User信息为空 -->
+	<select id="findByOfficeAndRole" resultMap="OfficeRoleResultMap">
+		select
+		<include refid="Base_Office_Role_List" />
+        from sys_role_office_user as re
+        inner join sys_office as of on of.id = re.office_id
+        inner join sys_role as ro on ro.id = re.role_id
+        <include refid="sql_of_OfficeAndRole_where" /> 
+	</select>
+	<!-- 根据部门及岗位通用查询 -->
+	<sql id="sql_of_OfficeAndRole_where">
+		<where> 1=1
+		<if test="office != null">
+			<if test="office.id != null"> AND of.id = #{office.id,jdbcType=BIGINT} </if>
+			<if test="office.parentId != null"> AND of.parent_id = #{office.parentId,jdbcType=VARCHAR} </if>
+			<if test="office.parentIds != null"> AND of.parent_ids = #{office.parentIds,jdbcType=VARCHAR} </if>
+			<if test="office.areaId != null"> AND of.area_id = #{office.areaId,jdbcType=VARCHAR} </if>
+			<if test="office.code != null"> AND of.code = #{office.code,jdbcType=VARCHAR} </if>
+			<if test="office.name != null"> AND of.name like #{office.name,jdbcType=VARCHAR} </if>
+			<if test="office.type != null"> AND of.type = #{office.type,jdbcType=CHAR} </if>
+			<if test="office.grade != null"> AND of.grade = #{office.grade,jdbcType=CHAR} </if>
+			<if test="office.address != null"> AND of.address = #{office.address,jdbcType=VARCHAR} </if>
+			<if test="office.zipCode != null"> AND of.zip_code = #{office.zipCode,jdbcType=VARCHAR} </if>
+			<if test="office.master != null"> AND of.master = #{office.master,jdbcType=VARCHAR} </if>
+			<if test="office.phone != null"> AND of.phone = #{office.phone,jdbcType=VARCHAR} </if>
+			<if test="office.fax != null"> AND of.fax = #{office.fax,jdbcType=VARCHAR} </if>
+			<if test="office.email != null"> AND of.email = #{office.email,jdbcType=VARCHAR} </if>
+			<if test="office.createBy != null"> AND of.create_by = #{office.createBy,jdbcType=VARCHAR} </if>
+			<if test="office.createDate != null"> AND of.create_date = #{office.createDate,jdbcType=TIMESTAMP} </if>
+			<if test="office.updateBy != null"> AND of.update_by = #{office.updateBy,jdbcType=VARCHAR} </if>
+			<if test="office.updateDate != null"> AND of.update_date = #{office.updateDate,jdbcType=TIMESTAMP} </if>
+			<if test="office.remarks != null"> AND of.remarks = #{office.remarks,jdbcType=VARCHAR} </if>
+			<if test="office.delFlag != null"> AND of.del_flag = #{office.delFlag,jdbcType=CHAR} </if>
+			<if test="office.auditStatus != null"> of.AND audit_status = #{office.auditStatus,jdbcType=VARCHAR} </if>
+			<if test="office.dataSource != null"> of.AND data_source = #{office.dataSource,jdbcType=VARCHAR} </if>
+			<if test="office.supplierId != null"> AND of.supplier_id = #{office.supplierId,jdbcType=BIGINT}</if>
+		</if>
+		<if test="role != null">
+				<if test="role.id != null"> AND ro.id = #{role.id,jdbcType=BIGINT} </if>
+				<if test="role.name != null"> AND ro.name like #{role.name,jdbcType=VARCHAR} </if>
+                <if test="role.type != null"> AND ro.type = #{role.type,jdbcType=VARCHAR} </if>
+				<if test="role.dataScope != null"> AND ro.data_scope = #{role.dataScope,jdbcType=CHAR} </if>
+				<if test="role.createBy != null"> AND ro.create_by = #{role.createBy,jdbcType=VARCHAR} </if>
+				<if test="role.createDate != null"> AND ro.create_date = #{role.createDate,jdbcType=TIMESTAMP} </if>
+				<if test="role.updateBy != null"> AND ro.update_by = #{role.updateBy,jdbcType=VARCHAR} </if>
+				<if test="role.updateDate != null"> AND ro.update_date = #{role.updateDate,jdbcType=TIMESTAMP} </if>
+				<if test="role.remarks != null"> AND ro.remarks = #{role.remarks,jdbcType=VARCHAR} </if>
+				<if test="role.delFlag != null"> AND ro.del_flag = #{role.delFlag,jdbcType=CHAR} </if>
+				<if test="role.dataSource != null"> AND ro.data_source = #{role.dataSource,jdbcType=VARCHAR} </if>
+				<if test="role.bingding != null"> AND ro.is_bingding = #{role.bingding,jdbcType=INTEGER} </if>
+				<if test="role.supplierId != null"> AND ro.supplier_id = #{role.supplierId,jdbcType=BIGINT} </if>
+		</if>
+		and (re.user_id is null or re.user_id ='')
+		</where>
+	</sql>
+	
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_office
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_office where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 通用查询条件 -->
+	<sql id="sql_of_where">
+		<where> 1=1
+		<if test="bParam != null">
+			<if test="bParam.id != null"> AND id = #{bParam.id,jdbcType=BIGINT} </if>
+			<if test="bParam.parentId != null"> AND parent_id = #{bParam.parentId,jdbcType=VARCHAR} </if>
+			<if test="bParam.parentIds != null"> AND parent_ids = #{bParam.parentIds,jdbcType=VARCHAR} </if>
+			<if test="bParam.areaId != null"> AND area_id = #{bParam.areaId,jdbcType=VARCHAR} </if>
+			<if test="bParam.code != null"> AND code = #{bParam.code,jdbcType=VARCHAR} </if>
+			<if test="bParam.name != null"> AND name like #{bParam.name,jdbcType=VARCHAR} </if>
+			<if test="bParam.type != null"> AND type = #{bParam.type,jdbcType=CHAR} </if>
+			<if test="bParam.grade != null"> AND grade = #{bParam.grade,jdbcType=CHAR} </if>
+			<if test="bParam.address != null"> AND address = #{bParam.address,jdbcType=VARCHAR} </if>
+			<if test="bParam.zipCode != null"> AND zip_code = #{bParam.zipCode,jdbcType=VARCHAR} </if>
+			<if test="bParam.master != null"> AND master = #{bParam.master,jdbcType=VARCHAR} </if>
+			<if test="bParam.phone != null"> AND phone = #{bParam.phone,jdbcType=VARCHAR} </if>
+			<if test="bParam.fax != null"> AND fax = #{bParam.fax,jdbcType=VARCHAR} </if>
+			<if test="bParam.email != null"> AND email = #{bParam.email,jdbcType=VARCHAR} </if>
+			<if test="bParam.createBy != null"> AND create_by = #{bParam.createBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.createDate != null"> AND create_date = #{bParam.createDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.updateBy != null"> AND update_by = #{bParam.updateBy,jdbcType=VARCHAR} </if>
+			<if test="bParam.updateDate != null"> AND update_date = #{bParam.updateDate,jdbcType=TIMESTAMP} </if>
+			<if test="bParam.remarks != null"> AND remarks = #{bParam.remarks,jdbcType=VARCHAR} </if>
+			<if test="bParam.delFlag != null"> AND del_flag = #{bParam.delFlag,jdbcType=CHAR} </if>
+			<if test="bParam.auditStatus != null"> AND audit_status = #{bParam.auditStatus,jdbcType=VARCHAR} </if>
+			<if test="bParam.dataSource != null"> AND data_source = #{bParam.dataSource,jdbcType=VARCHAR} </if>
+			<if test="bParam.supplierId != null"> AND supplier_id =
+                #{bParam.supplierId,jdbcType=BIGINT}
+            </if>
+		</if>
+		</where>
+	</sql>
+	 
+	
+	<!-- 通用分页查询 -->
+	<select id="queryByParamMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_office
+		<include refid="sql_of_where" />
+		<if test="pParam != null">
+			<if test="pParam.orderByClause == null"> order by id desc </if>
+			<if test="pParam.orderByClause != null"> order by ${pParam.orderByClause} </if>
+			<if test="pParam.startIndex != null and pParam.pageSize != null">
+				limit #{pParam.startIndex} , #{pParam.pageSize}
+			</if>
+		</if>
+	</select>
+
+	<!-- 通用分页查询记录总数 -->
+	<select id="countByParamMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from sys_office
+		<include refid="sql_of_where" />
+	</select>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_office
+		<where>
+			<if test="officeIds != null">
+				<trim prefix=" and id in ( " prefixOverrides="," suffixOverrides="," suffix=" )">${officeIds}</trim>
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=CHAR}
+			</if>
+		</where>
+	</select>
+	<select id="findByPidsMap" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_office
+		<where>
+			<if test="id != null">
+				<trim prefix=" and id in ( " prefixOverrides="," suffixOverrides="," suffix=" )">${officeIds}</trim>
+			</if>
+			<if test="officeIds != null">
+				<trim prefix=" and parent_id in ( " prefixOverrides="," suffixOverrides="," suffix=" )">${officeIds}</trim>
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=CHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.pzj.base.entity.SysOffice" >
+		insert into sys_office
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="parentIds != null">
+				parent_ids,
+			</if>
+			<if test="areaId != null">
+				area_id,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="grade != null">
+				grade,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="zipCode != null">
+				zip_code,
+			</if>
+			<if test="master != null">
+				master,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="fax != null">
+				fax,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="dataSource != null">
+                data_source,
+            </if>
+             <if test="supplierId != null">
+                supplier_id,
+            </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=BIGINT},
+			<if test="parentId != null">
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentIds != null">
+				#{parentIds,jdbcType=VARCHAR},
+			</if>
+			<if test="areaId != null">
+				#{areaId,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=CHAR},
+			</if>
+			<if test="grade != null">
+				#{grade,jdbcType=CHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="zipCode != null">
+				#{zipCode,jdbcType=VARCHAR},
+			</if>
+			<if test="master != null">
+				#{master,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">
+				#{fax,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=CHAR},
+			</if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="dataSource != null">
+                #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=BIGINT},
+            </if>
+		</trim>
+	</insert>
+
+	<!-- 批量插入 请根据业务修改默认值 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_office
+		(id
+		,parent_id
+		,parent_ids
+		,area_id
+		,code
+		,name
+		,type
+		,grade
+		,address
+		,zip_code
+		,master
+		,phone
+		,fax
+		,email
+		,create_by
+		,create_date
+		,update_by
+		,update_date
+		,remarks
+		,del_flag
+        ,audit_status
+        ,data_source
+        ,supplier_id
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id,jdbcType=BIGINT}
+			<choose>
+				<when test="item.parentId != null">,#{item.parentId ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.parentIds != null">,#{item.parentIds ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.areaId != null">,#{item.areaId ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.code != null">,#{item.code ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.name != null">,#{item.name ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.type != null">,#{item.type ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.grade != null">,#{item.grade ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.address != null">,#{item.address ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.zipCode != null">,#{item.zipCode ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.master != null">,#{item.master ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.phone != null">,#{item.phone ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.fax != null">,#{item.fax ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.email != null">,#{item.email ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createBy != null">,#{item.createBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.createDate != null">,#{item.createDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateBy != null">,#{item.updateBy ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.updateDate != null">,#{item.updateDate ,jdbcType=TIMESTAMP}</when>
+				<otherwise>,0</otherwise>
+			</choose>
+			<choose>
+				<when test="item.remarks != null">,#{item.remarks ,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.delFlag != null">,#{item.delFlag ,jdbcType=CHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+            <choose>
+                <when test="item.auditStatus != null">,#{item.auditStatus ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+            <choose>
+                <when test="item.dataSource != null">,#{item.dataSource ,jdbcType=VARCHAR}</when>
+                <otherwise>,''</otherwise>
+            </choose>
+            <choose>
+                <when test="item.supplierId != null">,#{item.supplierId ,jdbcType=BIGINT}</when>
+                <otherwise>,0</otherwise>
+            </choose>
+			)
+		</foreach>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysOffice">
+		update sys_office
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentIds != null">
+				parent_ids = #{parentIds,jdbcType=VARCHAR},
+			</if>
+			<if test="areaId != null">
+				area_id = #{areaId,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=CHAR},
+			</if>
+			<if test="grade != null">
+				grade = #{grade,jdbcType=CHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="zipCode != null">
+				zip_code = #{zipCode,jdbcType=VARCHAR},
+			</if>
+			<if test="master != null">
+				master = #{master,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">
+				fax = #{fax,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+            <if test="updateDate == null">
+                update_date = current_timestamp(),
+            </if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=CHAR},
+			</if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="dataSource != null">
+                data_source = #{dataSource,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=BIGINT},
+            </if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 批量更新 -->
+	<update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			update sys_office
+			<set>
+				<if test="item.parentId != null">
+					parent_id = #{item.parentId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.parentIds != null">
+					parent_ids = #{item.parentIds,jdbcType=VARCHAR},
+				</if>
+				<if test="item.areaId != null">
+					area_id = #{item.areaId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.code != null">
+					code = #{item.code,jdbcType=VARCHAR},
+				</if>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.type != null">
+					type = #{item.type,jdbcType=CHAR},
+				</if>
+				<if test="item.grade != null">
+					grade = #{item.grade,jdbcType=CHAR},
+				</if>
+				<if test="item.address != null">
+					address = #{item.address,jdbcType=VARCHAR},
+				</if>
+				<if test="item.zipCode != null">
+					zip_code = #{item.zipCode,jdbcType=VARCHAR},
+				</if>
+				<if test="item.master != null">
+					master = #{item.master,jdbcType=VARCHAR},
+				</if>
+				<if test="item.phone != null">
+					phone = #{item.phone,jdbcType=VARCHAR},
+				</if>
+				<if test="item.fax != null">
+					fax = #{item.fax,jdbcType=VARCHAR},
+				</if>
+				<if test="item.email != null">
+					email = #{item.email,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createBy != null">
+					create_by = #{item.createBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createDate != null">
+					create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updateBy != null">
+					update_by = #{item.updateBy,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateDate != null">
+					update_date = #{item.updateDate,jdbcType=TIMESTAMP},
+				</if>
+                <if test="item.updateDate == null">
+                    update_date = current_timestamp(),
+                </if>
+				<if test="item.remarks != null">
+					remarks = #{item.remarks,jdbcType=VARCHAR},
+				</if>
+				<if test="item.delFlag != null">
+					del_flag = #{item.delFlag,jdbcType=CHAR},
+				</if>
+                <if test="item.auditStatus != null">
+                    audit_status = #{item.auditStatus,jdbcType=VARCHAR},
+                </if>
+                <if test="item.dataSource != null">
+                    data_source = #{item.dataSource,jdbcType=VARCHAR},
+                </if>
+                <if test="item.supplierId != null">
+                    supplier_id = #{item.supplierId,jdbcType=BIGINT},
+                </if>
+			</set>
+			where id = #{item.id,jdbcType=BIGINT}
+		</foreach>
+	</update>
+</mapper>

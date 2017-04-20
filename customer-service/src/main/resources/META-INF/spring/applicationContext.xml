@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <!-- 用户暴露接口 -->
+    <dubbo:service interface="com.pzj.base.service.sys.IUserService" ref="userService" version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IRoleService" ref="roleService" version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IMenuService" ref="menuService" version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IOfficeService" ref="officeService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IUserAuthOfficeService" ref="userAuthOfficeService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IUserAuthRoleService" ref="userAuthRoleService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IUserAuthMenuService" ref="userAuthMenuService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IRoleAuthOfficeService" ref="roleAuthOfficeService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IRoleAuthMenuService" ref="roleAuthMenuService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IDictService" ref="dictService" version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.ILogService" ref="logService" version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.ISysUserRelationService" ref="sysUserRelationService"
+                   version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.ISysUserAgentService" ref="sysUserAgentServiceImpl" version="1.0"
+                   timeout="30000"  />
+
+    <dubbo:service interface="com.pzj.base.service.sys.IChannelService" ref="channelService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.ILabelService" ref="labelServiceImpl" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.ILabelRelationService" ref="labelRelationService" version="1.0"
+                   timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IContactsService" ref="iCntactsService"
+                   version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IAddressService" ref="iAddressService"
+                   version="1.0" timeout="30000"  />
+
+    <dubbo:service interface="com.pzj.base.service.sys.ITagService" ref="tagService"
+                   version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IUserTagService" ref="userTagService"
+                   version="1.0" timeout="30000"  />
+    <dubbo:service interface="com.pzj.base.service.sys.IUserMicroshopService" ref="userWechatService"
+                   version="1.0" timeout="30000"/>
+    <!-- 渠道信息模块-->
+    <dubbo:service interface="com.pzj.core.customer.channel.ChannelService" ref="newChannelService" version="1.3"
+                   timeout="30000"/>
+    <!-- 营销信息模块-->
+    <dubbo:service interface="com.pzj.core.customer.salesman.SalesmanService" ref="salesmanServiceImpl" version="1.3"
+                   timeout="30000"/>
+    <!-- 基础信息模块-->
+    <dubbo:service interface="com.pzj.core.customer.profile.ProfileService" ref="prfileService" version="1.3"
+                   timeout="30000"/>
+
+    <!-- 基础信息模块-->
+    <dubbo:service interface="com.pzj.core.customer.profile.DistributorService" ref="newUserService" version="1.3"
+                   timeout="30000"/>
+
+    <dubbo:service interface="com.pzj.core.customer.visitor.VisitorService" ref="visitorServiceImpl" version="1.3"
+                   timeout="30000"/>
+
+    <dubbo:service interface="com.pzj.core.customer.bankcard.BankCardService" ref="bankCardServiceImpl" version="1.3"
+                   timeout="30000"/>
+
+    <dubbo:registry id="smp" />
+
+    <!-- 库存依赖对接系统服务 -->
+	<dubbo:reference interface="com.pzj.core.smp.delivery.IShortMessageService" id="shortMessageService" version="1.0"  check="false" />
+    <!-- 访问日志 -->
+    <dubbo:protocol accesslog="true" />
+</beans>
