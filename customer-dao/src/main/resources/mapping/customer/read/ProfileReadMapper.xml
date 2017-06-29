@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.read.ProfileReadMapper">
+    <sql id="BaseColumns">
+        id, supplier_id, user_type, account_state, name, login_name, corporater, corporater_mobile, is_root
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.entitys.ProfileEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="superId"/>
+        <result column="user_type" jdbcType="INTEGER" property="type"/>
+        <result column="account_state" jdbcType="INTEGER" property="status"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="login_name" jdbcType="VARCHAR" property="username"/>
+        <result column="corporater" jdbcType="VARCHAR" property="contacts"/>
+        <result column="corporater_mobile" jdbcType="VARCHAR" property="phoneNum"/>
+        <result column="is_root" jdbcType="INTEGER" property="isRoot"/>
+    </resultMap>
+
+    <select id="selectProfileById" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumns"/> from sys_user
+        WHERE id = #{id, jdbcType=BIGINT}
+    </select>
+    <select id="selectProfileByIds" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumns"/> from sys_user
+        <where>
+            <if test="ids != null and ids.size >= 0">
+                id in
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </if>
+            or 1=2
+        </where>
+    </select>
+
+    <select id="selectProfileByLoginName" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumns"/> from sys_user
+        WHERE login_name = #{loginName}
+    </select>
+</mapper>

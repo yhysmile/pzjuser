@@ -787,6 +787,11 @@ public class UserGlobalDict {
          * SaaS用户权限
          */
         public static final String SAAS_AUTHORITY = "3";
+
+        /**
+         * 售票岗
+         */
+        public static final String TICKET_POST = "4";
     }
 
     /**

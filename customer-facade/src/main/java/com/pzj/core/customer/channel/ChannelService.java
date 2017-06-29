@@ -1,5 +1,6 @@
 package com.pzj.core.customer.channel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pzj.base.common.utils.PageModel;
@@ -328,6 +329,13 @@ public interface ChannelService {
 	Result<QueryChannelRelationResponse> queryChannelRelationByChannelId(List<Long> channelIds);
 
 	/**
+	 * 根据用户id，根据每个渠道关联的渠道id。
+	 * @param distributorIds
+	 * @return
+	 */
+	Result<QueryChannelRelationResponse> queryChannelRelationByDistributorIds(List<Long> distributorIds);
+
+	/**
 	 * @api {dubbo} com.pzj.core.customer.channel.ChannelService#queryChannelFreeJoin 根据查询类型筛选渠道信息
 	 * @apiGroup 渠道信息服务
 	 * @apiName 根据查询类型筛选渠道信息
@@ -375,5 +383,47 @@ public interface ChannelService {
 	 */
 	Result<QueryResult<QueryChannelResponse>> queryChannelFreeJoin(QueryChannelRequest channelRequest,
 			QueryCustomerRequest customerRequest, PageModel pageModel, Integer operType);
+
+	Result<ArrayList<QueryChannelResponse>> queryChannelByIds(List<Long> channelIds);
+
+	/**
+	 * @api {dubbo} com.pzj.core.customer.channel.ChannelService#queryChannelByDistributorId 根据分销商id查询关联的渠道信息
+	 * @apiGroup 渠道信息服务
+	 * @apiName 根据分销商id查询关联的渠道信息
+	 * @apiVersion 1.3.0-SNAPSHOT
+	 * @apiDescription 根据分销商id查询关联的渠道信息
+	 *
+	 * @apiParam (请求参数) {Long} distributorId 分销商id
+	 *
+	 * @apiParam (响应数据) {int} errorCode 返回结果码
+	 * @apiParam (响应数据) {String} errorMsg 返回结果提示
+	 * @apiParam (响应数据) {QueryChannelRelationResponse} data 渠道信息
+	 *
+	 * @apiParam (QueryChannelRelationResponse) {ChannelInfo} channelInfos 渠道信息集合
+	 *
+	 * @apiParam (ChannelInfo) {Long} channelId 渠道id
+	 * @apiParam (ChannelInfo) {Long} supplierId  所属供应商id
+	 *
+	 *@apiSuccessExample {json} 成功响应数据
+	 *{
+	 *	 "errorCode": 10000,
+	 *	 "errorMsg": "ok",
+	 *	 "data": {
+	 *			 	{
+	 *			 	 "channelId":"123456"
+	 *				 "supplierId": "456789"
+	 *	 		}
+	 * 		}
+	 *}
+	 * @apiParam (错误码) {CustomerException} 14999 失败
+	 *
+	 * @apiErrorExample {json} 异常示例
+	 * {
+	 *    "errorCode" : 14999,
+	 *    "errorMsg":"失败"
+	 * }
+	 */
+	Result<QueryChannelRelationResponse> queryChannelByDistributorId(Long distributorId);
+
 
 }

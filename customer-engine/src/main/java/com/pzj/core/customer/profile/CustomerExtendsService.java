@@ -2,12 +2,13 @@ package com.pzj.core.customer.profile;
 
 import javax.annotation.Resource;
 
+import com.pzj.core.customer.entitys.CustomerExtendsEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.pzj.core.customer.commons.exception.CustomerException;
-import com.pzj.core.customer.commons.exception.CustomerExceptionCode;
+import com.pzj.core.customer.common.exception.CustomerException;
+import com.pzj.core.customer.common.exception.CustomerExceptionCode;
 import com.pzj.core.customer.read.CustomerExtendsReadMapper;
 import com.pzj.core.customer.write.CustomerExtendsWriteMapper;
 import com.pzj.framework.converter.JSONConverter;

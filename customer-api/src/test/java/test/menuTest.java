@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+import com.pzj.framework.converter.JSONConverter;
 import com.pzj.menu.service.MenuUtil;
 import org.junit.Test;
 
@@ -95,9 +97,11 @@ public class menuTest {
      */
     @Test
     public void getMenuById() throws Exception {
-        Menu menu = menuService.getMenuById(4L);
+        Menu menu = menuService.getMenuById(3000L);
         assertNotNull(menu);
         System.out.println(">>>>getMenubyId is : " + menu.getName());
+        System.out.println(JSON.toJSONString(menu));
+
     }
 
     /*

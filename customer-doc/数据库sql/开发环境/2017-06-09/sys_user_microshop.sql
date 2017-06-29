@@ -1,0 +1,1 @@
+ALTER TABLE `core_deploment`.`sys_user_microshop` ADD COLUMN `phone_num` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '电话号码' AFTER `avatar`;

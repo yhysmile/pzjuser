@@ -18,7 +18,7 @@
     </sql>
 
     <!-- 字段映射 -->
-    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.VisitorEntity">
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.entitys.VisitorEntity">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
@@ -54,7 +54,7 @@
     	<include refid="paramQuerySql"></include>
     </select>
     
-    <select id="queryVisitorDetailById" resultType="com.pzj.core.customer.profile.VisitorEntity">
+    <select id="queryVisitorDetailById" resultType="com.pzj.core.customer.entitys.VisitorEntity">
     	select
     		id,
 	        status,
@@ -87,7 +87,7 @@
     	from
     		visitor
     	where 
-    		(name like concat('%', concat(#{nameOrMobile},'%')) or phone_num like concat('%', concat(#{nameOrMobile},'%')))
+    		(name like concat('%', concat(#{nameOrMobile},'%')) or phone_num like concat(#{nameOrMobile},'%'))
     	and
     		owner_id=#{supplierId}
     	and
@@ -111,8 +111,8 @@
     		status=1
     		<if test="visitor != null">
 	            <if test="visitor.id != null"> AND id = #{visitor.id, jdbcType=BIGINT}</if>
-	            <if test="visitor.name != null"> AND name = #{visitor.name, jdbcType=VARCHAR}</if>
-	            <if test="visitor.phoneNum != null"> AND phone_num = #{visitor.phoneNum, jdbcType=VARCHAR}</if>
+	            <if test="visitor.name != null"> AND name like #{visitor.name, jdbcType=VARCHAR}</if>
+	            <if test="visitor.phoneNum != null"> AND phone_num like #{visitor.phoneNum, jdbcType=VARCHAR}</if>
 	            <if test="visitor.idNum != null"> AND id_num = #{visitor.idNum, jdbcType=VARCHAR}</if>
 	            <if test="visitor.ownerId != null"> AND owner_id = #{visitor.ownerId, jdbcType=BIGINT}</if>
 	            <if test="visitor.createBy != null"> AND create_by = #{visitor.createBy, jdbcType=BIGINT}</if>

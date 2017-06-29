@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.pzj.core</groupId>
         <artifactId>customer</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
     <artifactId>customer-facade</artifactId>
     <name>用户服务对外接口层</name>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.pzj.core</groupId>
             <artifactId>pzj.service.base</artifactId>
-            <version>1.4.0-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 </project>

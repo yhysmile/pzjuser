@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pzj.core.customer.write.CustomerWriteMapper">
 	<!-- 字段映射 -->
-	<resultMap id="ResellerBaseInfo" type="com.pzj.core.customer.profile.ResellerEntity">
+	<resultMap id="ResellerBaseInfo" type="com.pzj.core.customer.entitys.CustomerEntity">
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
 		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
@@ -22,43 +22,28 @@
 		from sys_user where id = #{id,jdbcType=BIGINT}
 	</select>
 
-	<select id="queryUserByName" resultMap="ResellerBaseInfo">
-		select
-		id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county
-		from
-		sys_user
-		where
-		login_name=#{loginName}
-		and
-		account_state
-		in
-		(1, 0)
-		limit 1;
+	<select id="selectUserByName" resultMap="ResellerBaseInfo">
+		select id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county
+		from sys_user where login_name=#{loginName} and account_state in (1, 0) limit 1;
 	</select>
 
-	<select id="queryUserBaseInfoById" resultMap="ResellerBaseInfo">
+	<select id="selectUserBaseInfoById" resultMap="ResellerBaseInfo">
 		select id,supplier_id, login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county
 		from sys_user where id=#{id} and account_state = 1
 	</select>
 
-	<select id="queryUserBaseByInviteCode" resultMap="ResellerBaseInfo">
-		select
-			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,account_state,province,city,county, supplier_id
-		from
-			sys_user
-		where
-			invitationCode=#{inviteCode}
-		and
-			account_state = 1
-		limit 1;
+	<select id="selectUserBaseByInviteCode" resultMap="ResellerBaseInfo">
+		select id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,account_state,province,city,county, supplier_id
+		from sys_user where invitationCode=#{inviteCode} and account_state = 1 limit 1;
 	</select>
 
-	<insert id="insertDistributor" parameterType="com.pzj.core.customer.profile.ResellerEntity">
+	<insert id="insertDistributor" parameterType="com.pzj.core.customer.entitys.CustomerEntity">
 		insert into sys_user(
 			id,login_name,corporater,corporater_mobile,supplier_id,update_by,identifyType,reseller_type,name,supplier_normal,address,
 			corporater_credentials,business_license,oper_charger_phone,oper_charger_fax,business_certificate,
 			oper_charger_email,business_qualification,guideCertificate,province,city,county,account_state,check_status,
-			create_by,is_root,check_type,user_source,hotline_supplier,hotline_reseller,login_passwd,user_type,create_date
+			create_by,is_root,check_type,user_source,hotline_supplier,hotline_reseller,login_passwd,user_type,create_date,biee_token,
+			logo,sort,leader_flag
 		)
 		values(
 			#{id,jdbcType=BIGINT},
@@ -93,7 +78,11 @@
 			#{hotlineReseller,jdbcType=VARCHAR},
 			#{userPassword,jdbcType=VARCHAR},
 			#{userType,jdbcType=VARCHAR},
-			now()
+			now(),
+			REPLACE(uuid(), '-', ''),
+			#{logo,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			#{leaderFlag,jdbcType=INTEGER}
 		)
 	</insert>
 </mapper>

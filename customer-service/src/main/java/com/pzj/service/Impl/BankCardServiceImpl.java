@@ -1,9 +1,10 @@
 package com.pzj.service.Impl;
 
+import com.pzj.common.service.RpcCaller;
 import org.springframework.stereotype.Service;
 
 import com.pzj.core.customer.bankcard.*;
-import com.pzj.core.customer.profile.BankCardEntity;
+import com.pzj.core.customer.entitys.BankCardEntity;
 import com.pzj.framework.context.Result;
 
 import javax.annotation.Resource;

@@ -128,6 +128,7 @@
 		,department
 		,hotline_supplier
 		,hotline_reseller
+		,biee_token
 	</sql>
 	<!-- 字段映射 -->
 	<resultMap id="BaseResultMap" type="com.pzj.base.entity.SysUser">
@@ -242,6 +243,7 @@
 		<result column="department" jdbcType="VARCHAR" property="department" />
 		<result column="hotline_supplier" jdbcType="VARCHAR" property="hotlineSupplier" />
 		<result column="hotline_reseller" jdbcType="VARCHAR" property="hotlineReseller" />
+		<result column="biee_token" jdbcType="VARCHAR" property="bieeToken" />
 
 		<result column="check_type" jdbcType="INTEGER" property="checkType" />
 		<result column="qualification_audit" jdbcType="INTEGER" property="qualificationAudit" />
@@ -1300,6 +1302,7 @@
 		insert into sys_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			id,
+			biee_token,
 			<if test="loginName != null">
 				login_name,
 			</if>
@@ -1669,6 +1672,7 @@
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			#{id,jdbcType=BIGINT},
+			REPLACE(uuid(), '-', ''),
 			<if test="loginName != null">
 				#{loginName,jdbcType=VARCHAR},
 			</if>
@@ -2539,6 +2543,16 @@
 				<when test="item.department != null">, #{item.department,jdbcType=VARCHAR}</when>
 				<otherwise>,''</otherwise>
 			</choose>
+			<choose>
+				<when test="item.hotlineSupplier != null">, #{item.hotlineSupplier,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+			<choose>
+				<when test="item.hotlineReseller != null">, #{item.hotlineReseller,jdbcType=VARCHAR}</when>
+				<otherwise>,''</otherwise>
+			</choose>
+
+			,REPLACE(uuid(), '-', '')
 			)
 		</foreach>
 	</insert>
@@ -3868,8 +3882,12 @@
 		select id,supplier_id,name,invitationCode,corporater_mobile
 		from sys_user
 		where
-		user_type = 12
-		and supplier_id = #{sysUser.supplierId,jdbcType=BIGINT}
+		 supplier_id = #{sysUser.supplierId,jdbcType=BIGINT}
+		<if test="sysUser.resellerTypes != null">AND user_type in
+			<foreach collection="sysUser.resellerTypes" item="_user_type" open="(" separator="," close=")">
+				#{_user_type,jdbcType=VARCHAR}
+			</foreach>
+		</if>
 		<if test="sysUser.refereeInfo != null">
 			and
 			(

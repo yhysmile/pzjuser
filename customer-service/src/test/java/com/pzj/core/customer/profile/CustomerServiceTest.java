@@ -3,6 +3,7 @@ package com.pzj.core.customer.profile;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,16 +18,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.pzj.core.customer.commons.ChannelResellerQueryModel;
+import com.pzj.core.customer.commons.PageBean;
 import com.pzj.framework.armyant.anno.OneCase;
 import com.pzj.framework.armyant.anno.TestData;
 import com.pzj.framework.armyant.junit.spring.ArmyantSpringRunner;
 import com.pzj.framework.context.Result;
 import com.pzj.framework.converter.JSONConverter;
 import com.pzj.framework.entity.QueryResult;
-import com.pzj.core.customer.commons.PageBean;
 
 @RunWith(ArmyantSpringRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring-local.xml"})
+@ContextConfiguration(locations = { "classpath:/spring-local.xml" })
 public class CustomerServiceTest {
 	private final Logger logger = LoggerFactory.getLogger(CustomerServiceTest.class);
 
@@ -35,7 +36,7 @@ public class CustomerServiceTest {
 	@Resource
 	private CustomerService customerService;
 
-	@Test
+	//	@Test
 	public void testQueryResellerPage() throws ParseException {
 		//"nameOrNormal":"打发掉","supplierId":2216619741563734
 		//{"bindDateBegin":1488384000000,"bindDateEnd":1488643199000,"supplierId":2216619741564532}
@@ -49,6 +50,7 @@ public class CustomerServiceTest {
 		QueryCustomerRequest param = new QueryCustomerRequest();
 		param.setSupplierId(2216619741564532L);
 		param.setRefereeId(3673390697676801L);
+		param.setNameOrCorporaterOrMobile("徐明");
 		//		param.setName("8");
 		//		param.setCity("成都市");
 		//		param.setProvince("四川省");
@@ -84,7 +86,7 @@ public class CustomerServiceTest {
 		System.out.println("=======================" + JSONConverter.toJson(result));
 	}
 
-	@Test
+	//	@Test
 	public void bindDirectReseller() {
 		//{"operateId":2216619741564532,"resellerId":3632399036973056,"supplierId":2216619741564532}
 		BindCustomerRequest param = new BindCustomerRequest();
@@ -110,7 +112,7 @@ public class CustomerServiceTest {
 		logger.info("queryChannelContainsUsers result:{}", JSONConverter.toJson(result));
 	}
 
-	@Test
+	//	@Test
 	@OneCase("/com/pzj/core/customer/profile/DistributorService/channelNotContainUser.json")
 	public void queryChannelNotContainsUsers(@TestData ChannelResellerQueryModel channelUserParam) {
 		//		ChannelResellerQueryModel requestModel = new ChannelResellerQueryModel();
@@ -186,7 +188,7 @@ public class CustomerServiceTest {
 		System.out.println(JSONConverter.toJson(result));
 	}
 
-	@Test
+	//	@Test
 	@OneCase("/com/pzj/core/customer/profile/DistributorService/modifyCustomer.json")
 	public void modifyCustomer(@TestData ModifyCustomerRequest distributor) {
 		Result<Boolean> result = resellerService.modifyCustomer(distributor);
@@ -209,8 +211,7 @@ public class CustomerServiceTest {
 
 	}
 
-
-	@Test
+	//	@Test
 	@OneCase("/com/pzj/core/customer/profile/DistributorService/createDistributors2.json")
 	public void createDistributors2(@TestData CreateCustomerRequest distributors) {
 		Result<Long> result = resellerService.createDistributor(distributors);
@@ -233,13 +234,27 @@ public class CustomerServiceTest {
 		logger.info("查询用户返回{}", JSONConverter.toJson(result));
 	}
 
-	@Test
+	//	@Test
 	@OneCase("/com/pzj/core/customer/profile/CustomerService/queryCustomerLessInfo.json")
-	public void queryCustomerLessInfo(@TestData("param") QueryCustomerLessInfoRequest param, @TestData("page") PageBean page){
+	public void queryCustomerLessInfo(@TestData("param") QueryCustomerLessInfoRequest param,
+			@TestData("page") PageBean page) {
 		Result<QueryResult<QueryCustomerLessInfoResponse>> result = customerService.queryCustomerLessInfo(param, page);
 
 		assertNotNull(result);
 		System.out.println(JSONConverter.toJson(result));
 		assertTrue(result.isOk());
 	}
+
+	@Test
+	@OneCase("/com/pzj/core/customer/profile/CustomerService/unbindDirectDistributor.json")
+	public void unbindDirectDistributor(@TestData() BindCustomerRequest distributor) throws IOException {
+		Result<Boolean> result = resellerService.unbindDirectDistributor(distributor);
+
+		assertNotNull(result);
+		System.out.println(JSONConverter.toJson(result));
+		assertTrue(result.isOk());
+
+		System.in.read();
+	}
+
 }

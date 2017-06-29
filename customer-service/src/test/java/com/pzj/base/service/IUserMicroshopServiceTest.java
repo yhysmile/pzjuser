@@ -3,6 +3,7 @@ package com.pzj.base.service;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.pzj.framework.converter.JSONConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,7 @@ import com.pzj.framework.armyant.OneTestConfigurationBuilder;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath:/spring-context.xml"
-        //"classpath:/META-INF/spring/spring-context.xml"
+        "classpath:/spring-local.xml"
 })
 public class IUserMicroshopServiceTest {
     @Autowired
@@ -37,6 +37,7 @@ public class IUserMicroshopServiceTest {
         Result<SysUserMicroshop> result = userMicroshopService.findByUserId(userId);
 
         assertNotNull(result);
+        System.out.println(JSONConverter.toJson(result));
     }
 
     @Test

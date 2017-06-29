@@ -845,4 +845,11 @@ public interface DistributorService {
 	 * }
 	 */
 	Result<Long> bindDirectDistributor(BindCustomerRequest distributor);
+
+	/**
+	 * 解绑直签分销商
+	 * @param distributor
+	 * @return
+	 */
+	Result<Boolean> unbindDirectDistributor(BindCustomerRequest distributor);
 }

@@ -25,7 +25,7 @@ import com.pzj.framework.entity.QueryResult;
  * Created by Administrator on 2017-2-24.
  */
 @RunWith(ArmyantSpringRunner.class)
-@ContextConfiguration(locations = { "classpath:/META-INF/spring/spring-context.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-local.xml" })
 public class VisitorServiceTest {
 	private final Logger logger = LoggerFactory.getLogger(VisitorServiceTest.class);
 	@Resource
@@ -43,9 +43,11 @@ public class VisitorServiceTest {
 
 	@Test
 	public void queryVisitorByNameMobile() {
-		String nameMobile = "789";
+		String nameMobile = null;
 		Result<ArrayList<QueryVisitorSummaryResponse>> result = visitorService.queryVisitorSummaryByNameMobile(
-				nameMobile, 0l);
+				nameMobile, 2216619741563734L);
+		System.out.println(JSONConverter.toJson(result));
+		assertNotNull(result);
 
 	}
 

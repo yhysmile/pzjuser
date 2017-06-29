@@ -62,6 +62,35 @@
 		where id = #{id,jdbcType=BIGINT}
 	</select>
 
+	<select id="selectByUser" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+			m.id
+			,m.parent_id
+			,m.parent_ids
+			,m.name
+			,m.href
+			,m.target
+			,m.icon
+			,m.sort
+			,m.is_show
+			,m.is_activiti
+			,m.permission
+			,m.create_by
+			,m.create_date
+			,m.update_by
+			,m.update_date
+			,m.remarks
+			,m.del_flag
+			,m.position
+			,m.style
+			,m.data_source
+			,m.supplier_id
+			,m.catalog
+		from sys_menu m
+		inner join sys_user_menu r on m.id = r.menu_id
+		where r.user_id = #{userId,jdbcType=BIGINT}
+	</select>
+
 	<!-- 删除 -->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from sys_menu where id = #{id,jdbcType=BIGINT}

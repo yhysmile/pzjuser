@@ -16,4 +16,6 @@ public interface SysMenuMapper extends BaseUserMapper<SysMenu> {
 
     List<SysMenu> findByIdsMap(Map<String, String> map);
 
+    List<SysMenu> selectByUser(Long userId);
+
 }

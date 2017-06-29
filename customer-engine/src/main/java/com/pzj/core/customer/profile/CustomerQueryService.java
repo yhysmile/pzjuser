@@ -1,22 +1,23 @@
 package com.pzj.core.customer.profile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.pzj.core.customer.entitys.ChannelResellerQueryParam;
+import com.pzj.core.customer.entitys.CustomerQuery;
+import com.pzj.core.customer.entitys.PageEntity;
+import com.pzj.core.customer.entitys.CustomerEntity;
 import org.springframework.stereotype.Service;
 
 import com.pzj.base.common.global.GlobalParam;
 import com.pzj.base.common.global.UserGlobalDict;
 import com.pzj.commons.utils.CheckUtils;
-import com.pzj.core.customer.channel.QueryChannelRelationResponse;
 import com.pzj.core.customer.commons.ChannelResellerQueryModel;
 import com.pzj.core.customer.commons.PageBean;
-import com.pzj.core.customer.commons.exception.CustomerException;
-import com.pzj.core.customer.commons.exception.CustomerExceptionCode;
+import com.pzj.core.customer.common.exception.CustomerException;
+import com.pzj.core.customer.common.exception.CustomerExceptionCode;
 import com.pzj.core.customer.read.CustomerReadMapper;
 import com.pzj.core.customer.utils.QueryUtil;
 import com.pzj.core.customer.utils.UserConstants;
@@ -30,20 +31,27 @@ public class CustomerQueryService {
 	private CustomerReadMapper customerReadMapper;
 
 	public QueryResult<QueryCustomerResponse> queryResellerListByPage(QueryCustomerRequest param, PageBean page) {
-		int count = 0;
-		List<QueryCustomerResponse> sysUsers = null;
-
-		page = QueryUtil.defaultPageBean(page);
-		ResellerEntity resellerEntity = initResellerEntity(param);
-
-		count = customerReadMapper.countResellerBaseInfoPage(resellerEntity);
-		if (count > 0) {
-			PageEntity pageEntity = QueryUtil.convertToPageEntity(page);
-			List<ResellerEntity> resellers = customerReadMapper.queryResellerBaseInfoList(resellerEntity, pageEntity);
-			sysUsers = initSysUsers(resellers);
+		if (param == null){
+			throw new CustomerException(CustomerExceptionCode.PARAMETER_EMPTY);
+		}
+		if (param.getSupplierId() == null){
+			throw new CustomerException(CustomerExceptionCode.SUPPLIER_ID_NULL);
 		}
 
-		QueryResult<QueryCustomerResponse> queryResult = QueryUtil.result(page, count, sysUsers);
+		int count = 0;
+		List<QueryCustomerResponse> queryCustomerResponses = null;
+		CustomerQuery customerQuery = null;
+
+		customerQuery = CustomerModelConvert.convertToCustomerQuery(param);
+		count = customerReadMapper.countResellerBaseInfoPage(customerQuery);
+
+		if (count > 0) {
+			PageEntity pageEntity = QueryUtil.convertToPageEntity(page);
+			List<CustomerEntity> resellers = customerReadMapper.selectResellerBaseInfoList(customerQuery, pageEntity);
+			queryCustomerResponses = CustomerModelConvert.convertToQueryCustomerResponse(resellers);
+		}
+
+		QueryResult<QueryCustomerResponse> queryResult = QueryUtil.result(page, count, queryCustomerResponses);
 		return queryResult;
 	}
 
@@ -53,14 +61,13 @@ public class CustomerQueryService {
 	}
 
 	public QueryCustomerResponse queryUserById(Long id) {
+		CustomerEntity reseller = customerReadMapper.selectUserBaseInfoById(id);
 
-		ResellerEntity reseller = customerReadMapper.queryUserBaseInfoById(id);
-
-		return initSysUser(reseller);
+		return CustomerModelConvert.convertToQueryCustomerResponse(reseller);
 	}
 
 	public QueryCustomerResponse queryUserByInviteCode(String inviteCode) {
-		List<ResellerEntity> resellers = customerReadMapper.queryUserBaseByInviteCode(inviteCode);
+		List<CustomerEntity> resellers = customerReadMapper.selectUserBaseByInviteCode(inviteCode);
 
 		if (resellers == null || resellers.size() == 0) {
 			return null;
@@ -72,7 +79,7 @@ public class CustomerQueryService {
 			throw new CustomerException(code, message);
 		}
 
-		return initSysUser(resellers.get(0));
+		return CustomerModelConvert.convertToQueryCustomerResponse(resellers.get(0));
 	}
 
 	public QueryResult<QueryCustomerResponse> queryChannelUserListByPage(ChannelResellerQueryModel requestModel,
@@ -84,8 +91,8 @@ public class CustomerQueryService {
 		ChannelResellerQueryParam channelReseller = initChannelUserParam(requestModel);
 		channelReseller.setRelType(UserConstants.DIRECT_CHANNEL_USER_TYPE);
 		PageEntity pageEntity = new PageEntity(page.getCurrentPage(), page.getPageSize());
-		List<ResellerEntity> resellerEntitys = customerReadMapper.queryChannelUsers(channelReseller, pageEntity);
-		List<QueryCustomerResponse> sysUsers = initSysUsers(resellerEntitys);
+		List<CustomerEntity> customerEntities = customerReadMapper.selectChannelUsers(channelReseller, pageEntity);
+		List<QueryCustomerResponse> sysUsers = CustomerModelConvert.convertToQueryCustomerResponse(customerEntities);
 		if (sysUsers == null) {
 			return null;
 		}
@@ -107,8 +114,8 @@ public class CustomerQueryService {
 		ChannelResellerQueryParam rootReseller = initChannelUserParam(requestModel);
 		rootReseller.setRelType(UserRelationEnum.SUPPLIER_DIRECT_RESELLER.getId());
 		PageEntity pageEntity = new PageEntity(page.getCurrentPage(), page.getPageSize());
-		List<ResellerEntity> resellerEntitys = customerReadMapper.queryRootUsers(rootReseller, pageEntity);
-		List<QueryCustomerResponse> sysUsers = initSysUsers(resellerEntitys);
+		List<CustomerEntity> customerEntities = customerReadMapper.selectRootUsers(rootReseller, pageEntity);
+		List<QueryCustomerResponse> sysUsers = CustomerModelConvert.convertToQueryCustomerResponse(customerEntities);
 		if (sysUsers == null) {
 			return null;
 		}
@@ -136,13 +143,13 @@ public class CustomerQueryService {
 		channelRelUser.setTempRelResellers(requestModel.getTempRelResellers());
 		channelRelUser.setTempRemoveResellers(requestModel.getTempRemoveResellers());
 		PageEntity pageEntity = new PageEntity(page.getCurrentPage(), page.getPageSize());
-		List<ResellerEntity> resellerEntitys = customerReadMapper.queryChannelRelUsers(channelRelUser, pageEntity);
-		List<QueryCustomerResponse> sysUsers = initSysUsers(resellerEntitys);
+		List<CustomerEntity> customerEntities = customerReadMapper.selectChannelRelUsers(channelRelUser, pageEntity);
+		List<QueryCustomerResponse> sysUsers = CustomerModelConvert.convertToQueryCustomerResponse(customerEntities);
 		if (sysUsers == null) {
 			return null;
 		}
 		List<Long> countIds = customerReadMapper.countChannelRelUsers(channelRelUser);
-		int count = computorTotalCount(channelRelUser, countIds, resellerEntitys);
+		int count = computorTotalCount(channelRelUser, countIds, customerEntities);
 
 		QueryResult<QueryCustomerResponse> queryResult = new QueryResult<QueryCustomerResponse>(page.getCurrentPage(),
 				page.getPageSize());
@@ -152,7 +159,7 @@ public class CustomerQueryService {
 	}
 
 	private Integer computorTotalCount(ChannelResellerQueryParam channelRelUser, List<Long> countIds,
-			List<ResellerEntity> resellerEntitys) {
+			List<CustomerEntity> customerEntities) {
 		int count = countIds.size();
 		List<Long> addResellers = channelRelUser.getTempRelResellers();
 		if (addResellers != null && addResellers.size() > 0) {
@@ -184,14 +191,14 @@ public class CustomerQueryService {
 		channelRelUser.setTempRelResellers(requestModel.getTempRelResellers());
 		channelRelUser.setTempRemoveResellers(requestModel.getTempRemoveResellers());
 
-		PageEntity pageEntity = new PageEntity(page.getCurrentPage(), page.getPageSize());
-		List<ResellerEntity> resellerEntitys = customerReadMapper.queryChannelNotRelUsers(channelRelUser, pageEntity);
-		List<QueryCustomerResponse> sysUsers = initSysUsers(resellerEntitys);
+		PageEntity pageEntity = QueryUtil.convertToPageEntity(page);
+		List<CustomerEntity> customerEntities = customerReadMapper.selectChannelNotRelUsers(channelRelUser, pageEntity);
+		List<QueryCustomerResponse> sysUsers = CustomerModelConvert.convertToQueryCustomerResponse(customerEntities);
 		if (sysUsers == null) {
 			return null;
 		}
 		List<Long> countIds = customerReadMapper.countChannelNotRelUsers(channelRelUser);
-		int count = computorTotalCount(channelRelUser, countIds, resellerEntitys);
+		int count = computorTotalCount(channelRelUser, countIds, customerEntities);
 
 		QueryResult<QueryCustomerResponse> queryResult = new QueryResult<QueryCustomerResponse>(page.getCurrentPage(),
 				page.getPageSize());
@@ -200,49 +207,30 @@ public class CustomerQueryService {
 		return queryResult;
 	}
 
-	public QueryChannelRelationResponse queryUserIdsByChannelIds(List<Long> list) {
-		if (list == null || list.isEmpty()) {
-			return null;
-		}
-		QueryChannelRelationResponse response = new QueryChannelRelationResponse();
-		Map<Long, List<Long>> channelRelations = new HashMap<Long, List<Long>>();
-		List<ResellerEntity> resellers = customerReadMapper.queryUserIdsByChnnelIds(list);
-		if (resellers != null && !resellers.isEmpty()) {
-			Long key = null;
-			List<Long> resellerIds = null;
-			for (ResellerEntity reseller : resellers) {
-				key = reseller.getChannelId();
-				if (channelRelations.containsKey(key)) {
-					resellerIds = channelRelations.get(key);
-				} else {
-					resellerIds = new ArrayList<Long>();
-				}
-				resellerIds.add(reseller.getId());
-				channelRelations.put(key, resellerIds);
-			}
-		}
-		response.setChannelRelations(channelRelations);
-		return response;
-	}
-
 	public QueryResult<QueryCustomerResponse> queryMasterOfCustomer(QueryCustomerRequest param, PageBean page) {
-		if (page == null) {
-			page = new PageBean();
+		if (param == null){
+			throw new CustomerException(CustomerExceptionCode.PARAMETER_EMPTY);
 		}
-		QueryResult<QueryCustomerResponse> queryResult = new QueryResult<QueryCustomerResponse>(page.getCurrentPage(),
-				page.getPageSize());
+		if (param.getId() == null){
+			throw new CustomerException(CustomerExceptionCode.CUSTOMER_NULL_ID);
+		}
 
-		ResellerEntity resellerEntity = initResellerEntity(param);
-		resellerEntity.setUserType(UserGlobalDict.saasUserType());
-		Integer count = customerReadMapper.countResellerRelMaster(resellerEntity);
-		if (count == null || count == 0) {
-			return queryResult;
+		int count = 0;
+		ArrayList<QueryCustomerResponse> queryCustomerResponses = null;
+		CustomerQuery customerQuery = null;
+
+		customerQuery = CustomerModelConvert.convertToCustomerQuery(param);
+		customerQuery.setUserType(UserGlobalDict.saasUserType());
+
+		count = customerReadMapper.countResellerRelMaster(customerQuery);
+
+		if (count > 0) {
+			PageEntity pageEntity = QueryUtil.convertToPageEntity(page);
+			List<CustomerEntity> customerEntities = customerReadMapper.selectResellerRelMaster(customerQuery, pageEntity);
+			queryCustomerResponses = CustomerModelConvert.convertToQueryCustomerResponse(customerEntities);
 		}
-		PageEntity pageEntity = new PageEntity(page.getCurrentPage(), page.getPageSize());
-		List<ResellerEntity> resellers = customerReadMapper.queryResellerRelMaster(resellerEntity, pageEntity);
-		ArrayList<QueryCustomerResponse> sysUsers = initSysUsers(resellers);
-		queryResult.setRecords(sysUsers);
-		queryResult.setTotal(count);
+
+		QueryResult<QueryCustomerResponse> queryResult = QueryUtil.result(page, count, queryCustomerResponses);
 		return queryResult;
 	}
 
@@ -270,75 +258,10 @@ public class CustomerQueryService {
 		return queryParam;
 	}
 
-	private ResellerEntity initResellerEntity(QueryCustomerRequest param) {
-		if (param == null) {
-			return null;
-		}
-		ResellerEntity resellerEntity = new ResellerEntity();
-		resellerEntity.setLoginName(param.getLoginName());
-		resellerEntity.setSupplierId(param.getSupplierId());
-		resellerEntity.setCorporater(param.getCorporater());
-		resellerEntity.setCorporaterMobile(param.getCorporaterMobile());
-		resellerEntity.setName(param.getName());
-		resellerEntity.setAddress(param.getAddress());
-		resellerEntity.setUserRelType(UserRelationEnum.SUPPLIER_DIRECT_RESELLER.getId());
-		resellerEntity.setIsRoot(UserRootEnum.ROOT_USER.getKey());
-		if (param.getResellerType() != null) {
-			resellerEntity.setResellerType(param.getResellerType().toString());
-		}
-		resellerEntity.setRefereeId(param.getRefereeId());
-		resellerEntity.setCreateDate(param.getCreateDate());
-		resellerEntity.setBindDateBegin(param.getBindDateBegin());
-		resellerEntity.setBindDateEnd(param.getBindDateEnd());
-		resellerEntity.setProvince(param.getProvince());
-		resellerEntity.setCity(param.getCity());
-		resellerEntity.setCounty(param.getCounty());
-		resellerEntity.setQueryType(param.getQuerType());
-		resellerEntity.setUserIds(param.getUserIds());
-		resellerEntity.setId(param.getId());
-		return resellerEntity;
-	}
 
-	private ArrayList<QueryCustomerResponse> initSysUsers(List<ResellerEntity> resellers) {
-		if (resellers == null || resellers.size() == 0) {
-			return null;
-		}
-		ArrayList<QueryCustomerResponse> sysUsers = new ArrayList<QueryCustomerResponse>();
-		for (ResellerEntity reseller : resellers) {
-
-			sysUsers.add(initSysUser(reseller));
-		}
-		return sysUsers;
-	}
-
-	private QueryCustomerResponse initSysUser(ResellerEntity reseller) {
-		if (reseller == null) {
-			return null;
-		}
-		QueryCustomerResponse sysUser = new QueryCustomerResponse();
-		sysUser.setId(reseller.getId());
-		sysUser.setLoginName(reseller.getLoginName());
-		sysUser.setSupplierId(reseller.getSupplierId());
-		sysUser.setCorporater(reseller.getCorporater());
-		sysUser.setCorporaterMobile(reseller.getCorporaterMobile());
-		sysUser.setName(reseller.getName());
-		sysUser.setAddress(reseller.getAddress());
-		sysUser.setResellerType(reseller.getResellerType() == null ? null
-				: Integer.parseInt(reseller.getResellerType()));
-		sysUser.setCreateDate(reseller.getCreateDate());
-		sysUser.setProvince(reseller.getProvince());
-		sysUser.setCity(reseller.getCity());
-		sysUser.setCounty(reseller.getCounty());
-		sysUser.setIsRoot(reseller.getIsRoot());
-
-		if (reseller.getName() == null || reseller.getName().trim().length() == 0) {
-			sysUser.setName(reseller.getCorporater());
-		}
-		return sysUser;
-	}
 
 	public QueryResult<QueryCustomerResponse> queryCustomerFreeJoin(QueryCustomerRequest param, PageBean page) {
-		ResellerEntity resellerEntity = initResellerEntity(param);
+		CustomerQuery customerEntity = CustomerModelConvert.convertToCustomerQuery(param);
 		//初始化分页对象
 		if (null == page) {
 			page = new PageBean();
@@ -348,18 +271,18 @@ public class CustomerQueryService {
 				&& param.getQuerType() == GlobalParam.QueryType.exists) {
 			return null;
 		}
-		List<QueryCustomerResponse> sysUsers = null;
+		List<QueryCustomerResponse> queryCustomerResponses = null;
 		PageEntity pageEntity = new PageEntity(page.getCurrentPage(), page.getPageSize());
-		Integer count = customerReadMapper.countQueryCustomerFreeJoin(resellerEntity);
+		Integer count = customerReadMapper.countQueryCustomerFreeJoin(customerEntity);
 
 		if (count > 0) {
-			List<ResellerEntity> resellers = customerReadMapper.queryCustomerFreeJoin(resellerEntity, pageEntity);
-			sysUsers = initSysUsers(resellers);
+			List<CustomerEntity> resellers = customerReadMapper.selectCustomerFreeJoin(customerEntity, pageEntity);
+			queryCustomerResponses = CustomerModelConvert.convertToQueryCustomerResponse(resellers);
 		} else {
 			return null;
 		}
 
-		QueryResult<QueryCustomerResponse> queryResult = QueryUtil.result(page, count, sysUsers);
+		QueryResult<QueryCustomerResponse> queryResult = QueryUtil.result(page, count, queryCustomerResponses);
 		return queryResult;
 	}
 
@@ -368,15 +291,16 @@ public class CustomerQueryService {
 		int count = 0;
 		List<QueryCustomerLessInfoResponse> records = null;
 
-		page = QueryUtil.defaultPageBean(page);
-		ResellerEntity userParam = CustomerModelConvert.convertToResellerEntity(param);
+		CustomerQuery userParam = CustomerModelConvert.convertToResellerQuery(param);
 
 		if (userParam != null) {
 			count = customerReadMapper.countCustomerLessInfo(userParam);
 			if (count > 0) {
-				PageEntity pageEntity = QueryUtil.convertToPageEntity(page);
-				List<ResellerEntity> resellerEntities = customerReadMapper
-						.selectCustomerLessInfo(userParam, pageEntity);
+				PageEntity pageEntity = null;
+				if (page != null){
+					pageEntity = QueryUtil.convertToPageEntity(page);
+				}
+				List<CustomerEntity> resellerEntities = customerReadMapper.selectCustomerLessInfo(userParam, pageEntity);
 				records = CustomerModelConvert.convertToQueryCustomerLessInfoResponse(resellerEntities);
 			}
 		}

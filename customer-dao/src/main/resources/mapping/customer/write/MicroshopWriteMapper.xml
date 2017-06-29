@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.MicroshopWriteMapper">
+    <sql id="Base_Column_List">
+        id,
+        user_id,
+        name,
+        intro,
+        avatar,
+        phone_num,
+        create_date,
+        update_date
+    </sql>
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.microshop.MicroshopEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="masterId" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="intro" property="intro" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <select id="selectMicroshopByMasterId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_user_microshop where
+        user_id = #{masterId, jdbcType=BIGINT}
+    </select>
+    
+    <update id="updateMicroshop">
+        update sys_user_microshop
+        <set>
+            <if test="name != null">name = #{name, jdbcType=VARCHAR},</if>
+            <if test="intro != null">intro = #{intro, jdbcType=VARCHAR},</if>
+            <if test="avatar != null">avatar = #{avatar, jdbcType=VARCHAR},</if>
+            <if test="phoneNum != null">phone_num = #{phoneNum, jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+        </set>
+        where
+        id = #{id, jdbcType=BIGINT}
+    </update>
+    
+    <insert id="insertMicroshop">
+        insert into sys_user_microshop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="masterId != null">user_id,</if>
+            <if test="name != null">name,</if>
+            <if test="intro != null">intro,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="phoneNum != null">phone_num,</if>
+            <if test="createDate != null">create_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id, jdbcType=BIGINT},
+            <if test="masterId != null">#{masterId, jdbcType=BIGINT},</if>
+            <if test="name != null">#{name, jdbcType=VARCHAR},</if>
+            <if test="intro != null">#{intro, jdbcType=VARCHAR},</if>
+            <if test="avatar != null">#{avatar, jdbcType=VARCHAR},</if>
+            <if test="phoneNum != null">#{phoneNum, jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <select id="selectMicroshopById" resultMap="BaseResultMap">
+        select 
+        	<include refid="Base_Column_List" /> 
+        from 
+        	sys_user_microshop 
+        where
+       		id = #{id, jdbcType=BIGINT}
+    </select>
+    
+</mapper>

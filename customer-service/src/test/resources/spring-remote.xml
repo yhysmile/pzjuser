@@ -6,7 +6,7 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
        default-autowire="byName" default-lazy-init="true">
 
-    <dubbo:registry address="zookeeper://10.0.6.27:2181" />
+    <dubbo:registry address="zookeeper://10.0.2.132:2181" />
 
     <dubbo:reference id="newChannelService" interface="com.pzj.core.customer.channel.ChannelService" version="1.3"
                      timeout="3000"/>

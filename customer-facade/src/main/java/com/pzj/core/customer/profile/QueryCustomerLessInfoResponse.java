@@ -16,6 +16,11 @@ public class QueryCustomerLessInfoResponse implements Serializable {
      */
     private String name;
 
+    /**
+     * 联系人
+     */
+    private String corporater;
+
     public Long getId() {
         return id;
     }
@@ -30,5 +35,13 @@ public class QueryCustomerLessInfoResponse implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCorporater() {
+        return corporater;
+    }
+
+    public void setCorporater(String corporater) {
+        this.corporater = corporater;
     }
 }

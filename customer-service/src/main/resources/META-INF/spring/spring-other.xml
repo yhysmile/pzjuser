@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
        default-lazy-init="false">
 
     <bean id="userConfig" class="com.pzj.core.customer.utils.UserConfig">
@@ -20,4 +21,30 @@
         <property name="sysName" value="customer-service"/>
     </bean>
 
+    <bean id="unitOfWorkManager" class="com.pzj.core.customer.common.work.UnitOfWorkManager" init-method="init">
+        <property name="poolSize" value="${unitOfWork.pool.size}"/>
+        <property name="eventListeners">
+            <list>
+                <bean class="com.pzj.core.customer.profile.listener.CustomerEventListener"/>
+                <bean class="com.pzj.core.customer.profile.listener.ProfileEventListener"/>
+        </list>
+        </property>
+    </bean>
+
+    <bean id="facadeServiceAdvice" class="com.pzj.common.context.FacadeServiceAdvice"/>
+    <bean id="unitOfWorkAdvice" class="com.pzj.core.customer.common.work.UnitOfWorkAdvice"/>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="facadePointcut" expression="execution(* com.pzj.core.customer.profile.DistributorServiceImpl.unbindDirectDistributor(..)) or
+            execution(* com.pzj.core.customer.microshop.MicroshopServiceImpl.*(..)) or
+            execution(* com.pzj.core.customer.profile.ProfileServiceImpl.*(..)) or
+            execution(* com.pzj.core.customer.wechat.WeChatServiceImpl.*(..))"/>
+        <aop:aspect id="facadeServiceAspect" ref="facadeServiceAdvice" order="10">
+            <aop:around pointcut-ref="facadePointcut" method="watchPerformance"/>
+        </aop:aspect>
+        <aop:aspect id="unitOfWorkAspect" ref="unitOfWorkAdvice" order="50">
+            <aop:around pointcut-ref="facadePointcut" method="watchPerformance"/>
+        </aop:aspect>
+    </aop:config>
+	
 </beans>

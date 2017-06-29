@@ -3,19 +3,23 @@ package com.pzj.core.customer.profile.mq;
 import com.alibaba.fastjson.JSONObject;
 import com.pzj.base.common.global.UserGlobalDict;
 import com.pzj.base.entity.SysUser;
-import com.pzj.core.customer.commons.mq.AbstractMqMessageService;
-import com.pzj.core.customer.commons.mq.MQUtil;
+import com.pzj.core.customer.common.mq.AbstractMqMessageService;
+import com.pzj.core.customer.common.mq.MQUtil;
 import com.pzj.core.customer.utils.UserConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 向RocketMQ发送用户相关消息服务
  * Created by Administrator on 2016-12-27.
  */
 public class CustomerMqMessage extends AbstractMqMessageService {
+
 	private String tagUserCheck;
 	private String tagCustomerState;
 	private String tagCreateCustomer;
 	private String tagBindDistributor;
+	private String tagUnbindDistributor;
 
 	public CustomerMqMessage() {
 		super();
@@ -34,6 +38,7 @@ public class CustomerMqMessage extends AbstractMqMessageService {
 		this.tagCustomerState = config.getConfig("mq.tag.customer.state");
 		this.tagCreateCustomer = config.getConfig("mq.tag.customer.create");
 		this.tagBindDistributor = config.getConfig("mq.tag.customer.bindDistributor");
+		this.tagUnbindDistributor = config.getConfig("mq.tag.customer.unbindDistributor");
 	}
 
 	public void sendUserCheckMsg(SysUser user) {
@@ -65,5 +70,9 @@ public class CustomerMqMessage extends AbstractMqMessageService {
 
 	public void sendBindDistributorMsg(BindDistributor bindDistributor) {
 		sendMsg(topic, tagBindDistributor, bindDistributor);
+	}
+
+	public void sendUnbindDistributorMsg(BindDistributor bindDistributor) {
+		sendMsg(topic, tagUnbindDistributor, bindDistributor);
 	}
 }

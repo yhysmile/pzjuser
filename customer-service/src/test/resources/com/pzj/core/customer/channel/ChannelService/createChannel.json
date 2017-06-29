@@ -1,7 +1,7 @@
 {
   "testData" : {
     "name" : "newChannel",
-    "createBy" : 123456789,
+    "createBy" : 123,
     "dataSource" : 2
   },
   "testDataClass" : "com.pzj.core.customer.channel.CreateChannelRequest"

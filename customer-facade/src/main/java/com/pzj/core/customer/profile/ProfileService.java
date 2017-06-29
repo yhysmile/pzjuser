@@ -157,4 +157,11 @@ public interface ProfileService {
 	 * }
 	 */
 	Result<Boolean> passedUser(Long customerId,Long operId);
+
+	/**
+	 * 根据用户id，查询正常状态的用户基体信息
+	 * @param id
+	 * @return
+     */
+	Result<ProfileBasicInfo> queryActivateProfileBasicInfoById(Long id);
 }

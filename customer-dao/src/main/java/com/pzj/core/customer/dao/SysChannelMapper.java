@@ -9,7 +9,7 @@ import com.pzj.base.common.persistence.annotation.MyBatisDao;
 import com.pzj.base.common.utils.PageModel;
 import com.pzj.base.entity.SysChannel;
 import com.pzj.base.entity.SysUser;
-import com.pzj.core.customer.profile.ChannelUsers;
+import com.pzj.core.customer.entitys.ChannelUsers;
 
 @MyBatisDao
 public interface SysChannelMapper extends BaseUserMapper<SysChannel> {

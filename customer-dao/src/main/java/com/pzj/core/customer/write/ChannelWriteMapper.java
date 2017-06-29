@@ -2,6 +2,7 @@ package com.pzj.core.customer.write;
 
 import com.pzj.base.common.persistence.annotation.MyBatisDao;
 import com.pzj.core.customer.channel.ChannelEntity;
+import com.pzj.core.customer.channel.ChannelQuery;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ChannelWriteMapper {
     ChannelEntity selectById(Long id);
 
     List<ChannelEntity> selectByIds(List<Long> ids);
+
+    List<ChannelEntity> selectByParam(ChannelQuery channelQuery);
 }

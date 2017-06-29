@@ -3,17 +3,17 @@ package com.pzj.core.customer.write;
 import org.apache.ibatis.annotations.Param;
 
 import com.pzj.base.common.persistence.annotation.MyBatisDao;
-import com.pzj.core.customer.profile.ResellerEntity;
+import com.pzj.core.customer.entitys.CustomerEntity;
 
 @MyBatisDao
 public interface CustomerWriteMapper {
-	ResellerEntity selectById(@Param("id") Long id);
+	CustomerEntity selectById(@Param("id") Long id);
 
-	Long insertDistributor(ResellerEntity reseller);
+	Long insertDistributor(CustomerEntity reseller);
 
-	ResellerEntity queryUserBaseInfoById(Long id);
+	CustomerEntity selectUserBaseInfoById(Long id);
 
-	ResellerEntity queryUserByName(String loginName);
+	CustomerEntity selectUserByName(String loginName);
 
-	ResellerEntity queryUserBaseByInviteCode(String inviteCode);
+	CustomerEntity selectUserBaseByInviteCode(String inviteCode);
 }

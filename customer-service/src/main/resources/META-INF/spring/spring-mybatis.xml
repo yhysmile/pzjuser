@@ -52,8 +52,8 @@
     </tx:advice>
 
     <aop:config proxy-target-class="true">
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.pzj.service..*Impl.*(..))"/>
-        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.pzj.service..*Impl.*(..)) or execution(* com.pzj.core.customer.*.*Impl.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" order="100"/>
     </aop:config>
 
     <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
@@ -64,4 +64,5 @@
         </property>
     </bean>
 
+	
 </beans>

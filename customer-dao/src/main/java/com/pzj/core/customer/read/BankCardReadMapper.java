@@ -1,8 +1,8 @@
 package com.pzj.core.customer.read;
 
-import com.pzj.core.customer.profile.BankCardEntity;
-import com.pzj.core.customer.profile.BankCardQueryParam;
-import com.pzj.core.customer.profile.PageEntity;
+import com.pzj.core.customer.entitys.BankCardEntity;
+import com.pzj.core.customer.entitys.BankCardQueryParam;
+import com.pzj.core.customer.entitys.PageEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

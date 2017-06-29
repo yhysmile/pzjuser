@@ -85,7 +85,7 @@ public class ChannelMessageEngine {
         Date currentDate = new Date();
 
         SysUser operator = userMapper.selectByPrimaryKey(operatorId);
-        Long ownerId = CustomerUtil.ownerId(operator);
+        Long ownerId = CustomerUtil.masterId(operator);
 
         DirectChannelUser addCustomerMsg = createDirectChannelUser(operatorId, currentDate, ownerId, addRelations);
         DirectChannelUser delCustomerMsg = createDirectChannelUser(operatorId, currentDate, ownerId, delRelations);

@@ -63,7 +63,12 @@
 		set
 			status = #{status}
 			,update_by = #{updateBy}
-			,update_date = now()
+			<if test="updateDate != null">
+				,update_date = #{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateDate == null">
+				,update_date = now()
+			</if>
 		where
 			id=#{id}
 	</update>

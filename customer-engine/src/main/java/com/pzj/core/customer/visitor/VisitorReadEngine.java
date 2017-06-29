@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 import com.pzj.core.customer.commons.PageBean;
 import org.springframework.stereotype.Component;
 
-import com.pzj.core.customer.profile.PageEntity;
-import com.pzj.core.customer.profile.VisitorEntity;
+import com.pzj.core.customer.entitys.PageEntity;
+import com.pzj.core.customer.entitys.VisitorEntity;
 import com.pzj.core.customer.read.VisitorReadMapper;
 import com.pzj.framework.entity.QueryResult;
 
@@ -24,6 +24,21 @@ public class VisitorReadEngine {
     public QueryResult<QueryVisitorSummaryResponse> queryVisitorPage(QueryVisitorRequest visitorRequest, PageBean page) {
         if (page == null) {
             page = new PageBean();
+        }
+
+        if (visitorRequest != null){
+            if (visitorRequest.getName() != null){
+                String trim = visitorRequest.getName().trim();
+                if (!trim.equals("")) {
+                    visitorRequest.setName("%" + trim + "%");
+                }
+            }
+            if (visitorRequest.getPhoneNum() != null){
+                String trim = visitorRequest.getPhoneNum().trim();
+                if (!trim.equals("")) {
+                    visitorRequest.setPhoneNum("%" + trim + "%");
+                }
+            }
         }
 
         QueryResult<QueryVisitorSummaryResponse> queryResult = new QueryResult<QueryVisitorSummaryResponse>(page.getCurrentPage(), page.getPageSize());

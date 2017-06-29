@@ -18,7 +18,7 @@
     </sql>
 
     <!-- 字段映射 -->
-    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.BankCardEntity">
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.entitys.BankCardEntity">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
         <result column="account_holder" property="accountHolder" jdbcType="VARCHAR" />
@@ -38,7 +38,7 @@
     </select>
 
     <!-- 插入单条数据 -->
-    <insert id="insert" parameterType="com.pzj.core.customer.profile.BankCardEntity">
+    <insert id="insert" parameterType="com.pzj.core.customer.entitys.BankCardEntity">
         insert into bank_card
         <trim prefix="(" suffix=")" suffixOverrides=",">
             id,
@@ -94,7 +94,7 @@
     </insert>
 
     <!-- 更新单条数据 -->
-    <update id="update" parameterType="com.pzj.core.customer.profile.BankCardEntity">
+    <update id="update" parameterType="com.pzj.core.customer.entitys.BankCardEntity">
         update bank_card
         <set>
             <if test="accountHolder != null">account_holder = #{accountHolder, jdbcType=VARCHAR},</if>

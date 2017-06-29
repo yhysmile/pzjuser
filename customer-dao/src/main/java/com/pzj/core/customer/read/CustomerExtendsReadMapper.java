@@ -2,7 +2,7 @@ package com.pzj.core.customer.read;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.pzj.core.customer.profile.CustomerExtendsEntity;
+import com.pzj.core.customer.entitys.CustomerExtendsEntity;
 
 /**
  * Created by Administrator on 2017-2-16.

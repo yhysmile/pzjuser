@@ -29,6 +29,8 @@ public class SysUserMicroshop extends BaseEntity implements Serializable {
 
 	private Date updateDate;
 
+	private String phoneNum;
+
 	public SysUserMicroshop() {
 		super();
 	};
@@ -88,5 +90,13 @@ public class SysUserMicroshop extends BaseEntity implements Serializable {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
 }

@@ -1,7 +1,8 @@
 {
   "testData" : {
-    "ownerId" : "123456789"
-
+    "ownerId" : "2216619741563734",
+    "name" : "3",
+    "phoneNum": "4"
   },
   "testDataClass" : "com.pzj.core.customer.visitor.QueryVisitorRequest"
 }

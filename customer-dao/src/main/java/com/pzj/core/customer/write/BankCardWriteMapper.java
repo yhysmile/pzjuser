@@ -1,7 +1,7 @@
 package com.pzj.core.customer.write;
 
 import com.pzj.base.common.persistence.annotation.MyBatisDao;
-import com.pzj.core.customer.profile.BankCardEntity;
+import com.pzj.core.customer.entitys.BankCardEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

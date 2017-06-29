@@ -63,29 +63,35 @@ public interface ChannelService extends BaseApiService<ChannelVo> {
     public PageList<ChannelVo> queryPageBySupplierId(PageModel pager, Long supplierId) throws Exception;
 
     /**
+     * 已废弃，请使用 com.pzj.core.customer.channel.ChannelService#deleteChannel 接口
      * 移除渠道
      *
      * 实际更新其状态为删除状态。
      * @param channelId
      * @return
      */
+    @Deprecated
     boolean removeChannel(Long channelId);
 
     /**
+     * 已废弃，请使用 com.pzj.core.customer.profile.DistributorService#bindDirectDistributor 接口
      * 绑定渠道与分销商
      *
      * @param channelId
      * @param distributorsIds
      * @return
      */
+    @Deprecated
     boolean bindingDistributors(Long channelId, List<Long> distributorsIds, Long supplierId);
 
     /**
+     * 已废弃，请使用 com.pzj.core.customer.profile.DistributorService#unbindDirectDistributor 接口
      * 解绑渠道与分销商
      * @param channelId
      * @param distributorsIds
      * @return
      */
+    @Deprecated
     boolean unbundingDistributors(Long channelId, List<Long> distributorsIds, Long supplierId);
 
     /**

@@ -10,7 +10,8 @@
         intro,
         avatar,
         create_date,
-        update_date
+        update_date,
+        phone_num
     </sql>
 
     <!-- 字段映射 -->
@@ -22,6 +23,7 @@
         <result column="avatar" property="avatar" jdbcType="VARCHAR" />
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
     </resultMap>
 
     <!-- 主键查询 -->
@@ -128,6 +130,7 @@
             <if test="avatar != null">avatar,</if>
             <if test="createDate != null">create_date,</if>
             <if test="updateDate != null">update_date,</if>
+            <if test="phoneNum != null">phone_num,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{id, jdbcType=BIGINT},
@@ -137,6 +140,7 @@
             <if test="avatar != null">#{avatar, jdbcType=VARCHAR},</if>
             <if test="createDate != null">#{createDate, jdbcType=TIMESTAMP},</if>
             <if test="updateDate != null">#{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="phoneNum != null">#{phoneNum, jdbcType=VARCHAR},</if>
         </trim>
     </insert>
 
@@ -153,12 +157,13 @@
             <choose><when test="item.avatar != null">, #{item.avatar, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
             <choose><when test="item.createDate != null">, #{item.createDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
             <choose><when test="item.updateDate != null">, #{item.updateDate, jdbcType=TIMESTAMP}</when><otherwise>,'0000-00-00'</otherwise></choose>
+            <choose><when test="item.phoneNum != null">, #{item.phoneNum, jdbcType=VARCHAR}</when><otherwise>,''</otherwise></choose>
             )
         </foreach>
     </insert>
 
     <!-- 更新单条数据 -->
-    <update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysMenu">
+    <update id="updateByPrimaryKey" parameterType="com.pzj.base.entity.SysUserMicroshop">
         update sys_user_microshop
         <set>
             <if test="userId != null">user_id = #{userId, jdbcType=BIGINT},</if>
@@ -167,6 +172,7 @@
             <if test="avatar != null">avatar = #{avatar, jdbcType=VARCHAR},</if>
             <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
             <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="phoneNum != null">phone_num = #{phoneNum, jdbcType=VARCHAR},</if>
         </set>
         where
         id = #{id, jdbcType=BIGINT}
@@ -184,6 +190,7 @@
                 <if test="item.avatar != null">avatar = #{item.avatar, jdbcType=VARCHAR},</if>
                 <if test="item.createDate != null">create_date = #{item.createDate, jdbcType=TIMESTAMP},</if>
                 <if test="item.updateDate != null">update_date = #{item.updateDate, jdbcType=TIMESTAMP},</if>
+                <if test="item.phoneNum != null">phone_num = #{item.phoneNum, jdbcType=VARCHAR},</if>
             </set>
             where
             id = #{item.id, jdbcType=BIGINT}
@@ -197,6 +204,7 @@
             <if test="avatar != null">avatar = #{avatar, jdbcType=VARCHAR},</if>
             <if test="createDate != null">create_date = #{createDate, jdbcType=TIMESTAMP},</if>
             <if test="updateDate != null">update_date = #{updateDate, jdbcType=TIMESTAMP},</if>
+            <if test="phoneNum != null">phone_num = #{phoneNum, jdbcType=VARCHAR},</if>
         </set>
         where
         1 = 2

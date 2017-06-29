@@ -10,8 +10,10 @@ import java.util.*;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.pzj.base.service.sys.IMenuService;
 import com.pzj.cache.UserCacheService;
 
+import com.pzj.menu.entity.MenuBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,8 @@ import com.pzj.menu.entity.Menu;
 import com.pzj.role.entity.Role;
 import com.pzj.util.ServiceUtil;
 
+import javax.annotation.Resource;
+
 /**
  * 系统用户接口实现
  * 
@@ -55,6 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private final CustomerBuilder customerBuilder = new CustomerBuilder();
+	private final MenuBuilder AMenuBuilder = MenuBuilder.AMenuBuilder;
 
 	@Autowired
 	private IUserService iuserService = null;
@@ -73,6 +78,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private UserCacheService cacheService = null;
+
+	@Resource
+	private IMenuService menuService;
 
 	/**
 	 * <h3>创建用户</h3>
@@ -1081,7 +1089,11 @@ public class CustomerServiceImpl implements CustomerService {
 			customer = Customer.sysUser2Customer(user);
 			List<Customer> customers = new ArrayList<Customer>();
 			customers.add(customer);
-			customerUtil.setCustomerAuthorityList(customers);
+			customerUtil.setCustomerAuthorityList2(customers);
+
+
+			List<SysMenu> menus = menuService.findMenuOfUser(customer.getId());
+			customer.setMenuList(AMenuBuilder.buildSource(menus));
 
 			// 用户设置Token
 			setCustomerToken(customer);

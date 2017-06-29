@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.ChannelDistributorWriteMapper">
+    <sql id="Base_Column_List">
+        id, obj_id, rel_id, rel_type, s_id, status, create_by, create_date, update_by, update_date
+    </sql>
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.channel.ChannelDistributorEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="s_id" jdbcType="BIGINT" property="masterId" />
+        <result column="obj_id" jdbcType="BIGINT" property="channelId" />
+        <result column="rel_id" jdbcType="BIGINT" property="distributorId" />
+        <result column="rel_type" jdbcType="VARCHAR" property="type" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="create_by" jdbcType="BIGINT" property="createBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+
+    <update id="updateChannelDistributor">
+        update sys_label_relation
+        <set>
+            <if test="status != null">
+                status = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy, jdbcType=BIGINT}
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate, jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateChannelDistributorByChannelIdDistributorId">
+        <foreach item="item" collection="list" separator=";">
+            update sys_label_relation
+            <set>
+                <if test="item.status != null">
+                    status = #{item.status, jdbcType=INTEGER},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy, jdbcType=BIGINT},
+                </if>
+                <if test="item.updateDate != null">
+                    update_date = #{item.updateDate, jdbcType=TIMESTAMP},
+                </if>
+            </set>
+            where rel_id = #{item.distributorId, jdbcType=BIGINT}
+            and obj_id = #{item.channelId, jdbcType=BIGINT}
+            and rel_type in ('directChannelUser', 'channelUser')
+        </foreach>
+    </update>
+
+
+    <sql id="where_channl_customer_relation">
+        and rel_type in ('channelUser', 'directChannelUser') and status = 1
+    </sql>
+
+    <select id="selectByChannelId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from sys_label_relation
+        WHERE obj_id = #{channelId, jdbcType=BIGINT}
+        <include refid="where_channl_customer_relation"/>
+    </select>
+
+    <select id="selectByCustomerId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from sys_label_relation
+        WHERE rel_id = #{distributorId, jdbcType=BIGINT}
+        <include refid="where_channl_customer_relation"/>
+    </select>
+
+    <select id="selectByChannelIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from sys_label_relation
+        WHERE obj_id in
+        <foreach collection="list" item="channelId" open="(" separator="," close=")">
+            #{channelId, jdbcType=BIGINT}
+        </foreach>
+        <include refid="where_channl_customer_relation"/>
+    </select>
+
+    <select id="selectByCustomerIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from sys_label_relation
+        WHERE rel_id in
+        <foreach collection="list" item="distributorId" open="(" separator="," close=")">
+            #{distributorId, jdbcType=BIGINT}
+        </foreach>
+        <include refid="where_channl_customer_relation"/>
+    </select>
+
+    <select id="selectByChannelIdDistributorIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from sys_label_relation
+        WHERE (obj_id, rel_id) in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            (#{item.channelId, jdbcType=BIGINT}, #{item.distributorId, jdbcType=BIGINT})
+        </foreach>
+        <include refid="where_channl_customer_relation"/>
+    </select>
+    <select id="selectByChannelIdDistributorId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from sys_label_relation
+        WHERE obj_id = #{channelId, jdbcType=BIGINT} and rel_id = #{distributorId, jdbcType=BIGINT}
+    </select>
+
+
+</mapper>

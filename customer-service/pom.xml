@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.pzj.core</groupId>
 		<artifactId>customer</artifactId>
-		<version>1.4.0-SNAPSHOT</version>
+		<version>1.5.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>pzj.service.user</artifactId>
 	<name>用户服务业务逻辑处理层</name>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.pzj</groupId>
 			<artifactId>orange-client</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.pzj.framework</groupId>
@@ -44,6 +44,10 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -154,10 +158,10 @@
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
-			    <excludes>
+			    <!-- <excludes>
 					<exclude>*.properties</exclude>
 					<exclude>*.xml</exclude>
-				</excludes>
+				</excludes> -->
 				<filtering>true</filtering>
 			</resource>
 		</resources>

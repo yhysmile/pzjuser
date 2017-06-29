@@ -95,11 +95,11 @@ public class ChannelServiceTest {
 		Result<QueryResult<QueryChannelResponse>> result = newChannelService.queryChannelsUserNotJoin(channelRequest,
 				customerRequest, pageModel, tmpAddIds, tmpDelIds);
 
+		System.out.println(JSONConverter.toJson(result));
+
 		assertNotNull(result);
 		assertTrue(result.isOk());
 		assertNotNull(result.getData());
-
-		System.out.println(JSONConverter.toJson(result));
 	}
 
 	@Test
@@ -129,7 +129,7 @@ public class ChannelServiceTest {
 		logger.info("管理渠道用户关联关系返回结果:{}", JSONConverter.toJson(result));
 	}
 
-	//@Test
+	@Test
 	@OneCase("/com/pzj/core/customer/channel/ChannelService/createChannel.json")
 	public void test(@TestData CreateChannelRequest createChannelRequest) {
 		Result<Long> result = newChannelService.createChannel(createChannelRequest);
@@ -182,5 +182,39 @@ public class ChannelServiceTest {
 		Result<QueryResult<QueryChannelResponse>> queryResultResult = newChannelService.queryChannelFreeJoin(
 				channelRequest, customerRequest, pageModel, 2);
 		logger.info("政策查询渠道信息:{}", JSONConverter.toJson(queryResultResult));
+	}
+
+	@Test
+	@OneCase("/com/pzj/core/customer/channel/ChannelService/queryChannelRelationByChannelId.json")
+	public void queryChannelRelationByChannelId(@TestData List<Long> channelIds){
+		Result<QueryChannelRelationResponse> result = newChannelService.queryChannelRelationByChannelId(channelIds);
+		System.out.println(JSONConverter.toJson(result));
+
+		assertNotNull(result);
+		assertTrue(result.isOk());
+		assertNotNull(result.getData());
+
+	}
+
+	@Test
+	@OneCase("/com/pzj/core/customer/channel/ChannelService/queryChannelRelationByDistributorIds.json")
+	public void queryChannelRelationByDistributorIds(@TestData List<Long> channelIds){
+		Result<QueryChannelRelationResponse> result = newChannelService.queryChannelRelationByDistributorIds(channelIds);
+		System.out.println(JSONConverter.toJson(result));
+
+		assertNotNull(result);
+		assertTrue(result.isOk());
+		assertNotNull(result.getData());
+
+	}
+
+	@Test
+	public void queryChannelByDistributorId(){
+		Result<QueryChannelRelationResponse> result = newChannelService.queryChannelByDistributorId(2216619741563728l);
+		System.out.println(JSONConverter.toJson(result));
+
+		assertNotNull(result);
+		assertTrue(result.isOk());
+		assertNotNull(result.getData());
 	}
 }

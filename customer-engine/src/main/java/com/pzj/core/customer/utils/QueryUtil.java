@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pzj.base.common.utils.PageModel;
 import com.pzj.core.customer.commons.PageBean;
-import com.pzj.core.customer.profile.PageEntity;
+import com.pzj.core.customer.entitys.PageEntity;
 import com.pzj.framework.entity.QueryResult;
 
 /**
@@ -49,6 +49,9 @@ public class QueryUtil {
 	}
 
 	public static PageEntity convertToPageEntity(PageBean pageBean){
+		if (pageBean == null){
+			return null;
+		}
 		return new PageEntity(pageBean.getCurrentPage(), pageBean.getPageSize());
 	}
 }

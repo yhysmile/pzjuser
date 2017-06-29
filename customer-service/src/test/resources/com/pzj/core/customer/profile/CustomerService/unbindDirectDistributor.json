@@ -1,0 +1,8 @@
+{
+  "testData": {
+    "resellerId": 4118567497236480,
+    "supplierId": 4072055830478849,
+    "operateId": 1
+  },
+  "testDataClass": "com.pzj.core.customer.profile.BindCustomerRequest"
+}

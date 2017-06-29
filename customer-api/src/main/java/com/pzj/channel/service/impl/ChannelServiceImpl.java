@@ -438,79 +438,16 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public boolean removeChannel(Long channelId) {
-        if (channelId == null || channelId < 1) {
-            logger.error("接口方法[ChannelService.removeChannel],参数channelId无效");
-            return false;
-        }
-
-        SysChannel sysChannel = new SysChannel();
-        sysChannel.setId(channelId);
-        sysChannel.setDelFlag(GlobalParam.FLAG.del().toString());
-
-        Integer del = ichannelService.updateByPrimaryKey(sysChannel);
-        if (del != null && del > 0)
-            return true;
-
         return false;
     }
 
     @Override
     public boolean bindingDistributors(Long channelId, List<Long> distributorsIds,Long supplierId) {
-        if (channelId == null || channelId < 1) {
-            logger.error("接口方法[ChannelService.bindingDistributors],参数channelId无效");
-            return false;
-        }
-        if (Check.NuNCollections(distributorsIds)) {
-            logger.error("接口方法[ChannelService.bindingDistributors],参数distributorsIds无效");
-            return false;
-        }
-
-        List<SysLabelRelationKey> sysLabelRelationKeyList = packagedIntoRelationKeyList(channelId, distributorsIds, supplierId);
-
-        Long insertBatch = iLabelRelationService.insertBatch(sysLabelRelationKeyList);
-
-        if (insertBatch != null && insertBatch > 0)
-            return true;
-
         return false;
-    }
-
-    private List<SysLabelRelationKey> packagedIntoRelationKeyList(Long channelId, List<Long> distributorsIds, Long supplierId){
-        List<SysLabelRelationKey> sysLabelRelationKeyList = new ArrayList<>(distributorsIds.size());
-        String channelIdString = channelId.toString();
-        for (Long distributorsId : distributorsIds){
-            if (distributorsId == null)
-                continue;
-
-            SysLabelRelationKey sysLabelRelationKey = new SysLabelRelationKey();
-            sysLabelRelationKey.setObjId(channelIdString);
-            sysLabelRelationKey.setRelId(distributorsId.toString());
-            sysLabelRelationKey.setsId(supplierId);
-            sysLabelRelationKey.setRelType(UserGlobalParam.ChannelMapKeyParam.DIRECT_CHANNEL_USER_TYPE);
-
-            sysLabelRelationKeyList.add(sysLabelRelationKey);
-        }
-        return sysLabelRelationKeyList;
     }
 
     @Override
     public boolean unbundingDistributors(Long channelId, List<Long> distributorsIds, Long supplierId) {
-        if (channelId == null || channelId < 1) {
-            logger.error("接口方法[ChannelService.bindingDistributors],参数channelId无效");
-            return false;
-        }
-        if (Check.NuNCollections(distributorsIds)) {
-            logger.error("接口方法[ChannelService.bindingDistributors],参数distributorsIds无效");
-            return false;
-        }
-
-        List<SysLabelRelationKey> sysLabelRelationKeyList = packagedIntoRelationKeyList(channelId, distributorsIds, supplierId);
-
-        Long insertBatch = iLabelRelationService.deleteBatchSelective(sysLabelRelationKeyList);
-
-        if (insertBatch != null && insertBatch > 0)
-            return true;
-
         return false;
     }
 

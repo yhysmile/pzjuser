@@ -3,7 +3,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-autowire="byName">
 
-    <bean id="mqUtil" class="com.pzj.core.customer.commons.mq.MQUtil">
+    <bean id="mqUtil" class="com.pzj.core.customer.common.mq.MQUtil">
         <constructor-arg index="0" name="productName" value="${rocketmq.productName}" />
         <constructor-arg index="1" name="serviceAddress" value="${rocketmq.address}" />
         <constructor-arg index="2" name="maxPoolSize" value="${rocketmq.maxPoolSize}" />

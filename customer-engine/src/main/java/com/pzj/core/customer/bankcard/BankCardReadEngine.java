@@ -1,8 +1,8 @@
 package com.pzj.core.customer.bankcard;
 
-import com.pzj.core.customer.commons.exception.CustomerException;
-import com.pzj.core.customer.commons.exception.CustomerExceptionCode;
-import com.pzj.core.customer.profile.BankCardEntity;
+import com.pzj.core.customer.common.exception.CustomerException;
+import com.pzj.core.customer.common.exception.CustomerExceptionCode;
+import com.pzj.core.customer.entitys.BankCardEntity;
 import com.pzj.core.customer.read.BankCardReadMapper;
 import org.springframework.stereotype.Component;
 

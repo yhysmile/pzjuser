@@ -2080,6 +2080,10 @@ public class UserServiceImpl extends BaseUserServiceImpl<SysUser, SysUserMapper>
 		sysUser.setSupplierId(customerId);
 		sysUser.setRefereeInfo(refereeInfo);
 		sysUser.setAccountState(accountState);
+		List<String> resellerTypes = new ArrayList<>();
+		resellerTypes.add(UserGlobalDict.salespersonType());
+		resellerTypes.add(UserGlobalDict.saasUserType());
+		sysUser.setResellerTypes(resellerTypes);
 		List<SysUser> referees = mapper.findUserByRefereeInfo(sysUser);
 		return referees;
 	}

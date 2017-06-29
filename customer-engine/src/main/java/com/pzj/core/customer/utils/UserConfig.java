@@ -48,4 +48,8 @@ public class UserConfig {
         String value = configs.getProperty("customer.create.password.sms");
         return value == null ? false : "true".equals(value);
     }
+
+    public String getBiServerAddress(){
+        return configs.getProperty("bi.server.address");
+    }
 }

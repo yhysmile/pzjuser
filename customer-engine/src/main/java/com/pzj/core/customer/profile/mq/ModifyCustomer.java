@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
-import com.pzj.core.customer.commons.exception.CustomerException;
-import com.pzj.core.customer.commons.exception.CustomerExceptionCode;
+import com.pzj.core.customer.common.exception.CustomerException;
+import com.pzj.core.customer.common.exception.CustomerExceptionCode;
 import com.pzj.core.customer.utils.OperatInfo;
 
 /**

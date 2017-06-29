@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pzj.core.customer.read.CustomerExtendsReadMapper" >
-    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.CustomerExtendsEntity" >
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.entitys.CustomerExtendsEntity" >
         <id column="customer_id" property="customerId" jdbcType="BIGINT" />
         <id column="supplier_id" property="supplierId" jdbcType="BIGINT" />
         <result column="referee_id" property="refereeId" jdbcType="BIGINT" />

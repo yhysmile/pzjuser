@@ -1,0 +1,17 @@
+{
+  "testData": {
+	  "microshopId":2216619736563718,
+	  "microshopContent": {
+	    "name": "test",
+	    "intro": "18581359701",
+	    "avatar" : "123456",
+	    "phoneNun": "18581359701"
+	  },
+	  "modifierId":1,
+  },
+  "testDataClass":{
+  	"microshopId": "long",
+  	"microshopContent": "com.pzj.core.customer.microshop.MicroshopContent",
+  	"modifierId": "long"
+  }
+}

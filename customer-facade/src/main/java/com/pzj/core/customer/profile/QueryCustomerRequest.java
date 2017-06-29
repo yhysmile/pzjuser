@@ -27,6 +27,8 @@ public class QueryCustomerRequest implements Serializable {
 	private String supplierNormal;
 	//公司名或品牌名
 	private String nameOrNormal;
+	// 公司名或联系或手机号
+	private String nameOrCorporaterOrMobile;
 	//详细地址
 	private String address;
 	//查询具体时间
@@ -285,4 +287,11 @@ public class QueryCustomerRequest implements Serializable {
 		this.hotlineReseller = hotlineReseller;
 	}
 
+	public String getNameOrCorporaterOrMobile() {
+		return nameOrCorporaterOrMobile;
+	}
+
+	public void setNameOrCorporaterOrMobile(String nameOrCorporaterOrMobile) {
+		this.nameOrCorporaterOrMobile = nameOrCorporaterOrMobile;
+	}
 }

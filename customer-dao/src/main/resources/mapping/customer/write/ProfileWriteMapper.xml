@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pzj.core.customer.write.ProfileWriteMapper">
+
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.entitys.ProfileEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="superId"/>
+        <result column="user_type" jdbcType="INTEGER" property="type"/>
+        <result column="account_state" jdbcType="INTEGER" property="status"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="login_name" jdbcType="VARCHAR" property="username"/>
+        <result column="corporater" jdbcType="VARCHAR" property="contacts"/>
+        <result column="corporater_mobile" jdbcType="VARCHAR" property="phoneNum"/>
+        <result column="is_root" jdbcType="INTEGER" property="isRoot"/>
+    </resultMap>
+
+    <update id="updateProfile">
+        update sys_user
+        <set>
+            <if test="type != null">
+                user_type = #{type, jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                login_name = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                login_passwd = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                account_state = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                corporater = #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNum != null">
+                corporater_mobile = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUserId != null">
+                update_by = #{modifyUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                update_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyDate == null">
+                update_date = current_timestamp(),
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectProfileById" resultMap="BaseResultMap">
+        SELECT id, supplier_id, user_type, account_state, name, login_name, corporater, corporater_mobile, is_root from sys_user
+        WHERE id = #{id, jdbcType=BIGINT}
+    </select>
+    <select id="selectProfileByIds" resultMap="BaseResultMap">
+        SELECT id, supplier_id, user_type, account_state, name, login_name, corporater, corporater_mobile, is_root from sys_user
+        <where>
+            <if test="ids != null and ids.size >= 0">
+                id in
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id, jdbcType=BIGINT}
+                </foreach>
+            </if>
+            or 1=2
+        </where>
+    </select>
+</mapper>

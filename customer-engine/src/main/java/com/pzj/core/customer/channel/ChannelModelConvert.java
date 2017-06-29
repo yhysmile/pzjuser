@@ -93,4 +93,15 @@ public class ChannelModelConvert {
         return queryChannelResponses;
     }
 
+    public static List<ChannelInfo> convertToChannelInfos(List<SysChannel> channels){
+        List<ChannelInfo> channelInfos = new ArrayList<>();
+        for (SysChannel sysChannel : channels){
+            ChannelInfo channelInfo = new ChannelInfo();
+            channelInfo.setChannelId(sysChannel.getId());
+            channelInfo.setSupplierId(sysChannel.getSupplierId());
+            channelInfos.add(channelInfo);
+        }
+        return channelInfos;
+    }
+
 }

@@ -779,7 +779,7 @@ public class customerTest {
      */
     @Test
     public void login() throws Exception {
-        Customer customer = customerService.login("wuliqing", "g7bplv");
+        Customer customer = customerService.login("xkjTest001", "123456");
         assertNotNull(customer);
         /*for (int i = 0; i < customer.getDepartmentList().size(); i++) {
             System.out.println(">>>>login DepartmentList is : " + customer.getDepartmentList().get(i).getName());
@@ -790,6 +790,10 @@ public class customerTest {
         for (int i = 0; i < customer.getDcrList().size(); i++) {
             System.out.println(">>>>login getDcrList is : " + customer.getDcrList().toArray());
         }*/
+
+        for (Menu menu : customer.getMenuList()) {
+            System.out.println(">>>> " + menu.getCatalog() + " -- " +menu.getHref());
+        }
     }
     /*
      * 用户登录

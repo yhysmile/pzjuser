@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pzj.core.customer.write.CustomerExtendsWriteMapper" >
-    <resultMap id="BaseResultMap" type="com.pzj.core.customer.profile.CustomerExtendsEntity" >
+    <resultMap id="BaseResultMap" type="com.pzj.core.customer.entitys.CustomerExtendsEntity" >
         <id column="customer_id" property="customerId" jdbcType="BIGINT" />
         <id column="supplier_id" property="supplierId" jdbcType="BIGINT" />
         <result column="referee_id" property="refereeId" jdbcType="BIGINT" />
@@ -9,7 +9,7 @@
     </resultMap>
 
     <!-- 新增-->
-    <insert id="insertCustomerExtends" parameterType="com.pzj.core.customer.profile.CustomerExtendsEntity">
+    <insert id="insertCustomerExtends" parameterType="com.pzj.core.customer.entitys.CustomerExtendsEntity">
         INSERT INTO customer_extends(
         customer_id,
         supplier_id,
@@ -24,7 +24,7 @@
     </insert>
 
     <!--根据用户id修改扩展信息 -->
-    <update id="updateCustomerExtends" parameterType="com.pzj.core.customer.profile.CustomerExtendsEntity">
+    <update id="updateCustomerExtends" parameterType="com.pzj.core.customer.entitys.CustomerExtendsEntity">
         UPDATE  customer_extends
         <set>
             <if test="customerExtends.refereeId != null">

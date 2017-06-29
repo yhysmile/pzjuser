@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.pzj.core.customer.profile.PageEntity;
-import com.pzj.core.customer.profile.VisitorEntity;
+import com.pzj.core.customer.entitys.PageEntity;
+import com.pzj.core.customer.entitys.VisitorEntity;
 
 /**
  * Created by Administrator on 2017-2-23.

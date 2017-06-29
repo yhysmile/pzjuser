@@ -518,6 +518,8 @@ public class SysUser extends BaseEntity implements Serializable {
 	 */
 	private String department;
 
+	private String bieeToken;
+
 	/**
 	 * 获取客栈地图 :经度
 	 *
@@ -1952,4 +1954,13 @@ public class SysUser extends BaseEntity implements Serializable {
 		setId(id);
 	}
 
+
+
+	public String getBieeToken() {
+		return bieeToken;
+	}
+
+	public void setBieeToken(String bieeToken) {
+		this.bieeToken = bieeToken;
+	}
 }

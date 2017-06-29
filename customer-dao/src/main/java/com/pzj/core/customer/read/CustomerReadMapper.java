@@ -2,61 +2,60 @@ package com.pzj.core.customer.read;
 
 import java.util.List;
 
+import com.pzj.core.customer.entitys.CustomerQuery;
 import org.apache.ibatis.annotations.Param;
 
-import com.pzj.core.customer.profile.ChannelResellerQueryParam;
-import com.pzj.core.customer.profile.PageEntity;
-import com.pzj.core.customer.profile.ResellerEntity;
+import com.pzj.core.customer.entitys.ChannelResellerQueryParam;
+import com.pzj.core.customer.entitys.PageEntity;
+import com.pzj.core.customer.entitys.CustomerEntity;
 
 public interface CustomerReadMapper {
 
-	public List<ResellerEntity> queryResellerBaseInfoList(@Param("reseller") ResellerEntity reseller,
-			@Param("page") PageEntity page);
+	List<CustomerEntity> selectResellerBaseInfoList(@Param("reseller") CustomerQuery reseller,
+													@Param("page") PageEntity page);
 
-	public Integer countResellerBaseInfoPage(@Param("reseller") ResellerEntity reseller);
+	int countResellerBaseInfoPage(@Param("reseller") CustomerQuery reseller);
 
-	public ResellerEntity queryUserBaseInfoById(Long id);
+	CustomerEntity selectUserBaseInfoById(Long id);
 
-	public Long judgeUserNameMate(@Param("loginName") String loginName, @Param("mobile") String mobile);
+	Long judgeUserNameMate(@Param("loginName") String loginName, @Param("mobile") String mobile);
 
-	public List<ResellerEntity> queryUserBaseByInviteCode(String inviteCode);
+	List<CustomerEntity> selectUserBaseByInviteCode(String inviteCode);
 
-	public List<ResellerEntity> queryChannelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller,
-			@Param("page") PageEntity page);
+	List<CustomerEntity> selectChannelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller,
+											@Param("page") PageEntity page);
 
-	public Integer countChannelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
+	int countChannelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
 
-	public List<ResellerEntity> queryRootUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller,
-			@Param("page") PageEntity page);
+	List<CustomerEntity> selectRootUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller,
+										 @Param("page") PageEntity page);
 
-	public Integer countRootUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
+	int countRootUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
 
-	public List<ResellerEntity> queryChannelRelUsers(
-			@Param("channelReseller") ChannelResellerQueryParam channelReseller, @Param("page") PageEntity page);
+	List<CustomerEntity> selectChannelRelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller,
+											   @Param("page") PageEntity page);
 
-	public List<Long> countChannelRelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
+	List<Long> countChannelRelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
 
-	public List<ResellerEntity> queryChannelNotRelUsers(
-			@Param("channelReseller") ChannelResellerQueryParam channelReseller, @Param("page") PageEntity page);
+	List<CustomerEntity> selectChannelNotRelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller,
+												  @Param("page") PageEntity page);
 
-	public List<Long> countChannelNotRelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
+	List<Long> countChannelNotRelUsers(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
 
-	public Integer countResellerSum(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
+	Integer countResellerSum(@Param("channelReseller") ChannelResellerQueryParam channelReseller);
+	List<CustomerEntity> selectCustomerFreeJoin(@Param("reseller") CustomerQuery reseller,
+												@Param("page") PageEntity page);
 
-	public List<ResellerEntity> queryUserIdsByChnnelIds(@Param("list") List<Long> list);
+	int countQueryCustomerFreeJoin(@Param("reseller") CustomerQuery reseller);
 
-	public List<ResellerEntity> queryCustomerFreeJoin(@Param("reseller") ResellerEntity reseller,
-			@Param("page") PageEntity page);
+	int countCustomerLessInfo(@Param("reseller") CustomerQuery param);
 
-	public Integer countQueryCustomerFreeJoin(@Param("reseller") ResellerEntity reseller);
+	List<CustomerEntity> selectCustomerLessInfo(@Param("reseller") CustomerQuery userParam,
+												@Param("page") PageEntity page);
 
-	int countCustomerLessInfo(@Param("reseller") ResellerEntity param);
+	List<CustomerEntity> selectResellerRelMaster(@Param("reseller") CustomerQuery reseller,
+												 @Param("page") PageEntity page);
 
-	List<ResellerEntity> selectCustomerLessInfo(@Param("reseller") ResellerEntity userParam, @Param("page") PageEntity page);
-
-	public List<ResellerEntity> queryResellerRelMaster(@Param("reseller") ResellerEntity reseller,
-			@Param("page") PageEntity page);
-
-	public Integer countResellerRelMaster(@Param("reseller") ResellerEntity reseller);
+	int countResellerRelMaster(@Param("reseller") CustomerQuery reseller);
 
 }

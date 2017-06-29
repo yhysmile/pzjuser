@@ -69,4 +69,6 @@ public interface CustomerService {
 	 */
 	Result<QueryResult<QueryCustomerResponse>> queryCustomerFreeJoin(QueryCustomerRequest customerRequest,
 			PageBean pageBean, Integer operType);
+
+	Result<Long> createSaasCustomer(CreateSaasCustomerRequest createSaasCustomerRequest);
 }

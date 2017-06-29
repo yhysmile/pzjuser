@@ -1,11 +1,11 @@
 {
   "testData": {
-    "corporater": "1123",
+    "corporater": "test",
     "corporaterMobile": "15210147640",
-    "identifyType": "p",
-    "loginName": "bbbar13343999",
+    "userPassword" : "123456",
+    "loginName": "testfx_30",
     "createBy":123456789,
-    "resellerType": 5
+    "refereeCode" : "wiar"
   },
   "testDataClass": "com.pzj.core.customer.profile.CreateCustomerRequest"
 }

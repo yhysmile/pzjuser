@@ -1,10 +1,11 @@
 {
   "testData" : {
-    "id" : 2216619736563717,
-    "userId" : 52434,
+    "id" : 2216619741564110,
+    "userId" : 2216619741564110,
     "name" : "4444123123",
     "intro" : "aga",
     "avatar" : "5354",
+    "phoneNum" : "qew",
     "createDate" : "2013-12-12",
     "updateDate" : "2013-12-22"
   },

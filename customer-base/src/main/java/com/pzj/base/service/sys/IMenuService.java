@@ -21,5 +21,7 @@ public interface IMenuService extends IBaseUserService<SysMenu> {
 	 *            菜单Ids
 	 * 
 	 */
-	public List<SysMenu> findSysMenuKeyByIds(Map<String, String> IdsMap);
+	List<SysMenu> findSysMenuKeyByIds(Map<String, String> IdsMap);
+
+	List<SysMenu> findMenuOfUser(Long userId);
 }

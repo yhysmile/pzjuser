@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pzj.core.customer.read.CustomerReadMapper">
 	<!-- 字段映射 -->
-	<resultMap id="ResellerBaseInfo" type="com.pzj.core.customer.profile.ResellerEntity">
+	<resultMap id="ResellerBaseInfo" type="com.pzj.core.customer.entitys.CustomerEntity">
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
 		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
@@ -17,12 +17,11 @@
 		<result column="province" jdbcType="VARCHAR" property="province" />
 		<result column="city" jdbcType="VARCHAR" property="city" />
 		<result column="county" jdbcType="VARCHAR" property="county" />
-		<result column="channel_id" jdbcType="BIGINT" property="channelId" />
 		<result column="is_root" jdbcType="INTEGER" property="isRoot" />
 	</resultMap>
 	
 	<!-- 查询分销商列表基本信息 -->
-	<select id="queryResellerBaseInfoList" resultMap="ResellerBaseInfo">
+	<select id="selectResellerBaseInfoList" resultMap="ResellerBaseInfo">
 		select
 			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,sur.create_date,province,city,county
 		from 
@@ -66,9 +65,9 @@
         </if>
 	</select>
 	
-	<select id="queryUserBaseInfoById" resultMap="ResellerBaseInfo">
+	<select id="selectUserBaseInfoById" resultMap="ResellerBaseInfo">
 		select 
-			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county,is_root
+			id, supplier_id, login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,province,city,county,is_root
 		from
 			sys_user
 		where
@@ -91,7 +90,7 @@
 		limit 1;
 	</select>
 	
-	<select id="queryUserBaseByInviteCode" resultMap="ResellerBaseInfo">
+	<select id="selectUserBaseByInviteCode" resultMap="ResellerBaseInfo">
 		select
 			id,login_name,corporater,corporater_mobile,name,address,reseller_type,create_date,account_state,province,city,county, supplier_id
 		from
@@ -100,10 +99,11 @@
 			invitationCode=#{inviteCode}
 		and
 			account_state = 1
-	    and user_type = 12
+	    and
+	    	user_type IN (12,13)
 	</select>
 	
-	<select id="queryChannelRelUsers" resultMap="ResellerBaseInfo">
+	<select id="selectChannelRelUsers" resultMap="ResellerBaseInfo">
 		(select
 			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
 		from
@@ -173,7 +173,7 @@
 		<include refid="channelUserQueryParam"></include>
 	</select>
 	
-	<select id="queryChannelNotRelUsers" resultMap="ResellerBaseInfo">
+	<select id="selectChannelNotRelUsers" resultMap="ResellerBaseInfo">
 		(select
 			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
 		from
@@ -231,7 +231,7 @@
 		<include refid="noChannelUserQueryParam"></include>
 	</select>
 	
-	<select id="queryChannelUsers" resultMap="ResellerBaseInfo">
+	<select id="selectChannelUsers" resultMap="ResellerBaseInfo">
 		select
 			suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
 		from
@@ -258,7 +258,7 @@
 		<include refid="channelUserQueryParam"></include>
 	</select>
 	
-	<select id="queryRootUsers" resultMap="ResellerBaseInfo">
+	<select id="selectRootUsers" resultMap="ResellerBaseInfo">
 		select
 			suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,suser.create_date,account_state,province,city,county
 		from
@@ -410,25 +410,8 @@
 		<include refid="resellerBaseInfo"></include>
 		<include refid="userQueryParam"></include>
 	</select>
-	<!-- 通过渠道id获取用户id列表 -->
-	<select id="queryUserIdsByChnnelIds" resultMap="ResellerBaseInfo">
-		select
-			suser.id,channelUser.id as channel_id
-		from
-			sys_user suser
-		left join
-			sys_label_relation channelUser
-		on
-			suser.id=channelUser.rel_id
-		where
-			channelUser.id
-		in
-			<foreach collection="list" item="channelId" index="index" open="(" close=")" separator=",">
-				#{channelId}
-			</foreach>
-	</select>
 	
-	<select id="queryResellerRelMaster" resultMap="ResellerBaseInfo">
+	<select id="selectResellerRelMaster" resultMap="ResellerBaseInfo">
 		SELECT
 			suser.id,suser.supplier_id,login_name,corporater,corporater_mobile,name,address,reseller_type,sur.create_date,province,city,county
 		FROM
@@ -475,69 +458,78 @@
 		<!-- <if test="reseller.supplierId != null">
 			and suser.supplier_id = #{reseller.supplierId}
 		</if> -->
-		<if test="reseller.loginName != null">
-			and suser.login_name like concat('%',#{reseller.loginName},'%')
-		</if>
-		<if test="reseller.name != null">
-			and (suser.name like CONCAT(CONCAT('%', #{reseller.name}),'%') or suser.supplier_normal like CONCAT(CONCAT('%', #{reseller.name}),'%'))
-		</if>
-		<if test="reseller.corporater != null">
-			and suser.corporater like CONCAT(CONCAT('%', #{reseller.corporater}),'%')
-		</if>
-		<if test="reseller.corporaterMobile != null">
-			and suser.corporater_mobile = #{reseller.corporaterMobile}
-		</if>
-		<if test="reseller.address != null">
-			and suser.address like CONCAT(CONCAT('%', #{reseller.address}),'%')
-		</if>
-		<if test="reseller.resellerType != null">
-			and suser.reseller_type = #{reseller.resellerType}
-		</if>
-		<if test="reseller.userType != null">
-			and suser.user_type = #{reseller.userType}
-		</if>
-		<if test="reseller.createDate != null">
-			and suser.create_date = DATE_FORMAT(#{reseller.createDate}, '%Y-%m-%d')
-		</if>
-		<if test="reseller.isRoot != null">
-			and suser.is_root = #{reseller.isRoot}
-		</if>
-		<if test="reseller.province != null">
-			and suser.province=#{reseller.province}
-		</if>
-		<if test="reseller.city != null">
-			and suser.city=#{reseller.city}
-		</if>
-		<if test="reseller.county != null">
-			and suser.county=#{reseller.county}
-		</if>
-		<if test="reseller.bindDateBegin != null">
-			<![CDATA[
+		<if test="reseller != null">
+			<if test="reseller.loginName != null">
+				and suser.login_name like concat('%',#{reseller.loginName},'%')
+			</if>
+			<if test="reseller.name != null">
+				and (suser.name like CONCAT(CONCAT('%', #{reseller.name}),'%') or suser.supplier_normal like CONCAT(CONCAT('%', #{reseller.name}),'%'))
+			</if>
+			<if test="reseller.nameOrCorporaterOrMobile != null">
+				and (
+					suser.name like CONCAT(CONCAT('%', #{reseller.nameOrCorporaterOrMobile}),'%')
+					or suser.corporater like CONCAT(CONCAT('%', #{reseller.nameOrCorporaterOrMobile}),'%')
+					or suser.corporater_mobile like CONCAT(#{reseller.nameOrCorporaterOrMobile},'%')
+				)
+			</if>
+			<if test="reseller.corporater != null">
+				and suser.corporater like CONCAT(CONCAT('%', #{reseller.corporater}),'%')
+			</if>
+			<if test="reseller.corporaterMobile != null">
+				and suser.corporater_mobile = #{reseller.corporaterMobile}
+			</if>
+			<if test="reseller.address != null">
+				and suser.address like CONCAT(CONCAT('%', #{reseller.address}),'%')
+			</if>
+			<if test="reseller.resellerType != null">
+				and suser.reseller_type = #{reseller.resellerType}
+			</if>
+			<if test="reseller.userType != null">
+				and suser.user_type = #{reseller.userType}
+			</if>
+			<if test="reseller.createDate != null">
+				and suser.create_date = DATE_FORMAT(#{reseller.createDate}, '%Y-%m-%d')
+			</if>
+			<if test="reseller.isRoot != null">
+				and suser.is_root = #{reseller.isRoot}
+			</if>
+			<if test="reseller.province != null">
+				and suser.province=#{reseller.province}
+			</if>
+			<if test="reseller.city != null">
+				and suser.city=#{reseller.city}
+			</if>
+			<if test="reseller.county != null">
+				and suser.county=#{reseller.county}
+			</if>
+			<if test="reseller.bindDateBegin != null">
+				<![CDATA[
 			and suser.create_date >= #{reseller.bindDateBegin}
 			]]>
-		</if>
-		<if test="reseller.bindDateEnd != null">
-			<![CDATA[
+			</if>
+			<if test="reseller.bindDateEnd != null">
+				<![CDATA[
 			and suser.create_date <= #{reseller.bindDateEnd}
 			]]>
-		</if>
-		<if test="reseller.refereeId != null">
-			and custext.referee_id = #{reseller.refereeId}
-		</if>
-		<if test="reseller.userIds != null and reseller.userIds.size &gt; 0">
-			<if test="reseller.queryType != null and reseller.queryType == 1">
-				AND suser.id IN
-				<foreach collection="reseller.userIds" item="_userId" open="( " close=" )"
-						 separator=",">
-					#{_userId, jdbcType=BIGINT}
-				</foreach>
 			</if>
-			<if test="reseller.queryType != null and reseller.queryType == 2">
-				AND suser.id NOT IN
-				<foreach collection="reseller.userIds" item="_userId" open="( " close=" )"
-						 separator=",">
-					#{_userId, jdbcType=BIGINT}
-				</foreach>
+			<if test="reseller.refereeId != null">
+				and custext.referee_id = #{reseller.refereeId}
+			</if>
+			<if test="reseller.userIds != null and reseller.userIds.size &gt; 0">
+				<if test="reseller.queryType != null and reseller.queryType == 1">
+					AND suser.id IN
+					<foreach collection="reseller.userIds" item="_userId" open="( " close=" )"
+							 separator=",">
+						#{_userId, jdbcType=BIGINT}
+					</foreach>
+				</if>
+				<if test="reseller.queryType != null and reseller.queryType == 2">
+					AND suser.id NOT IN
+					<foreach collection="reseller.userIds" item="_userId" open="( " close=" )"
+							 separator=",">
+						#{_userId, jdbcType=BIGINT}
+					</foreach>
+				</if>
 			</if>
 		</if>
 	</sql>
@@ -554,7 +546,7 @@
 	</sql>
 	
 	<!-- 单表查询分销商列表基本信息 -->
-	<select id="queryCustomerFreeJoin" resultMap="ResellerBaseInfo">
+	<select id="selectCustomerFreeJoin" resultMap="ResellerBaseInfo">
 		select
 			distinct suser.id,login_name,corporater,corporater_mobile,name,address,reseller_type,province,city,county
 		from 
@@ -579,7 +571,7 @@
 		<trim prefixOverrides="and|or">
 			<if test="reseller != null">
 				and sur.account_state = 1
-				and sur.user_type in (6, 13)
+				and sur.user_type in (6, 1, 7, 13)
 				and sur.is_root = 1
 				<if test="reseller.name != null">
 					and sur.name like #{reseller.name, jdbcType=VARCHAR}
@@ -594,12 +586,16 @@
 			or 1 = 2
 		</trim>
 	</select>
-	<select id="selectCustomerLessInfo" resultType="com.pzj.core.customer.profile.ResellerEntity">
-		select id, name from sys_user sur where
+	<select id="selectCustomerLessInfo" resultType="com.pzj.core.customer.entitys.CustomerEntity">
+		select id, name, corporater from sys_user sur where
 		<trim prefixOverrides="and|or">
-			<if test="reseller != null">
+			<if test="reseller != null
+				and (reseller.name != null
+				or reseller.userIds != null
+				or reseller.userIds.size &gt; 0)">
+
 				and sur.account_state = 1
-				and sur.user_type in (6, 13)
+				and sur.user_type in (6, 1, 7, 13)
 				and sur.is_root = 1
 				<if test="reseller.name != null">
 					and sur.name like #{reseller.name, jdbcType=VARCHAR}

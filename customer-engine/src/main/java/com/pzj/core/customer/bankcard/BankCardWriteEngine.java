@@ -1,9 +1,9 @@
 package com.pzj.core.customer.bankcard;
 
-import com.pzj.core.customer.commons.exception.CustomerException;
-import com.pzj.core.customer.commons.exception.CustomerExceptionCode;
-import com.pzj.core.customer.profile.BankCardEntity;
-import com.pzj.core.customer.profile.ResellerEntity;
+import com.pzj.core.customer.common.exception.CustomerException;
+import com.pzj.core.customer.common.exception.CustomerExceptionCode;
+import com.pzj.core.customer.entitys.BankCardEntity;
+import com.pzj.core.customer.entitys.CustomerEntity;
 import com.pzj.core.customer.write.BankCardWriteMapper;
 import com.pzj.core.customer.write.CustomerWriteMapper;
 import com.pzj.framework.idgen.IDGenerater;
@@ -26,8 +26,8 @@ public class BankCardWriteEngine {
     @Resource
     private IDGenerater idGenerater;
 
-    private ResellerEntity getCustomerById(Long id){
-        ResellerEntity operatorEntity = customerWriteMapper.selectById(id);
+    private CustomerEntity getCustomerById(Long id){
+        CustomerEntity operatorEntity = customerWriteMapper.selectById(id);
         return operatorEntity;
     }
 
@@ -45,7 +45,7 @@ public class BankCardWriteEngine {
         // 数据非空校验
         nonEmptyCheckForCreate(bankCardEntity);
 
-        ResellerEntity operatorEntity = getCustomerById(bankCardEntity.getCreateBy());
+        CustomerEntity operatorEntity = getCustomerById(bankCardEntity.getCreateBy());
 
         // 其它字段初始化
         initOtherFieldsForCreate(bankCardEntity, operatorEntity);
@@ -89,7 +89,7 @@ public class BankCardWriteEngine {
     /*
     创建银行卡时，初始化一些其它字段数据
      */
-    private void initOtherFieldsForCreate(BankCardEntity bankCardEntity, ResellerEntity operatorEntity){
+    private void initOtherFieldsForCreate(BankCardEntity bankCardEntity, CustomerEntity operatorEntity){
         long newId = idGenerater.nextId();
         bankCardEntity.setId(newId);
         Long ownerId = ownerIdOf(operatorEntity);
@@ -100,11 +100,11 @@ public class BankCardWriteEngine {
     /*
     获取某用户的主账号id
      */
-    private Long ownerIdOf(ResellerEntity resellerEntity){
-        if ("1".equals(resellerEntity.getIsRoot())){
-            return resellerEntity.getId();
+    private Long ownerIdOf(CustomerEntity customerEntity){
+        if ("1".equals(customerEntity.getIsRoot())){
+            return customerEntity.getId();
         } else {
-            return resellerEntity.getSupplierId();
+            return customerEntity.getSupplierId();
         }
     }
 
@@ -119,7 +119,7 @@ public class BankCardWriteEngine {
 
         BankCardEntity originalBankCardEntity = getBankCardById(bankCardEntity.getId());
 
-        ResellerEntity operatorEntity = getCustomerById(bankCardEntity.getUpdateBy());
+        CustomerEntity operatorEntity = getCustomerById(bankCardEntity.getUpdateBy());
 
         // 操作人修改权限校验
         ruleCheckForModify(originalBankCardEntity, operatorEntity);
@@ -167,7 +167,7 @@ public class BankCardWriteEngine {
     /*
     修改银行卡时，按一些规则校验
      */
-    private void ruleCheckForModify(BankCardEntity bankCardEntity, ResellerEntity operatorEntity) {
+    private void ruleCheckForModify(BankCardEntity bankCardEntity, CustomerEntity operatorEntity) {
         Long ownerIdOfBankCard = bankCardEntity.getOwnerId();
         Long ownerIdOfOperator = ownerIdOf(operatorEntity);
         if (!(ownerIdOfBankCard != null && ownerIdOfOperator != null

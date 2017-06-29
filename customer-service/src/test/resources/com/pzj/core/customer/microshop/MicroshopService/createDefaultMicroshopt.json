@@ -1,0 +1,11 @@
+{
+  "testData": {
+    "masterId" : 2216619736563722,
+    "defaultPhoneNum": "123aaa",
+    "creatorId" : 1
+  },
+  "testDataClass":{
+    "masterId": "long",
+    "creatorId": "long"
+  }
+}

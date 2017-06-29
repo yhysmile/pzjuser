@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<configuration debug="true" scan="true">
-    <property name="log.path" value="../logs"/>
-    <property name="enginee" value="customer" />
-
-    <turboFilter class="com.pzj.common.log.LogSessionDynamicConfigFilter" />
+<configuration debug="false" scan="true">
+    <property name="log.path" value="/data/logs" />
+    <property name="enginee" value="customer"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.pzj.framework.logger.layout.LoggerPatternLayout">
+                <pattern>%d{HH:mm:ss.SSS} [${enginee}] %X{requestId} %inet [%5p] [%C{0}.%M] -> %m%n</pattern>
+            </layout>
         </encoder>
     </appender>
-    <appender name="user-data" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/user-data.out</file>
+    <appender name="customer-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="com.pzj.framework.logger.filter.ThresholdFilter" />
+        <file>${log.path}/customer-error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/user-data.%d{yyyyMMdd}</fileNamePattern>
+            <fileNamePattern>${log.path}/customer-error-%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.pzj.framework.logger.layout.LoggerPatternLayout">
+                <pattern>%d{HH:mm:ss.SSS} [${enginee}] %X{requestId} %inet [%5p] [%C{0}.%M] -> %m%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+    <appender name="customer-all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/customer-all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/customer-all-%d{yyyyMMdd}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
-        </encoder>
-        <filter class="com.pzj.framework.logger.filter.ThresholdFilter">
-            <level>warn</level>
-            <rebel>true</rebel>
-        </filter>
-    </appender>
-    <appender name="user-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/user-error.out</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/user-error.%d{yyyyMMdd}</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{HH:mm:ss} [%5p] %C{0}.%M - %m%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [${enginee}] %X{requestId} %inet [%5p] [%C{0}.%M] -> %m%n</pattern>
         </encoder>
     </appender>
 
@@ -46,28 +45,26 @@
         </appender>
     </logger>
 
-    <logger name="com.pzj.service.Impl" level="debug" additivity="false">
-        <appender-ref ref="stdout"/>
-        <appender-ref ref="user-error"/>
-        <appender-ref ref="user-data"/>
-    </logger>
-    <logger name="org.apache.ibatis" level="debug" additivity="false">
-        <appender-ref ref="stdout"/>
-        <appender-ref ref="user-error"/>
-        <appender-ref ref="user-data"/>
-    </logger>
-    <logger name="java.sql" level="debug" additivity="false">
-        <appender-ref ref="stdout"/>
-        <appender-ref ref="user-error"/>
-        <appender-ref ref="user-data"/>
+    <logger name="com.pzj" level="debug" additivity="false">
+        <appender-ref ref="customer-all" />
+        <appender-ref ref="customer-error" />
+        <appender-ref ref="stdout" />
     </logger>
 
-    <logger name="org.springframework" level="debug" />
-    <logger name="com.alibaba" level="debug" />
+    <logger name="org.springframework" level="warn" />
+    <logger name="com.alibaba" level="warn" />
     <logger name="org.apache" level="warn" />
     <logger name="org.I0Itec.zkclient" level="warn" />
+    
+    <logger name="org.apache.ibatis" level="DEBUG" additivity="false">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+	
+	<logger name="java.sql" level="debug" additivity="false">
+	    <appender-ref ref="STDOUT"/>
+	</logger> 
 
     <root level="debug">
-        <appender-ref ref="stdout"/>
+        <appender-ref ref="stdout" />
     </root>
 </configuration>

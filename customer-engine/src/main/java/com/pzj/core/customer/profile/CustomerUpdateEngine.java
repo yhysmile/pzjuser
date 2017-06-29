@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.pzj.core.customer.entitys.CustomerExtendsEntity;
+import com.pzj.core.customer.entitys.CustomerEntity;
+import com.pzj.core.customer.entitys.SaasCustomerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pzj.base.common.global.PasswordGenerateUtil;
-import com.pzj.base.common.global.UserGlobalDict;
 import com.pzj.core.customer.utils.ResellerTypeEnum;
 import com.pzj.core.customer.utils.UserCheckStatusEnum;
 import com.pzj.core.customer.utils.UserConfig;
@@ -39,9 +41,9 @@ public class CustomerUpdateEngine {
 	private IShortMessageService shortMessageService;
 
 	public Long addReseller(CreateCustomerRequest sysUser) {
-		ResellerEntity resellerEntity = initResellerEntity(sysUser);
+		CustomerEntity customerEntity = initResellerEntity(sysUser);
 		//新增用户信息
-		customerWriteMapper.insertDistributor(resellerEntity);
+		customerWriteMapper.insertDistributor(customerEntity);
 
 		//新增用户扩展信息
 		CustomerExtendsEntity extendsInfoModel = initCustomerExtend(sysUser.getRefereeId(), sysUser.getBusinessId());
@@ -52,24 +54,24 @@ public class CustomerUpdateEngine {
 			}
 			QueryCustomerResponse saleUser = this.queryUserById(userId);
 			if (null != saleUser) {
-				extendsInfoModel.setCustomerId(resellerEntity.getId());
-				extendsInfoModel.setSupplierId(resellerEntity.getSupplierId());
+				extendsInfoModel.setCustomerId(customerEntity.getId());
+				extendsInfoModel.setSupplierId(customerEntity.getSupplierId());
 				customerExtendsService.intserCustomerExtends(extendsInfoModel);
 			}
 		}
 
-		return resellerEntity.getId();
+		return customerEntity.getId();
 	}
 
 	public Boolean sendSms(CreateCustomerRequest sysUser) {
 		Long supplierId = sysUser.getSupplierId();
 		String supplierName = "";
 		if (supplierId != null && supplierId.longValue() > 0) {
-			ResellerEntity resellerEntity = customerWriteMapper.queryUserBaseInfoById(supplierId);
-			if (null != resellerEntity) {
-				supplierName = resellerEntity.getName();
+			CustomerEntity customerEntity = customerWriteMapper.selectUserBaseInfoById(supplierId);
+			if (null != customerEntity) {
+				supplierName = customerEntity.getName();
 				if (supplierName == null || "".equals(supplierName.trim())) {
-					supplierName = resellerEntity.getCorporater();
+					supplierName = customerEntity.getCorporater();
 				}
 			}
 		}
@@ -91,19 +93,19 @@ public class CustomerUpdateEngine {
 	}
 
 	public QueryCustomerResponse queryUserByInviteCode(String inviteCode) {
-		ResellerEntity reseller = customerWriteMapper.queryUserBaseByInviteCode(inviteCode);
+		CustomerEntity reseller = customerWriteMapper.selectUserBaseByInviteCode(inviteCode);
 
 		return initSysUser(reseller);
 	}
 
 	public QueryCustomerResponse queryUserById(Long id) {
 
-		ResellerEntity reseller = customerWriteMapper.queryUserBaseInfoById(id);
+		CustomerEntity reseller = customerWriteMapper.selectUserBaseInfoById(id);
 
 		return initSysUser(reseller);
 	}
 
-	private QueryCustomerResponse initSysUser(ResellerEntity reseller) {
+	private QueryCustomerResponse initSysUser(CustomerEntity reseller) {
 		if (reseller == null) {
 			return null;
 		}
@@ -152,69 +154,78 @@ public class CustomerUpdateEngine {
 		return null;
 	}
 
-	private ResellerEntity initResellerEntity(CreateCustomerRequest sysUser) {
-		ResellerEntity resellerEntity = new ResellerEntity();
-		resellerEntity.setId(sysUser.getUserId());
-		resellerEntity.setLoginName(sysUser.getLoginName());
-		resellerEntity.setCorporater(sysUser.getCorporater());
-		resellerEntity.setCorporaterMobile(sysUser.getCorporaterMobile());
-		resellerEntity.setCreateUserId(sysUser.getCreateBy());
-		resellerEntity.setIdentifyType(sysUser.getIdentifyType());
+	private CustomerEntity initResellerEntity(CreateCustomerRequest sysUser) {
+		CustomerEntity customerEntity = new CustomerEntity();
+		customerEntity.setId(sysUser.getUserId());
+		customerEntity.setLoginName(sysUser.getLoginName());
+		customerEntity.setCorporater(sysUser.getCorporater());
+		customerEntity.setCorporaterMobile(sysUser.getCorporaterMobile());
+		customerEntity.setCreateUserId(sysUser.getCreateBy());
+		customerEntity.setIdentifyType(sysUser.getIdentifyType());
 		ResellerTypeEnum resellerTypeEnum = ResellerTypeEnum.getResellerTypeEnumById(sysUser.getResellerType());
 		if (resellerTypeEnum != null) {
-			resellerEntity.setResellerType(resellerTypeEnum.getId().toString());
+			customerEntity.setResellerType(resellerTypeEnum.getId().toString());
 		}
-		resellerEntity.setSupplierId(sysUser.getSupplierId());
-		if (resellerEntity.getSupplierId() == null) {
-			resellerEntity.setSupplierId(sysUser.getCreateBy());
+		customerEntity.setSupplierId(sysUser.getSupplierId());
+		if (customerEntity.getSupplierId() == null) {
+			customerEntity.setSupplierId(sysUser.getCreateBy());
 		}
-		resellerEntity.setUserType(UserTypeEnum.RESELLER.getId().toString());
-		resellerEntity.setIsRoot(UserRootEnum.ROOT_USER.getKey());
-		resellerEntity.setCheckType(1);
-		resellerEntity.setUserSource(sysUser.getUserSource());
-		resellerEntity.setName(sysUser.getName());
-		resellerEntity.setSupplierNormal(sysUser.getSupplierNormal());
-		resellerEntity.setAddress(sysUser.getAddress());
-		resellerEntity.setCorporaterCredentials(sysUser.getCorporaterCredentials());
-		resellerEntity.setBusinessLicense(sysUser.getBusinessLicense());
-		resellerEntity.setOperChargerPhone(sysUser.getOperChargerPhone());
-		resellerEntity.setUserSource(sysUser.getUserSource());
-		resellerEntity.setOperChargerFax(sysUser.getOperChargerFax());
-		resellerEntity.setBusinessCertificate(sysUser.getBusinessCertificate());
-		resellerEntity.setOperChargerEmail(sysUser.getOperChargerEmail());
-		resellerEntity.setBusinessQualification(sysUser.getBusinessQualification());
-		resellerEntity.setGuideCertificate(sysUser.getGuideCertificate());
-		resellerEntity.setProvince(sysUser.getProvince());
-		resellerEntity.setCity(sysUser.getCity());
-		resellerEntity.setCounty(sysUser.getCounty());
-		resellerEntity.setAccountState(UserStatusEnum.AVAILABLE.getStatus());
-		resellerEntity.setCheckState(UserCheckStatusEnum.AUDIT_PASS.getCheckStatus());
-		resellerEntity.setHotlineReseller(sysUser.getHotlineReseller());
-		resellerEntity.setHotlineSupplier(sysUser.getHotlineSupplier());
-		resellerEntity.setUserPassword(sysUser.getUserPassword());
+		customerEntity.setUserType(UserTypeEnum.RESELLER.getId().toString());
+		customerEntity.setIsRoot(UserRootEnum.ROOT_USER.getKey());
+		customerEntity.setCheckType(1);
+		customerEntity.setUserSource(sysUser.getUserSource());
+		customerEntity.setName(sysUser.getName());
+		customerEntity.setSupplierNormal(sysUser.getSupplierNormal());
+		customerEntity.setAddress(sysUser.getAddress());
+		customerEntity.setCorporaterCredentials(sysUser.getCorporaterCredentials());
+		customerEntity.setBusinessLicense(sysUser.getBusinessLicense());
+		customerEntity.setOperChargerPhone(sysUser.getOperChargerPhone());
+		customerEntity.setUserSource(sysUser.getUserSource());
+		customerEntity.setOperChargerFax(sysUser.getOperChargerFax());
+		customerEntity.setBusinessCertificate(sysUser.getBusinessCertificate());
+		customerEntity.setOperChargerEmail(sysUser.getOperChargerEmail());
+		customerEntity.setBusinessQualification(sysUser.getBusinessQualification());
+		customerEntity.setGuideCertificate(sysUser.getGuideCertificate());
+		customerEntity.setProvince(sysUser.getProvince());
+		customerEntity.setCity(sysUser.getCity());
+		customerEntity.setCounty(sysUser.getCounty());
+		customerEntity.setAccountState(UserStatusEnum.AVAILABLE.getStatus());
+		customerEntity.setCheckState(UserCheckStatusEnum.AUDIT_PASS.getCheckStatus());
+		customerEntity.setHotlineReseller(sysUser.getHotlineReseller());
+		customerEntity.setHotlineSupplier(sysUser.getHotlineSupplier());
+		customerEntity.setUserPassword(sysUser.getUserPassword());
 
-		if (resellerEntity.getHotlineReseller() == null) {
-			resellerEntity.setHotlineReseller(sysUser.getCorporaterMobile());
+		if (customerEntity.getHotlineReseller() == null) {
+			customerEntity.setHotlineReseller(sysUser.getCorporaterMobile());
 		}
 
-		return resellerEntity;
+		return customerEntity;
 	}
 
 	public QueryCustomerResponse queryUserByName(String name) {
-		ResellerEntity reseller = customerWriteMapper.queryUserByName(name);
+		CustomerEntity reseller = customerWriteMapper.selectUserByName(name);
 
 		return initSysUser(reseller);
 	}
 
-	private ArrayList<QueryCustomerResponse> initSysUsers(List<ResellerEntity> resellers) {
+	private ArrayList<QueryCustomerResponse> initSysUsers(List<CustomerEntity> resellers) {
 		if (resellers == null || resellers.size() == 0) {
 			return null;
 		}
 		ArrayList<QueryCustomerResponse> sysUsers = new ArrayList<QueryCustomerResponse>();
-		for (ResellerEntity reseller : resellers) {
+		for (CustomerEntity reseller : resellers) {
 
 			sysUsers.add(initSysUser(reseller));
 		}
 		return sysUsers;
+	}
+
+	public Long addSaasCustomer(CreateSaasCustomerRequest createSaasCustomerRequest){
+		SaasCustomerEntity saasCustomerEntity = (SaasCustomerEntity) initResellerEntity(createSaasCustomerRequest);
+		saasCustomerEntity.setLogo(createSaasCustomerRequest.getLogo());
+		//赋值默认属性
+		saasCustomerEntity.setDefaultData();
+		customerWriteMapper.insertDistributor(saasCustomerEntity);
+		return saasCustomerEntity.getId();
 	}
 }

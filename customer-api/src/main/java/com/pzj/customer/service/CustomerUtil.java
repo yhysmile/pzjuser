@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pzj.base.service.sys.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,8 @@ import com.pzj.menu.entity.Menu;
 import com.pzj.menu.service.MenuUtil;
 import com.pzj.role.entity.Role;
 import com.pzj.role.service.RoleUtil;
+
+import javax.annotation.Resource;
 
 @Component
 public class CustomerUtil {
@@ -540,6 +543,27 @@ public class CustomerUtil {
 
             // 用户封装菜单列表
             setCustomerMenuList(customers);
+
+            // 用户封装用户部门角色关系列表
+            setCustomerDCRList(customers);
+
+            // 用户封装渠道列表
+            setCustomerChannelList(customers);
+
+            // 封装用户关联的售票点ID集合
+            setCustomerTicketList(customers);
+        }
+
+    }
+
+    public void setCustomerAuthorityList2(List<Customer> customers)
+            throws Exception {
+        if (customers != null && !customers.isEmpty()) {
+
+            // 用户封装部门列表
+            setCustomerOfficeList(customers);
+            // 用户封装角色列表
+            setCustomerRoleList(customers);
 
             // 用户封装用户部门角色关系列表
             setCustomerDCRList(customers);

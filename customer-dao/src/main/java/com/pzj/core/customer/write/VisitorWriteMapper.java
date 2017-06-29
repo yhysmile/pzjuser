@@ -1,7 +1,7 @@
 package com.pzj.core.customer.write;
 
 import com.pzj.base.common.persistence.annotation.MyBatisDao;
-import com.pzj.core.customer.profile.VisitorEntity;
+import com.pzj.core.customer.entitys.VisitorEntity;
 
 import java.util.List;
 

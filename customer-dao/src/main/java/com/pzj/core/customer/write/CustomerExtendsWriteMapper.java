@@ -3,7 +3,7 @@ package com.pzj.core.customer.write;
 import com.pzj.base.common.persistence.annotation.MyBatisDao;
 import org.apache.ibatis.annotations.Param;
 
-import com.pzj.core.customer.profile.CustomerExtendsEntity;
+import com.pzj.core.customer.entitys.CustomerExtendsEntity;
 
 /**
  * Created by Administrator on 2017-2-16.

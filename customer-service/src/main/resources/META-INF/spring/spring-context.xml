@@ -10,12 +10,12 @@
     <context:component-scan base-package="com.pzj"/>
     <!-- 加载配置属性文件 -->
     <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/>
-
-    <import resource="classpath:/META-INF/spring/spring-other.xml"/>
+    
     <import resource="classpath:/META-INF/spring/spring-disconf.xml"/>
     <import resource="classpath:/META-INF/spring/spring-datasource.xml"/>
     <import resource="classpath:/META-INF/spring/spring-mybatis.xml"/>
     <import resource="classpath:/META-INF/spring/spring-redis.xml"/>
     <import resource="classpath:/META-INF/spring/spring-rocketmq.xml"/>
     <import resource="classpath:/META-INF/spring/spring-dubbo.xml"/>
+    <import resource="classpath:/META-INF/spring/spring-other.xml"/>
 </beans>

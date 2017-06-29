@@ -67,11 +67,10 @@
 	</resultMap>
 
 	<!-- 字段映射 -->
-	<resultMap id="channel_users" type="com.pzj.core.customer.profile.ChannelUsers">
+	<resultMap id="channel_users" type="com.pzj.core.customer.entitys.ChannelUsers">
 		<result column="obj_id" property="channelId" jdbcType="BIGINT" />
-		<result column="user_Num" property="userNum" jdbcType="INTEGER" />
-		<result column="user_ids" property="userIds" jdbcType="VARCHAR" />
-		<result column="user_names" property="userNames" jdbcType="VARCHAR" />
+		<result column="rel_id" property="userId" jdbcType="BIGINT" />
+		<result column="name" property="userName" jdbcType="VARCHAR" />
 	</resultMap>
 	<!-- 主键查询 -->
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -663,7 +662,7 @@
 		<where>
 			<include refid="sql_of_leftJoin_condition" />
 			and r.rel_id = #{idParam}
-			and r.rel_type in (${relType})
+			and r.rel_type in (#{relType})
 			and r.status = 1
 		</where>
 		<if test="pParam != null">
@@ -781,7 +780,7 @@
 			or
 			(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
 		)">
-			inner join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type in ('directChannelUser')
+			inner join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type in ('directChannelUser')  and rel.status = 1
 			inner join sys_user u on u.id = rel.rel_id
 		</if>
 		<where>
@@ -855,7 +854,7 @@
 				or
 				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
 			)">
-				inner join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type in ('directChannelUser')
+				inner join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type in ('directChannelUser') and rel.status = 1
 				inner join sys_user u on u.id = rel.rel_id
 			</if>
 			<where>
@@ -923,7 +922,7 @@
 				or
 				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
 			)">
-			left join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type = 'directChannelUser'
+			left join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type = 'directChannelUser' and rel.status = 1
 			left join sys_user u on u.id = rel.rel_id
 		</if>
 		<where>
@@ -994,7 +993,7 @@
 				or
 				(user.nameOrNormal != null and user.nameOrNormal.length() &gt; 0)
 			)">
-			left join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type = 'directChannelUser'
+			left join sys_label_relation rel on rel.obj_id = c.id and rel.rel_type = 'directChannelUser' and rel.status = 1
 			left join sys_user u on u.id = rel.rel_id
 		</if>
 		<where>
@@ -1058,21 +1057,23 @@
 	</select>
 	
 	<select id="queryChannelUsers" resultMap="channel_users">
-	SELECT obj_id,COUNT(rel_id) AS user_num,
-	SUBSTRING_INDEX(GROUP_CONCAT(u.name),',',3) AS user_names, 
-	GROUP_CONCAT(rel_id) AS user_ids
-	  FROM `sys_label_relation` l
-	INNER JOIN 
-	sys_user u 
-	ON l.rel_id = u.`id`
-	 WHERE  rel_type = 'directChannelUser' 
-	 <if test="channel.queryIds != null and channel.queryIds.size &gt; 0">
-				AND l.obj_id IN
-				<foreach collection="channel.queryIds" item="_channelId" open="( " close=" )"
-						 separator=",">
-					#{_channelId, jdbcType=BIGINT}
-				</foreach>
-	</if>
-	 GROUP BY l.obj_id
+		SELECT l.obj_id,
+		 	   u.name,
+			   l.rel_id
+		FROM sys_label_relation l
+		INNER JOIN
+		sys_user u
+		ON l.rel_id = u.id
+		where rel_type = 'directChannelUser'
+		<if test="channel.queryIds != null and channel.queryIds.size &gt; 0">
+			AND l.obj_id IN
+			<foreach collection="channel.queryIds" item="_channelId" open="( " close=" )"
+					 separator=",">
+				#{_channelId, jdbcType=BIGINT}
+			</foreach>
+		</if>
+		AND l.status = 1
+		AND u.account_state = 1
+		AND u.check_status=1
 	</select>
 </mapper>

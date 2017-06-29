@@ -1,7 +1,7 @@
 package com.pzj.core.customer.channel.mq;
 
-import com.pzj.core.customer.commons.mq.AbstractMqMessageService;
-import com.pzj.core.customer.commons.mq.MQUtil;
+import com.pzj.core.customer.common.mq.AbstractMqMessageService;
+import com.pzj.core.customer.common.mq.MQUtil;
 import com.pzj.core.customer.utils.UserConfig;
 
 /**

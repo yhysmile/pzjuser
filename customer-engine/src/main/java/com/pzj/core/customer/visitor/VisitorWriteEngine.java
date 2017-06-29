@@ -1,7 +1,7 @@
 package com.pzj.core.customer.visitor;
 
 import com.pzj.base.common.global.GlobalParam;
-import com.pzj.core.customer.profile.VisitorEntity;
+import com.pzj.core.customer.entitys.VisitorEntity;
 import com.pzj.core.customer.write.VisitorWriteMapper;
 import com.pzj.framework.idgen.IDGenerater;
 import org.springframework.stereotype.Service;
